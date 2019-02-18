@@ -1,7 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-from OOPCourseWorkTwo.GUI.ApplicationGUIFromQtDesigner import Ui_MainWindow
+from OOPCourseWorkTwo.GUI.LoginGUIQtDesigner import Ui_MainWindow
+from OOPCourseWorkTwo.BusinessLogic.User import User
 
 import sys
 
@@ -13,7 +14,8 @@ class ApplicationMain():
         self.ui = Ui_MainWindow()
         self.ui.setupUi(MainWindow)
 
-
+        User.setup_login_screen(self.ui)
+        User.login()
 
         MainWindow.show()
         sys.exit(app.exec_())
