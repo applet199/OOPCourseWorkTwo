@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1120</width>
+    <height>859</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>1081</width>
+      <height>761</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>2</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Create Question</string>
+     </attribute>
+     <widget class="QTabWidget" name="tabWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>1041</width>
+        <height>711</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Manually Marking</string>
+       </attribute>
+       <widget class="QTabWidget" name="tabWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>1011</width>
+          <height>661</height>
+         </rect>
+        </property>
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="tab_5">
+         <attribute name="title">
+          <string>Essay</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="tab_6">
+         <attribute name="title">
+          <string>Short Answer</string>
+         </attribute>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>Automatically Marking</string>
+       </attribute>
+       <widget class="QTabWidget" name="tabWidget_4">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>1011</width>
+          <height>661</height>
+         </rect>
+        </property>
+        <property name="currentIndex">
+         <number>2</number>
+        </property>
+        <widget class="QWidget" name="tab_7">
+         <attribute name="title">
+          <string>Multiple Choice</string>
+         </attribute>
+         <widget class="QTabWidget" name="tabWidget_5">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>991</width>
+            <height>611</height>
+           </rect>
+          </property>
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="tab_9">
+           <attribute name="title">
+            <string>True Or False</string>
+           </attribute>
+          </widget>
+          <widget class="QWidget" name="tab_10">
+           <attribute name="title">
+            <string>Four Options</string>
+           </attribute>
+          </widget>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="tab_8">
+         <attribute name="title">
+          <string>Random Maths</string>
+         </attribute>
+         <widget class="QPushButton" name="pushButton">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>250</y>
+            <width>281</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Generate Random Maths Question </string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="tab_19">
+         <attribute name="title">
+          <string>ReOrder Code</string>
+         </attribute>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Questions Bank</string>
+     </attribute>
+     <widget class="QTabWidget" name="tabWidget_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>1051</width>
+        <height>711</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="tab_11">
+       <attribute name="title">
+        <string>The Bank</string>
+       </attribute>
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>1011</width>
+          <height>661</height>
+         </rect>
+        </property>
+        <property name="rowCount">
+         <number>16</number>
+        </property>
+        <property name="columnCount">
+         <number>7</number>
+        </property>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_12">
+       <attribute name="title">
+        <string>Search The Bank By Tag</string>
+       </attribute>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>40</y>
+          <width>201</width>
+          <height>51</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>620</x>
+          <y>50</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Search By Year Level</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_2">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>110</y>
+          <width>201</width>
+          <height>51</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>620</x>
+          <y>120</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Search By Phrase</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="tableWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>210</y>
+          <width>1021</width>
+          <height>461</height>
+         </rect>
+        </property>
+        <property name="rowCount">
+         <number>11</number>
+        </property>
+        <property name="columnCount">
+         <number>7</number>
+        </property>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_13">
+       <attribute name="title">
+        <string>View Or Modify Question</string>
+       </attribute>
+       <widget class="QTabWidget" name="tabWidget_7">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>1011</width>
+          <height>661</height>
+         </rect>
+        </property>
+        <property name="currentIndex">
+         <number>4</number>
+        </property>
+        <widget class="QWidget" name="tab_14">
+         <attribute name="title">
+          <string>Random Maths</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="tab_15">
+         <attribute name="title">
+          <string>True or False</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="tab_16">
+         <attribute name="title">
+          <string>Four Options</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="tab_17">
+         <attribute name="title">
+          <string>Essay</string>
+         </attribute>
+        </widget>
+        <widget class="QWidget" name="tab_18">
+         <attribute name="title">
+          <string>Short Answer</string>
+         </attribute>
+        </widget>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_20">
+     <attribute name="title">
+      <string>Close Application</string>
+     </attribute>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>350</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Close</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1120</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
