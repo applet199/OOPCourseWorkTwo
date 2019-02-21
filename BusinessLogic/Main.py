@@ -1,5 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from OOPCourseWorkTwo.BusinessLogic.User import User
+
 from OOPCourseWorkTwo.GUI.LoginGUIQtDesigner import Ui_LoginMainWindow
 from OOPCourseWorkTwo.GUI.AdminGUIQtDesigner import Ui_AdminMainWindow
 from OOPCourseWorkTwo.GUI.TeacherGUIQtDesigner import Ui_TeacherMainWindow
@@ -14,12 +16,12 @@ class Main():
     def __init__(self):
         app = QtWidgets.QApplication(sys.argv)
         self.__mainwindow = QtWidgets.QMainWindow()
+        self.__user_type = None
         self.show_login_screen(self.__mainwindow)
         self.__db_connection = self.connect_to_database()
         self.ui.pushButton.clicked.connect(self.login_to_application)
-
-
-
+        User.setup_application(self.__db_connection, self.ui, self.__user_type)
+        User.actions()
         self.__mainwindow.show()
         sys.exit(app.exec_())
 
@@ -81,6 +83,7 @@ class Main():
         if (user_type_tuple == None):
             return None
         user_type = user_type_tuple[0]
+        self.__user_type = user_type
         return user_type
 
     def display_invalid_login_error_message(self):

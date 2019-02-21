@@ -1,7 +1,5 @@
 
-from OOPCourseWorkTwo.DataAccess.UserDA import UserDA
-
-from OOPCourseWorkTwo.GUI.UserGUI import UserGUI
+from OOPCourseWorkTwo.BusinessLogic.Admin import Admin
 
 class User():
 
@@ -9,21 +7,14 @@ class User():
         pass
 
     @classmethod
-    def setup_login_system(cls, ui_mainwindow, connection):
+    def setup_application(cls, connection, ui_mainwindow, user_type):
+        cls.__db_connection = connection
         cls.__ui_mainwindow = ui_mainwindow
-        cls.__connection = connection
-        UserDA.setup_login_system(ui_mainwindow, connection)
-        UserGUI.setup_login_system(ui_mainwindow)
+        cls.__user_type = user_type
 
     @classmethod
-    def login(cls):
-        cls.__ui_mainwindow.pushButton.clicked.connect(cls.trigger_login_events)
-
-
-
-
-
-
+    def actions(cls):
+        pass
 
     def __str__(self):
         return ("This is User Object")

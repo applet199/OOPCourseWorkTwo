@@ -1,11 +1,10 @@
 
-from OOPCourseWorkTwo.BusinessLogic.User import User
 
-class Administrator(User):
+class Admin():
 
-    def __init__(self, user_id=None, full_name=None, username=None, password=None, admin_id=None):
-        super.__init__(user_id, full_name, username, password)
-        self.__admin_id = admin_id
+    def __init__(self):
+        pass
+
 
 
 
