@@ -7,11 +7,15 @@ class UserGUI():
         pass
 
     @classmethod
-    def setup_ui_mainwindow(cls, ui_mainwindow):
+    def setup_login_system(cls, ui_mainwindow):
         cls.__ui_mainwindow = ui_mainwindow
 
     @classmethod
-    def display_invalid_login_error_message_GUI(cls):
+    def load_application_for_user_type(cls, user_type):
+        pass
+
+    @classmethod
+    def display_invalid_login_error_message(cls):
         cls.__ui_mainwindow.label_3.setText("Invalid Login")
 
     def __str__(self):
