@@ -65,7 +65,7 @@ class Ui_LoginMainWindow(object):
 
     def retranslateUi(self, LoginMainWindow):
         _translate = QtCore.QCoreApplication.translate
-        LoginMainWindow.setWindowTitle(_translate("LoginMainWindow", "MainWindow"))
+        LoginMainWindow.setWindowTitle(_translate("LoginMainWindow", "Login Application"))
         self.label.setText(_translate("LoginMainWindow", "UserName"))
         self.label_2.setText(_translate("LoginMainWindow", "Password"))
         self.pushButton.setText(_translate("LoginMainWindow", "login"))

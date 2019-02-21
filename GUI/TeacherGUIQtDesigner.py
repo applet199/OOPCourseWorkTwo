@@ -144,7 +144,7 @@ class Ui_TeacherMainWindow(object):
 
     def retranslateUi(self, TeacherMainWindow):
         _translate = QtCore.QCoreApplication.translate
-        TeacherMainWindow.setWindowTitle(_translate("TeacherMainWindow", "MainWindow"))
+        TeacherMainWindow.setWindowTitle(_translate("TeacherMainWindow", "Teacher Application"))
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_5), _translate("TeacherMainWindow", "Essay"))
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_6), _translate("TeacherMainWindow", "Short Answer"))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_3), _translate("TeacherMainWindow", "Manually Marking"))

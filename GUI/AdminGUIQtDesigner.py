@@ -158,7 +158,7 @@ class Ui_AdminMainWindow(object):
 
     def retranslateUi(self, AdminMainWindow):
         _translate = QtCore.QCoreApplication.translate
-        AdminMainWindow.setWindowTitle(_translate("AdminMainWindow", "MainWindow"))
+        AdminMainWindow.setWindowTitle(_translate("AdminMainWindow", "Admin Application"))
         self.label.setText(_translate("AdminMainWindow", "Full Name"))
         self.label_2.setText(_translate("AdminMainWindow", "UserName"))
         self.label_3.setText(_translate("AdminMainWindow", "Password"))
