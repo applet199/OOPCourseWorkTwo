@@ -1,19 +1,18 @@
 
-from OOPCourseWorkTwo.BusinessLogic.User import User
+from OOPCourseWorkTwo.DataAccess.AdminDA import AdminDA
 
 from OOPCourseWorkTwo.GUI.AdminGUI import AdminGUI
 
-class Admin(User):
+
+class Admin():
 
     def __init__(self):
-        super.__init__()
+        pass
 
     @classmethod
     def setup(cls, connection, ui_mainwindow):
         cls.__db_connection = connection
         cls.__ui_mainwindow = ui_mainwindow
-        AdminGUI.setup()
-        AdminGUI.display_saved_users()
 
     @classmethod
     def actions(cls):
@@ -25,7 +24,8 @@ class Admin(User):
 
     @classmethod
     def trigger_create_new_student_events(cls):
-        pass
+        AdminDA.trigger_create_new_student_DA_events()
+        AdminGUI.trigger_create_new_student_GUI_events()
 
     def __str__(self):
         return ("This is Admin Object")

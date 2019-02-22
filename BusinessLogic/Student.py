@@ -1,10 +1,9 @@
 
-from OOPCourseWorkTwo.BusinessLogic.User import User
 
-class Student(User):
+class Student():
 
     def __init__(self):
-        super.__init__()
+        pass
 
     @classmethod
     def setup_application(cls, connection, ui_mainwindow):

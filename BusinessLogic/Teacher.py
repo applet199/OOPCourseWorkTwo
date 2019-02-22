@@ -1,10 +1,10 @@
 
-from OOPCourseWorkTwo.BusinessLogic.User import User
 
-class Teacher(User):
+
+class Teacher():
 
     def __init__(self):
-        super.__init__()
+        pass
 
     @classmethod
     def setup_application(cls, connection, ui_mainwindow):

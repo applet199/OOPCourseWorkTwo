@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from OOPCourseWorkTwo.BusinessLogic.User import User
+from OOPCourseWorkTwo.BusinessLogic.Admin import Admin
 
 from OOPCourseWorkTwo.DataAccess.AdminDA import AdminDA
 
@@ -19,12 +19,9 @@ class Main():
     def __init__(self):
         app = QtWidgets.QApplication(sys.argv)
         self.__mainwindow = QtWidgets.QMainWindow()
-        self.__user_type = None
         self.show_login_screen(self.__mainwindow)
         self.__db_connection = self.connect_to_database()
         self.ui.pushButton.clicked.connect(self.login_to_application)
-        User.setup_application(self.__db_connection, self.ui, self.__user_type)
-        User.actions()
         self.__mainwindow.show()
         sys.exit(app.exec_())
 
@@ -100,16 +97,15 @@ class Main():
                 self.ui = Ui_AdminMainWindow()
                 self.ui.setupUi(self.__mainwindow)
                 self.__mainwindow.show()
+                Admin.setup(self.__db_connection, self.ui)
                 AdminDA.setup(self.__db_connection, self.ui)
                 AdminGUI.setup(self.__db_connection, self.ui)
-                AdminGUI.display_saved_students()
+                AdminGUI.display_saved_users()
+                Admin.actions()
             elif (user_type == "Teacher"):
                 self.ui = Ui_TeacherMainWindow()
             elif (user_type == "Student"):
                 self.ui = Ui_StudentMainWindow()
-
-
-
         except:
             self.display_invalid_login_error_message()
 
