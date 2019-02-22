@@ -2,10 +2,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from OOPCourseWorkTwo.BusinessLogic.User import User
 
+from OOPCourseWorkTwo.DataAccess.AdminDA import AdminDA
+
 from OOPCourseWorkTwo.GUI.LoginGUIQtDesigner import Ui_LoginMainWindow
 from OOPCourseWorkTwo.GUI.AdminGUIQtDesigner import Ui_AdminMainWindow
 from OOPCourseWorkTwo.GUI.TeacherGUIQtDesigner import Ui_TeacherMainWindow
 from OOPCourseWorkTwo.GUI.StudentGUIQtDesigner import Ui_StudentMainWindow
+from OOPCourseWorkTwo.GUI.AdminGUI import AdminGUI
 
 import sys
 import sqlite3
@@ -95,12 +98,18 @@ class Main():
         try:
             if (user_type == "Admin"):
                 self.ui = Ui_AdminMainWindow()
+                self.ui.setupUi(self.__mainwindow)
+                self.__mainwindow.show()
+                AdminDA.setup(self.__db_connection, self.ui)
+                AdminGUI.setup(self.__db_connection, self.ui)
+                AdminGUI.display_saved_students()
             elif (user_type == "Teacher"):
                 self.ui = Ui_TeacherMainWindow()
             elif (user_type == "Student"):
                 self.ui = Ui_StudentMainWindow()
-            self.ui.setupUi(self.__mainwindow)
-            self.__mainwindow.show()
+
+
+
         except:
             self.display_invalid_login_error_message()
 
