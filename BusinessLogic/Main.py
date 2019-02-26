@@ -1,14 +1,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QLineEdit, QPushButton, QApplication, QMainWindow, QLabel
 
 from OOPCourseWorkTwo.BusinessLogic.Admin import Admin
-
-from OOPCourseWorkTwo.DataAccess.AdminDA import AdminDA
 
 from OOPCourseWorkTwo.GUI.LoginGUIQtDesigner import Ui_LoginMainWindow
 from OOPCourseWorkTwo.GUI.AdminGUIQtDesigner import Ui_AdminMainWindow
 from OOPCourseWorkTwo.GUI.TeacherGUIQtDesigner import Ui_TeacherMainWindow
 from OOPCourseWorkTwo.GUI.StudentGUIQtDesigner import Ui_StudentMainWindow
-from OOPCourseWorkTwo.GUI.AdminGUI import AdminGUI
 
 import sys
 import sqlite3
@@ -98,9 +96,7 @@ class Main():
                 self.ui.setupUi(self.__mainwindow)
                 self.__mainwindow.show()
                 Admin.setup(self.__db_connection, self.ui)
-                AdminDA.setup(self.__db_connection, self.ui)
-                AdminGUI.setup(self.__db_connection, self.ui)
-                AdminGUI.display_saved_users()
+                Admin.display_saved_users()
                 Admin.actions()
             elif (user_type == "Teacher"):
                 self.ui = Ui_TeacherMainWindow()

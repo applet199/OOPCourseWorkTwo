@@ -78,6 +78,11 @@ class Ui_AdminMainWindow(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.layoutWidget)
         self.pushButton_2.setObjectName("pushButton_2")
         self.verticalLayout.addWidget(self.pushButton_2)
+        self.label_17 = QtWidgets.QLabel(self.tab_3)
+        self.label_17.setGeometry(QtCore.QRect(400, 560, 191, 31))
+        self.label_17.setText("")
+        self.label_17.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_17.setObjectName("label_17")
         self.tabWidget_2.addTab(self.tab_3, "")
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setObjectName("tab_4")
@@ -240,9 +245,9 @@ class Ui_AdminMainWindow(object):
         AdminMainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(AdminMainWindow)
-        self.tabWidget.setCurrentIndex(2)
-        self.tabWidget_2.setCurrentIndex(2)
-        self.tabWidget_3.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget_2.setCurrentIndex(0)
+        self.tabWidget_3.setCurrentIndex(0)
         self.tabWidget_5.setCurrentIndex(0)
         self.tabWidget_4.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(AdminMainWindow)
@@ -250,7 +255,7 @@ class Ui_AdminMainWindow(object):
     def retranslateUi(self, AdminMainWindow):
         _translate = QtCore.QCoreApplication.translate
         AdminMainWindow.setWindowTitle(_translate("AdminMainWindow", "Admin Application"))
-        self.label.setText(_translate("AdminMainWindow", "Full Name"))
+        self.label.setText(_translate("AdminMainWindow", "Student Full Name"))
         self.label_2.setText(_translate("AdminMainWindow", "UserName"))
         self.label_3.setText(_translate("AdminMainWindow", "Password"))
         self.label_4.setText(_translate("AdminMainWindow", "Date Of Birth"))

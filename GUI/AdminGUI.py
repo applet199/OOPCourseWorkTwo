@@ -1,8 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QLineEdit, QRadioButton, QPushButton, QTableWidgetItem, QTableWidget, QApplication, QMainWindow
-
-
-from OOPCourseWorkTwo.DataAccess.AdminDA import AdminDA
+from PyQt5.QtWidgets import QLineEdit, QRadioButton, QPushButton, QTableWidgetItem, QTableWidget, QApplication, QMainWindow, QDateEdit, QLabel
+from PyQt5.QtCore import QDate, QTime, QDateTime, Qt
 
 class AdminGUI():
 
@@ -10,20 +8,12 @@ class AdminGUI():
         pass
 
     @classmethod
-    def setup(cls, connection, ui_mainwindow):
-        cls.__db_connection = connection
+    def setup(cls, ui_mainwindow):
         cls.__ui_mainwindow = ui_mainwindow
 
     @classmethod
-    def display_saved_users(cls):
-        cls.display_saved_students()
-        cls.display_saved_teachers()
-        cls.display_saved_admins()
-        cls.display_saved_school_classes()
-
-    @classmethod
-    def display_saved_students(cls):
-        students = AdminDA.get_all_students_from_db()
+    def display_saved_students_GUI(cls, students):
+        cls.__ui_mainwindow.tableWidget_2.clear()
         row = 0
         col = 0
         for (student_id, student_name) in students:
@@ -36,11 +26,8 @@ class AdminGUI():
             else:
                 col += 1
 
-
-
     @classmethod
-    def display_saved_teachers(cls):
-        teachers = AdminDA.get_all_teachers_from_db()
+    def display_saved_teachers_GUI(cls, teachers):
         row = 0
         col = 0
         for (teacher_id, teacher_name) in teachers:
@@ -54,8 +41,7 @@ class AdminGUI():
                 col += 1
 
     @classmethod
-    def display_saved_admins(cls):
-        admins = AdminDA.get_all_admins_from_db()
+    def display_saved_admins_GUI(cls, admins):
         row = 0
         col = 0
         for (admin_id, admin_name) in admins:
@@ -67,8 +53,7 @@ class AdminGUI():
 
 
     @classmethod
-    def display_saved_school_classes(cls):
-        school_classes = AdminDA.get_all_school_classes_from_db()
+    def display_saved_school_classes_GUI(cls, school_classes):
         row = 0
         col = 0
         for (school_class_id, ) in school_classes:
@@ -81,10 +66,40 @@ class AdminGUI():
             else:
                 col += 1
 
+
     @classmethod
-    def trigger_create_new_student_GUI_events(cls):
-        cls.__ui_mainwindow.tableWidget_2.clear()
-        cls.display_saved_students()
+    def display_create_student_failed_message_GUI(cls):
+        cls.__ui_mainwindow.label_17.setText("Create New Student Failed")
+
+    @classmethod
+    def display_create_student_success_message_GUI(cls):
+        cls.__ui_mainwindow.label_17.setText("Create New Student Success")
+
+    @classmethod
+    def get_student_name_input(cls):
+        student_full_name = cls.__ui_mainwindow.lineEdit.text()
+        return student_full_name
+
+    @classmethod
+    def get_student_user_name_input(cls):
+        student_user_name = cls.__ui_mainwindow.lineEdit_2.text()
+        return student_user_name
+
+    @classmethod
+    def get_student_password_input(cls):
+        student_password = cls.__ui_mainwindow.lineEdit_3.text()
+        return student_password
+
+    @classmethod
+    def get_student_date_of_birth_input(cls):
+        date_of_birth_qdate = cls.__ui_mainwindow.dateEdit.date()
+        date_of_birth = date_of_birth_qdate.toString(Qt.DefaultLocaleLongDate)
+        return date_of_birth
+
+    @classmethod
+    def get_student_school_class_id_input(cls):
+        school_class_id = int(cls.__ui_mainwindow.lineEdit_4.text() or 0)
+        return school_class_id
 
     def __str__(self):
         return ("This is AdminGUI Object")
