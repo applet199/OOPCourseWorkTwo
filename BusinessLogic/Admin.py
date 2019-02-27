@@ -34,6 +34,10 @@ class Admin():
         cls.create_new_teacher_button_pressed()
         cls.view_student_details_button_pressed()
         cls.view_teacher_details_button_pressed()
+        cls.view_admin_details_button_pressed()
+        cls.view_school_class_details_button_pressed()
+        cls.de_activate_student_by_id_button_pressed()
+
 
 
     @classmethod
@@ -47,6 +51,22 @@ class Admin():
     @classmethod
     def view_student_details_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_3.clicked.connect(cls.view_student_details)
+
+    @classmethod
+    def view_teacher_details_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_5.clicked.connect(cls.view_teacher_details)
+
+    @classmethod
+    def view_admin_details_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_6.clicked.connect(cls.view_admin_details)
+
+    @classmethod
+    def view_school_class_details_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_7.clicked.connect(cls.view_school_class_details)
+
+    @classmethod
+    def de_activate_student_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_8.clicked.connect(cls.de_activate_student_by_id)
 
     @classmethod
     def create_new_student(cls):
@@ -127,6 +147,44 @@ class Admin():
             return
         student_details_tuple = AdminDA.get_student_details_tuple_by_id(student_id)
         AdminGUI.display_student_details_from_tuple(student_details_tuple)
+
+    @classmethod
+    def view_teacher_details(cls):
+        teacher_id = AdminGUI.get_teacher_id_to_view_details()
+        if (teacher_id == None):
+            AdminGUI.display_view_teacher_box_can_not_empty_message()
+            return
+        teacher_details_tuple = AdminDA.get_teacher_details_tuple_by_id(teacher_id)
+        AdminGUI.display_teacher_details_from_tuple(teacher_details_tuple)
+
+    @classmethod
+    def view_admin_details(cls):
+        admin_id = AdminGUI.get_admin_id_to_view_details()
+        if (admin_id == None):
+            AdminGUI.display_view_admin_box_can_not_empty_message()
+            return
+        admin_details_tuple = AdminDA.get_admin_details_tuple_by_id(admin_id)
+        AdminGUI.display_admin_details_from_tuple(admin_details_tuple)
+
+    @classmethod
+    def view_school_class_details(cls):
+        school_class_id = AdminGUI.get_school_class_id_to_view_details()
+        if (school_class_id == None):
+            AdminGUI.display_view_school_class_box_can_not_empty_message()
+            return
+        school_class_details_tuples_list = AdminDA.get_school_class_details_tuples_list_by_id(school_class_id)
+        AdminGUI.display_school_class_details_from_tuples_list(school_class_details_tuples_list)
+
+    @classmethod
+    def de_activate_student_by_id(cls):
+        student_id = AdminGUI.get_student_id_to_de_activate()
+        student_id_valid = AdminDA.is_student_id_to_de_activate_valid(student_id)
+        if (not student_id_valid):
+            AdminGUI.display_de_activate_student_id_input_box_can_not_empty_message()
+            return
+        AdminDA.de_activate_student_by_id_in_db(student_id)
+        de_activated_students = AdminDA.get_all_de_activated_students_from_db()
+        AdminGUI.display_de_activated_students(de_activated_students)
 
     def __str__(self):
         return ("This is Admin Object")

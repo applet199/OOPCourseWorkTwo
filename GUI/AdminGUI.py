@@ -147,6 +147,36 @@ class AdminGUI():
         return student_id
 
     @classmethod
+    def get_teacher_id_to_view_details(cls):
+        teacher_item = cls.__ui_mainwindow.tableWidget_5.item(0,0)
+        if (teacher_item == None):
+            return None
+        teacher_text = teacher_item.text()
+        teacher_text_split = teacher_text.split(" ")
+        teacher_id = int(teacher_text_split[0])
+        return teacher_id
+
+    @classmethod
+    def get_admin_id_to_view_details(cls):
+        admin_item = cls.__ui_mainwindow.tableWidget_7.item(0,0)
+        if (admin_item == None):
+            return None
+        admin_text = admin_item.text()
+        admin_text_split = admin_text.split(" ")
+        admin_id = int(admin_text_split[0])
+        return admin_id
+
+    @classmethod
+    def get_school_class_id_to_view_details(cls):
+        school_class_item = cls.__ui_mainwindow.tableWidget_8.item(0,0)
+        if (school_class_item == None):
+            return None
+        school_class_text = school_class_item.text()
+        school_class_text_split = school_class_text.split(" ")
+        school_class_id = int(school_class_text_split[1])
+        return school_class_id
+
+    @classmethod
     def display_student_details_from_tuple(cls, student_details_tuple):
         cls.__ui_mainwindow.label_7.setText("Full Name: " + student_details_tuple[0])
         cls.__ui_mainwindow.label_8.setText("User Name: " + student_details_tuple[1])
@@ -155,6 +185,42 @@ class AdminGUI():
         cls.__ui_mainwindow.label_11.setText("School Class Id: " + str(student_details_tuple[4]))
         cls.__ui_mainwindow.label_26.clear()
 
+    @classmethod
+    def display_teacher_details_from_tuple(cls, teacher_details_tuple):
+        cls.__ui_mainwindow.label_13.setText("Full Name: " + teacher_details_tuple[0])
+        cls.__ui_mainwindow.label_14.setText("User Name: " + teacher_details_tuple[1])
+        cls.__ui_mainwindow.label_15.setText("Password: " + teacher_details_tuple[2])
+        cls.__ui_mainwindow.label_16.setText("Date Of Birth: " + teacher_details_tuple[3])
+        cls.__ui_mainwindow.label_27.clear()
+
+    @classmethod
+    def display_admin_details_from_tuple(cls, admin_details_tuple):
+        cls.__ui_mainwindow.label_30.setText("Full Name: " + admin_details_tuple[0])
+        cls.__ui_mainwindow.label_31.setText("User Name: " + admin_details_tuple[1])
+        cls.__ui_mainwindow.label_32.setText("Password: " + admin_details_tuple[2])
+        cls.__ui_mainwindow.label_33.setText("Date Of Birth: " + admin_details_tuple[3])
+        cls.__ui_mainwindow.label_29.clear()
+
+    @classmethod
+    def display_school_class_details_from_tuples_list(cls, school_class_details_tuples_list):
+        cls.__ui_mainwindow.tableWidget_9.clear()
+        student_tuple = school_class_details_tuples_list[0]
+        school_class_id = student_tuple[0]
+        cls.__ui_mainwindow.label_36.setText("School Class ID: " + str(school_class_id))
+        year_level = student_tuple[1]
+        cls.__ui_mainwindow.label_37.setText("Year Level: " + str(year_level))
+        row = 0
+        col = 0
+        for student_tuple in school_class_details_tuples_list:
+            student_text = (str(student_tuple[-2]) + " " + student_tuple[-1])
+            student_item = QTableWidgetItem(student_text)
+            cls.__ui_mainwindow.tableWidget_9.setItem(row, col, student_item)
+            if (col >= 1):
+                col = 0
+                row += 1
+            else:
+                col += 1
+        cls.__ui_mainwindow.label_35.clear()
 
     @classmethod
     def display_student_user_name_can_not_empty_message(cls):
@@ -187,6 +253,18 @@ class AdminGUI():
     @classmethod
     def display_view_student_box_can_not_empty_message(cls):
         cls.__ui_mainwindow.label_26.setText("View Student Box Is Empty")
+
+    @classmethod
+    def display_view_teacher_box_can_not_empty_message(cls):
+        cls.__ui_mainwindow.label_27.setText("View Teacher Box Is Empty")
+
+    @classmethod
+    def display_view_admin_box_can_not_empty_message(cls):
+        cls.__ui_mainwindow.label_29.setText("View Admin Box Is Empty")
+
+    @classmethod
+    def display_view_school_class_box_can_not_empty_message(cls):
+        cls.__ui_mainwindow.label_35.setText("View School Class Box Is Empty")
 
     def __str__(self):
         return ("This is AdminGUI Object")

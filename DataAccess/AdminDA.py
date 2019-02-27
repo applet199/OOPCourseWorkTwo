@@ -156,5 +156,54 @@ class AdminDA():
         student_details_tuple = cls.__cursor.fetchone()
         return student_details_tuple
 
+    @classmethod
+    def get_teacher_details_tuple_by_id(cls, teacher_pk):
+        select_teacher_details_query = '''
+                                        SELECT teacher_full_name,
+                                               login_name,
+                                               password,
+                                               date_of_birth
+                                        FROM user
+                                        INNER JOIN teacher
+                                        WHERE user.user_full_name = teacher.teacher_full_name
+                                        AND teacher_pk = ?
+                                        '''
+        cls.__cursor.execute(select_teacher_details_query, (teacher_pk, ))
+        teacher_details_tuple = cls.__cursor.fetchone()
+        return teacher_details_tuple
+
+    @classmethod
+    def get_admin_details_tuple_by_id(cls, admin_pk):
+        select_admin_details_query = '''
+                                        SELECT admin_full_name,
+                                               login_name,
+                                               password,
+                                               date_of_birth
+                                        FROM user
+                                        INNER JOIN admin
+                                        WHERE user.user_full_name = admin.admin_full_name
+                                        AND admin_pk = ?
+                                        '''
+        cls.__cursor.execute(select_admin_details_query, (admin_pk, ))
+        admin_details_tuple = cls.__cursor.fetchone()
+        return admin_details_tuple
+
+    @classmethod
+    def get_school_class_details_tuples_list_by_id(cls, school_class_pk):
+        select_school_class_details_query = '''
+                                        SELECT school_class_pk,
+                                               year_level,
+                                               student_pk,
+                                               student_full_name
+                                        FROM student
+                                        INNER JOIN school_class
+                                        WHERE student.school_class_fk = school_class.school_class_pk
+                                        AND school_class_pk = ?
+                                        '''
+        cls.__cursor.execute(select_school_class_details_query, (school_class_pk, ))
+        school_class_details_tuples_list = cls.__cursor.fetchall()
+        return school_class_details_tuples_list
+
+
     def __str__(self):
         return ("This is AdminDA Object")
