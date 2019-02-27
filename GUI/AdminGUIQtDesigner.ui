@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -75,7 +75,7 @@
            <item>
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>UserName</string>
+              <string>User Name</string>
              </property>
             </widget>
            </item>
@@ -122,7 +122,14 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_4"/>
+            <widget class="QLineEdit" name="lineEdit_4">
+             <property name="inputMethodHints">
+              <set>Qt::ImhNone</set>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -138,11 +145,17 @@
        <widget class="QLabel" name="label_17">
         <property name="geometry">
          <rect>
-          <x>400</x>
-          <y>560</y>
-          <width>191</width>
-          <height>31</height>
+          <x>350</x>
+          <y>550</y>
+          <width>300</width>
+          <height>50</height>
          </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>300</width>
+          <height>50</height>
+         </size>
         </property>
         <property name="text">
          <string/>
@@ -151,16 +164,150 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
+       <widget class="QLabel" name="label_23">
+        <property name="geometry">
+         <rect>
+          <x>700</x>
+          <y>370</y>
+          <width>321</width>
+          <height>141</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>(School Class ID has to be 5 digits long.  The first two digits are year level.  The last three digits are class id within the year level.  For example: a student who is in year level 1 and class 2 would have the school class id 01002. a student who is in year level 11 and class 23 would have school class id 11023)</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_24">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>190</y>
+          <width>201</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>(User Name has to be unique)</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">
         <string>Teacher</string>
        </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_5">
-       <attribute name="title">
-        <string>Admin</string>
-       </attribute>
+       <widget class="QWidget" name="layoutWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>100</y>
+          <width>331</width>
+          <height>391</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QLabel" name="label_18">
+             <property name="text">
+              <string>Teacher Full Name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_5"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>User Name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_6"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>Password</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_7"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <widget class="QLabel" name="label_21">
+             <property name="text">
+              <string>Date Of Birth</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDateEdit" name="dateEdit_2"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="text">
+            <string>Create Teacher</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QLabel" name="label_22">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>520</y>
+          <width>400</width>
+          <height>60</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>300</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_25">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>190</y>
+          <width>201</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>(User Name has to be unique)</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </widget>
@@ -193,11 +340,20 @@
           <height>671</height>
          </rect>
         </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="dragDropOverwriteMode">
+         <bool>false</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DragOnly</enum>
+        </property>
         <property name="rowCount">
-         <number>18</number>
+         <number>20</number>
         </property>
         <property name="columnCount">
-         <number>6</number>
+         <number>10</number>
         </property>
         <attribute name="horizontalHeaderVisible">
          <bool>false</bool>
@@ -223,6 +379,12 @@
         <row/>
         <row/>
         <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
         <column/>
         <column/>
         <column/>
@@ -234,7 +396,7 @@
         <property name="geometry">
          <rect>
           <x>830</x>
-          <y>50</y>
+          <y>20</y>
           <width>159</width>
           <height>50</height>
          </rect>
@@ -259,7 +421,7 @@
         <property name="geometry">
          <rect>
           <x>860</x>
-          <y>170</y>
+          <y>140</y>
           <width>93</width>
           <height>28</height>
          </rect>
@@ -272,7 +434,7 @@
         <property name="geometry">
          <rect>
           <x>810</x>
-          <y>230</y>
+          <y>280</y>
           <width>201</width>
           <height>401</height>
          </rect>
@@ -288,7 +450,7 @@
          <item>
           <widget class="QLabel" name="label_8">
            <property name="text">
-            <string>UserName:</string>
+            <string>User Name:</string>
            </property>
           </widget>
          </item>
@@ -319,10 +481,19 @@
         <property name="geometry">
          <rect>
           <x>840</x>
-          <y>110</y>
+          <y>80</y>
           <width>131</width>
           <height>41</height>
          </rect>
+        </property>
+        <property name="acceptDrops">
+         <bool>true</bool>
+        </property>
+        <property name="dragDropOverwriteMode">
+         <bool>false</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DropOnly</enum>
         </property>
         <property name="rowCount">
          <number>1</number>
@@ -338,6 +509,25 @@
         </attribute>
         <row/>
         <column/>
+       </widget>
+       <widget class="QLabel" name="label_26">
+        <property name="geometry">
+         <rect>
+          <x>820</x>
+          <y>190</y>
+          <width>181</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_7">
@@ -386,7 +576,7 @@
         <property name="geometry">
          <rect>
           <x>740</x>
-          <y>50</y>
+          <y>30</y>
           <width>159</width>
           <height>50</height>
          </rect>
@@ -411,7 +601,7 @@
         <property name="geometry">
          <rect>
           <x>750</x>
-          <y>120</y>
+          <y>90</y>
           <width>131</width>
           <height>41</height>
          </rect>
@@ -435,9 +625,9 @@
         <property name="geometry">
          <rect>
           <x>720</x>
-          <y>190</y>
+          <y>270</y>
           <width>201</width>
-          <height>401</height>
+          <height>361</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -451,14 +641,14 @@
          <item>
           <widget class="QLabel" name="label_14">
            <property name="text">
-            <string>UserName:</string>
+            <string>User Name:</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QLabel" name="label_15">
            <property name="text">
-            <string>Passwrod:</string>
+            <string>Password:</string>
            </property>
           </widget>
          </item>
@@ -470,6 +660,38 @@
           </widget>
          </item>
         </layout>
+       </widget>
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="geometry">
+         <rect>
+          <x>770</x>
+          <y>160</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>View Teacher</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_27">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>200</y>
+          <width>181</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_8">
@@ -597,7 +819,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_10">
        <attribute name="title">

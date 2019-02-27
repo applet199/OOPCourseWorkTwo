@@ -5,6 +5,7 @@ class Student():
     def __init__(self):
         pass
 
+
     @classmethod
     def setup_application(cls, connection, ui_mainwindow):
         cls.__db_connection = connection

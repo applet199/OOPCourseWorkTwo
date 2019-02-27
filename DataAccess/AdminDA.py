@@ -18,7 +18,7 @@ class AdminDA():
     def get_all_students_from_db(cls):
         query = '''
                 SELECT student_pk,
-                       student_name
+                       student_full_name
                 FROM student
                 '''
         cls.__cursor.execute(query)
@@ -29,7 +29,7 @@ class AdminDA():
     def get_all_teachers_from_db(cls):
         query = '''
                 SELECT teacher_pk,
-                       teacher_name
+                       teacher_full_name
                 FROM teacher
                 '''
         cls.__cursor.execute(query)
@@ -40,7 +40,7 @@ class AdminDA():
     def get_all_admins_from_db(cls):
         query = '''
                 SELECT admin_pk,
-                       admin_name
+                       admin_full_name
                 FROM admin
                 '''
         cls.__cursor.execute(query)
@@ -50,8 +50,8 @@ class AdminDA():
     @classmethod
     def get_all_school_classes_from_db(cls):
         query = '''
-                SELECT class_pk
-                FROM class
+                SELECT school_class_pk
+                FROM school_class
                 '''
         cls.__cursor.execute(query)
         school_classes = cls.__cursor.fetchall()
@@ -84,32 +84,77 @@ class AdminDA():
         return students_count
 
     @classmethod
-    def insert_new_user_to_db(cls, user_pk, user_name, password, user_type):
+    def get_total_number_of_teachers_from_db(cls):
+        total_number_of_teachers_query = '''
+                                         SELECT count(*)
+                                         FROM teacher
+                                         '''
+        cls.__cursor.execute(total_number_of_teachers_query)
+        teachers_count_tuple = cls.__cursor.fetchone()
+        teachers_count = 0
+        if (teachers_count_tuple != None):
+            teachers_count = teachers_count_tuple[0]
+        return teachers_count
+
+    @classmethod
+    def insert_new_user_to_db(cls, user_pk, login_name, password, user_type, user_full_name):
         insert_new_user_query = '''
                                 INSERT INTO user (
                                     user_pk,
-                                    user_name,
+                                    login_name,
                                     password,
-                                    user_type)
+                                    user_type,
+                                    user_full_name)
                                 VALUES
-                                    (?, ?, ?, ?)
+                                    (?, ?, ?, ?, ?)
                                 '''
-        cls.__cursor.execute(insert_new_user_query, (user_pk, user_name, password, user_type))
+        cls.__cursor.execute(insert_new_user_query, (user_pk, login_name, password, user_type, user_full_name))
         cls.__db_connection.commit()
 
     @classmethod
-    def insert_new_student_to_db(cls, student_pk, student_name, date_of_birth, school_class_id):
+    def insert_new_student_to_db(cls, student_pk, student_full_name, date_of_birth, school_class_id):
         insert_new_student_query = '''
                                    INSERT INTO student (
                                         student_pk,
-                                        student_name,
+                                        student_full_name,
                                         date_of_birth,
                                         class_fk)
                                    VALUES
                                         (?, ?, ?, ?)
                                    '''
-        cls.__cursor.execute(insert_new_student_query, (student_pk, student_name, date_of_birth, school_class_id))
+        cls.__cursor.execute(insert_new_student_query, (student_pk, student_full_name, date_of_birth, school_class_id))
         cls.__db_connection.commit()
+
+    @classmethod
+    def insert_new_teacher_to_db(cls, teacher_pk, teacher_full_name, date_of_birth):
+        insert_new_teacher_query = '''
+                                   INSERT INTO teacher (
+                                        teacher_pk,
+                                        teacher_full_name,
+                                        date_of_birth)
+                                   VALUES
+                                        (?, ?, ?)
+                                   '''
+        cls.__cursor.execute(insert_new_teacher_query, (teacher_pk, teacher_full_name, date_of_birth))
+        cls.__db_connection.commit()
+
+
+    @classmethod
+    def get_student_details_tuple_by_id(cls, student_pk):
+        select_student_details_query = '''
+                                        SELECT student_full_name,
+                                               login_name,
+                                               password,
+                                               date_of_birth,
+                                               school_class_fk
+                                        FROM user
+                                        INNER JOIN student
+                                        WHERE user.user_full_name = student.student_full_name
+                                        AND student_pk = ?
+                                        '''
+        cls.__cursor.execute(select_student_details_query, (student_pk, ))
+        student_details_tuple = cls.__cursor.fetchone()
+        return student_details_tuple
 
     def __str__(self):
         return ("This is AdminDA Object")

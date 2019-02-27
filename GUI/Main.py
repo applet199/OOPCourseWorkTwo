@@ -30,7 +30,7 @@ class Main():
 
     def connect_to_database(self):
         try:
-            connection = sqlite3.connect("Database.db")
+            connection = sqlite3.connect("../DataAccess/Database.db")
             return connection
         except Error as e:
             print(e)
@@ -45,24 +45,24 @@ class Main():
             self.display_invalid_login_error_message()
 
     def is_login_valid(self):
-        user_name = self.get_user_name_from_login_screen()
+        login_name = self.get_login_name_from_login_screen()
         password = self.get_password_from_login_screen()
-        stored_password = self.get_password_for_user_name_from_database(user_name)
+        stored_password = self.get_password_for_login_name_from_database(login_name)
         login_validity = self.are_passwords_matching(password, stored_password)
         return login_validity
 
-    def get_user_name_from_login_screen(self):
-        user_name = self.ui.lineEdit.text()
-        return user_name
+    def get_login_name_from_login_screen(self):
+        login_name = self.ui.lineEdit.text()
+        return login_name
 
     def get_password_from_login_screen(self):
         password = self.ui.lineEdit_2.text()
         return password
 
-    def get_password_for_user_name_from_database(self, user_name):
+    def get_password_for_login_name_from_database(self, login_name):
         cursor = self.__db_connection.cursor()
-        query = "SELECT password FROM user WHERE user_name=?"
-        cursor.execute(query, (user_name,))
+        query = "SELECT password FROM user WHERE login_name=?"
+        cursor.execute(query, (login_name,))
         stored_password_tuple = cursor.fetchone()
         if (stored_password_tuple == None):
             return None
@@ -73,10 +73,10 @@ class Main():
         return (password == stored_password)
 
     def get_valid_login_user_type_from_database(self):
-        user_name = self.get_user_name_from_login_screen()
+        login_name = self.get_login_name_from_login_screen()
         cursor = self.__db_connection.cursor()
-        query = "SELECT user_type FROM user WHERE user_name=?"
-        cursor.execute(query, (user_name,))
+        query = "SELECT user_type FROM user WHERE login_name=?"
+        cursor.execute(query, (login_name,))
         user_type_tuple = cursor.fetchone()
         if (user_type_tuple == None):
             return None
