@@ -26,11 +26,35 @@ class AdminDA():
         return students
 
     @classmethod
+    def get_all_active_students_from_db(cls):
+        query = '''
+                SELECT student_pk,
+                       student_full_name
+                FROM student
+                WHERE active = 1
+                '''
+        cls.__cursor.execute(query)
+        students = cls.__cursor.fetchall()
+        return students
+
+    @classmethod
     def get_all_teachers_from_db(cls):
         query = '''
                 SELECT teacher_pk,
                        teacher_full_name
                 FROM teacher
+                '''
+        cls.__cursor.execute(query)
+        teachers = cls.__cursor.fetchall()
+        return teachers
+
+    @classmethod
+    def get_all_active_teachers_from_db(cls):
+        query = '''
+                SELECT teacher_pk,
+                       teacher_full_name
+                FROM teacher
+                WHERE active = 1
                 '''
         cls.__cursor.execute(query)
         teachers = cls.__cursor.fetchall()
@@ -56,6 +80,17 @@ class AdminDA():
         cls.__cursor.execute(query)
         school_classes = cls.__cursor.fetchall()
         return school_classes
+
+    @classmethod
+    def get_all_active_school_classes_from_db(cls):
+        query = '''
+                SELECT school_class_pk
+                FROM school_class
+                WHERE active = 1
+                '''
+        cls.__cursor.execute(query)
+        active_school_classes = cls.__cursor.fetchall()
+        return active_school_classes
 
     @classmethod
     def get_total_number_of_users_from_db(cls):
@@ -112,17 +147,16 @@ class AdminDA():
         cls.__db_connection.commit()
 
     @classmethod
-    def insert_new_student_to_db(cls, student_pk, student_full_name, date_of_birth, school_class_id):
+    def insert_new_student_to_db(cls, student_pk, student_full_name, date_of_birth):
         insert_new_student_query = '''
                                    INSERT INTO student (
                                         student_pk,
                                         student_full_name,
-                                        date_of_birth,
-                                        class_fk)
+                                        date_of_birth)
                                    VALUES
-                                        (?, ?, ?, ?)
+                                        (?, ?, ?)
                                    '''
-        cls.__cursor.execute(insert_new_student_query, (student_pk, student_full_name, date_of_birth, school_class_id))
+        cls.__cursor.execute(insert_new_student_query, (student_pk, student_full_name, date_of_birth))
         cls.__db_connection.commit()
 
     @classmethod
@@ -204,6 +238,70 @@ class AdminDA():
         school_class_details_tuples_list = cls.__cursor.fetchall()
         return school_class_details_tuples_list
 
+    @classmethod
+    def is_student_id_to_de_activate_valid(cls, student_id):
+        total_number_of_students = cls.get_total_number_of_students_from_db()
+        return ((1 <= student_id) and (student_id <= total_number_of_students))
+
+    @classmethod
+    def is_teacher_id_to_de_activate_valid(cls, teacher_id):
+        total_number_of_teachers = cls.get_total_number_of_teachers_from_db()
+        return ((1 <= teacher_id) and (teacher_id <= total_number_of_teachers))
+
+    @classmethod
+    def de_activate_student_by_id_in_db(cls, student_pk):
+        update_student_active_flag_query = '''
+                                            UPDATE student
+                                            SET active = 0
+                                            WHERE student_pk = ?
+                                            '''
+        cls.__cursor.execute(update_student_active_flag_query, (student_pk, ))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def de_activate_teacher_by_id_in_db(cls, teacher_pk):
+        update_teacher_active_flag_query = '''
+                                            UPDATE teacher
+                                            SET active = 0
+                                            WHERE teacher_pk = ?
+                                            '''
+        cls.__cursor.execute(update_teacher_active_flag_query, (teacher_pk, ))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def get_all_de_activated_students_from_db(cls):
+        query = '''
+                SELECT student_pk,
+                       student_full_name
+                FROM student
+                WHERE active = 0
+                '''
+        cls.__cursor.execute(query)
+        students_tuples_list = cls.__cursor.fetchall()
+        return students_tuples_list
+
+    @classmethod
+    def get_all_de_activated_teachers_from_db(cls):
+        query = '''
+                SELECT teacher_pk,
+                       teacher_full_name
+                FROM teacher
+                WHERE active = 0
+                '''
+        cls.__cursor.execute(query)
+        teachers_tuples_list = cls.__cursor.fetchall()
+        return teachers_tuples_list
+
+    @classmethod
+    def get_all_de_activated_school_classes_from_db(cls):
+        query = '''
+                SELECT school_class_pk
+                FROM school_class
+                WHERE active = 0
+                '''
+        cls.__cursor.execute(query)
+        school_classes_tuples_list = cls.__cursor.fetchall()
+        return school_classes_tuples_list
 
     def __str__(self):
         return ("This is AdminDA Object")

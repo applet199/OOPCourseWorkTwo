@@ -12,11 +12,11 @@ class AdminGUI():
         cls.__ui_mainwindow = ui_mainwindow
 
     @classmethod
-    def display_saved_students_GUI(cls, students):
+    def display_active_students(cls, active_students):
         cls.__ui_mainwindow.tableWidget_2.clear()
         row = 0
         col = 0
-        for (student_id, student_name) in students:
+        for (student_id, student_name) in active_students:
             student_text = str(student_id) + " " + str(student_name)
             student_item = QTableWidgetItem(student_text)
             cls.__ui_mainwindow.tableWidget_2.setItem(row, col, student_item)
@@ -27,7 +27,8 @@ class AdminGUI():
                 col += 1
 
     @classmethod
-    def display_saved_teachers_GUI(cls, teachers):
+    def display_active_teachers(cls, teachers):
+        cls.__ui_mainwindow.tableWidget_4.clear()
         row = 0
         col = 0
         for (teacher_id, teacher_name) in teachers:
@@ -53,7 +54,8 @@ class AdminGUI():
 
 
     @classmethod
-    def display_saved_school_classes_GUI(cls, school_classes):
+    def display_active_school_classes(cls, school_classes):
+        cls.__ui_mainwindow.tableWidget.clear()
         row = 0
         col = 0
         for (school_class_id, ) in school_classes:
@@ -126,17 +128,6 @@ class AdminGUI():
         return date_of_birth
 
     @classmethod
-    def get_student_school_class_id_input(cls):
-        school_class_id_text = cls.__ui_mainwindow.lineEdit_4.text()
-        try:
-            school_class_id = int(school_class_id_text)
-            if (1001 <= school_class_id & school_class_id <= 13999):
-                return school_class_id
-            return 0
-        except:
-            return 0
-
-    @classmethod
     def get_student_id_to_view_details(cls):
         student_item = cls.__ui_mainwindow.tableWidget_3.item(0,0)
         if (student_item == None):
@@ -145,6 +136,22 @@ class AdminGUI():
         student_text_split = student_text.split(" ")
         student_id = int(student_text_split[0])
         return student_id
+
+    @classmethod
+    def get_student_id_to_de_activate(cls):
+        student_id_text = cls.__ui_mainwindow.lineEdit_8.text()
+        if (student_id_text == None):
+            return None
+        student_id = int(student_id_text)
+        return student_id
+
+    @classmethod
+    def get_teacher_id_to_de_activate(cls):
+        teacher_id_text = cls.__ui_mainwindow.lineEdit_39.text()
+        if (teacher_id_text == None):
+            return None
+        teacher_id = int(teacher_id_text)
+        return teacher_id
 
     @classmethod
     def get_teacher_id_to_view_details(cls):
@@ -247,10 +254,6 @@ class AdminGUI():
         cls.__ui_mainwindow.label_22.setText("Teacher Password Can Not Be Empty")
 
     @classmethod
-    def display_school_class_id_invalid_message(cls):
-        cls.__ui_mainwindow.label_17.setText("School Class Id Invalid")
-
-    @classmethod
     def display_view_student_box_can_not_empty_message(cls):
         cls.__ui_mainwindow.label_26.setText("View Student Box Is Empty")
 
@@ -265,6 +268,62 @@ class AdminGUI():
     @classmethod
     def display_view_school_class_box_can_not_empty_message(cls):
         cls.__ui_mainwindow.label_35.setText("View School Class Box Is Empty")
+
+    @classmethod
+    def display_de_activate_student_id_input_box_can_not_empty_message(cls):
+        cls.__ui_mainwindow.label_38.setText("De-Activate Student ID Box Is Empty")
+
+    @classmethod
+    def display_de_activate_teacher_id_input_box_can_not_empty_message(cls):
+        cls.__ui_mainwindow.label_5.setText("De-Activate Student ID Box Is Empty")
+
+    @classmethod
+    def display_de_activated_students(cls, students_tuples_list):
+        cls.__ui_mainwindow.tableWidget_10.clear()
+        row = 0
+        col = 0
+        for student_tuple in students_tuples_list:
+            student_text = (str(student_tuple[0]) + " " + student_tuple[1])
+            student_item = QTableWidgetItem(student_text)
+            cls.__ui_mainwindow.tableWidget_10.setItem(row, col, student_item)
+            if (col >= 2):
+                col = 0
+                row += 1
+            else:
+                col += 1
+        cls.__ui_mainwindow.label_38.clear()
+
+    @classmethod
+    def display_de_activated_teachers(cls, teachers_tuples_list):
+        cls.__ui_mainwindow.tableWidget_12.clear()
+        row = 0
+        col = 0
+        for teacher_tuple in teachers_tuples_list:
+            teacher_text = (str(teacher_tuple[0]) + " " + teacher_tuple[1])
+            teacher_item = QTableWidgetItem(teacher_text)
+            cls.__ui_mainwindow.tableWidget_12.setItem(row, col, teacher_item)
+            if (col >= 2):
+                col = 0
+                row += 1
+            else:
+                col += 1
+        cls.__ui_mainwindow.label_5.clear()
+
+    @classmethod
+    def display_de_activated_school_classes(cls, school_classes_tuples_list):
+        cls.__ui_mainwindow.tableWidget_13.clear()
+        row = 0
+        col = 0
+        for school_class_tuple in school_classes_tuples_list:
+            school_class_text = (str(school_class_tuple[0]) + " " + school_class_tuple[1])
+            school_class_item = QTableWidgetItem(school_class_text)
+            cls.__ui_mainwindow.tableWidget_13.setItem(row, col, school_class_item)
+            if (col >= 2):
+                col = 0
+                row += 1
+            else:
+                col += 1
+        cls.__ui_mainwindow.label_23.clear()
 
     def __str__(self):
         return ("This is AdminGUI Object")

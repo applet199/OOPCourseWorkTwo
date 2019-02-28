@@ -19,14 +19,23 @@ class Admin():
 
     @classmethod
     def display_saved_users(cls):
-        students = AdminDA.get_all_students_from_db()
-        AdminGUI.display_saved_students_GUI(students)
-        teachers = AdminDA.get_all_teachers_from_db()
-        AdminGUI.display_saved_teachers_GUI(teachers)
+        active_students = AdminDA.get_all_active_students_from_db()
+        AdminGUI.display_active_students(active_students)
+        de_activated_students = AdminDA.get_all_de_activated_students_from_db()
+        AdminGUI.display_de_activated_students(de_activated_students)
+
+        active_teachers = AdminDA.get_all_active_teachers_from_db()
+        AdminGUI.display_active_teachers(active_teachers)
+        de_activated_teachers = AdminDA.get_all_de_activated_teachers_from_db()
+        AdminGUI.display_de_activated_teachers(de_activated_teachers)
+
         admins = AdminDA.get_all_admins_from_db()
         AdminGUI.display_saved_admins_GUI(admins)
-        school_classes = AdminDA.get_all_school_classes_from_db()
-        AdminGUI.display_saved_school_classes_GUI(school_classes)
+
+        active_school_classes = AdminDA.get_all_active_school_classes_from_db()
+        AdminGUI.display_active_school_classes(active_school_classes)
+        de_activated_school_classes = AdminDA.get_all_de_activated_school_classes_from_db()
+        AdminGUI.display_de_activated_school_classes(de_activated_school_classes)
 
     @classmethod
     def actions(cls):
@@ -37,6 +46,9 @@ class Admin():
         cls.view_admin_details_button_pressed()
         cls.view_school_class_details_button_pressed()
         cls.de_activate_student_by_id_button_pressed()
+        cls.de_activate_teacher_by_id_button_pressed()
+        cls.re_activate_teacher_by_id_button_pressed()
+
 
 
 
@@ -69,6 +81,14 @@ class Admin():
         cls.__ui_mainwindow.pushButton_8.clicked.connect(cls.de_activate_student_by_id)
 
     @classmethod
+    def de_activate_teacher_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_39.clicked.connect(cls.de_activate_teacher_by_id)
+
+    @classmethod
+    def re_activate_teacher_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_32.clicked.connect(cls.re_activate_teacher_by_id)
+
+    @classmethod
     def create_new_student(cls):
         full_name = AdminGUI.get_student_full_name_input()
         if (full_name == ""):
@@ -83,10 +103,7 @@ class Admin():
             AdminGUI.display_student_password_can_not_empty_message()
             return
         date_of_birth = AdminGUI.get_student_date_of_birth_input()
-        school_class_id = AdminGUI.get_student_school_class_id_input()
-        if (school_class_id == 0):
-            AdminGUI.display_school_class_id_invalid_message()
-            return
+
         users_count = AdminDA.get_total_number_of_users_from_db()
         user_pk = users_count + 1
         try:
@@ -97,12 +114,12 @@ class Admin():
         students_count = AdminDA.get_total_number_of_students_from_db()
         student_pk = students_count + 1
         try:
-            AdminDA.insert_new_student_to_db(student_pk, full_name, date_of_birth, school_class_id)
+            AdminDA.insert_new_student_to_db(student_pk, full_name, date_of_birth)
         except:
             AdminGUI.display_create_student_failed_message_GUI()
             return
-        students = AdminDA.get_all_students_from_db()
-        AdminGUI.display_saved_students_GUI(students)
+        active_students = AdminDA.get_all_active_students_from_db()
+        AdminGUI.display_active_students(active_students)
         AdminGUI.display_create_student_success_message_GUI()
 
     @classmethod
@@ -183,8 +200,36 @@ class Admin():
             AdminGUI.display_de_activate_student_id_input_box_can_not_empty_message()
             return
         AdminDA.de_activate_student_by_id_in_db(student_id)
-        de_activated_students = AdminDA.get_all_de_activated_students_from_db()
-        AdminGUI.display_de_activated_students(de_activated_students)
+        de_activated_students_tuples_list = AdminDA.get_all_de_activated_students_from_db()
+        AdminGUI.display_de_activated_students_from_tuples_list(de_activated_students_tuples_list)
+        active_students = AdminDA.get_all_active_students_from_db()
+        AdminGUI.display_active_students(active_students)
+
+    @classmethod
+    def de_activate_teacher_by_id(cls):
+        teacher_id = AdminGUI.get_teacher_id_to_de_activate()
+        teacher_id_valid = AdminDA.is_teacher_id_to_de_activate_valid(teacher_id)
+        if (not teacher_id_valid):
+            AdminGUI.display_de_activate_teacher_id_input_box_can_not_empty_message()
+            return
+        AdminDA.de_activate_teacher_by_id_in_db(teacher_id)
+        de_activated_teachers_tuples_list = AdminDA.get_all_de_activated_teachers_from_db()
+        AdminGUI.display_de_activated_teachers(de_activated_teachers_tuples_list)
+        active_teachers = AdminDA.get_all_active_teachers_from_db()
+        AdminGUI.display_active_teachers(active_teachers)
+
+    @classmethod
+    def re_activate_teacher_by_id(cls):
+        teacher_id = AdminGUI.get_teacher_id_to_re_activate()
+        teacher_id_valid = AdminDA.is_teacher_id_to_re_activate_valid(teacher_id)
+        if (not teacher_id_valid):
+            AdminGUI.display_de_activate_teacher_id_input_box_can_not_empty_message()
+            return
+        AdminDA.de_activate_teacher_by_id_in_db(teacher_id)
+        de_activated_teachers_tuples_list = AdminDA.get_all_de_activated_teachers_from_db()
+        AdminGUI.display_de_activated_teachers(de_activated_teachers_tuples_list)
+        active_teachers = AdminDA.get_all_active_teachers_from_db()
+        AdminGUI.display_active_teachers(active_teachers)
 
     def __str__(self):
         return ("This is Admin Object")
