@@ -45,7 +45,9 @@ class Admin():
         cls.view_teacher_details_button_pressed()
         cls.view_admin_details_button_pressed()
         cls.view_school_class_details_button_pressed()
+        cls.create_unique_school_class_id_button_pressed()
         cls.de_activate_student_by_id_button_pressed()
+        cls.re_activate_student_by_id_button_pressed()
         cls.de_activate_teacher_by_id_button_pressed()
         cls.re_activate_teacher_by_id_button_pressed()
 
@@ -81,12 +83,21 @@ class Admin():
         cls.__ui_mainwindow.pushButton_8.clicked.connect(cls.de_activate_student_by_id)
 
     @classmethod
+    def re_activate_student_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_9.clicked.connect(cls.re_activate_student_by_id)
+
+    @classmethod
     def de_activate_teacher_by_id_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_39.clicked.connect(cls.de_activate_teacher_by_id)
 
     @classmethod
     def re_activate_teacher_by_id_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_32.clicked.connect(cls.re_activate_teacher_by_id)
+
+    @classmethod
+    def create_unique_school_class_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_38.clicked.connect(cls.create_unique_school_class_id)
+
 
     @classmethod
     def create_new_student(cls):
@@ -121,6 +132,7 @@ class Admin():
         active_students = AdminDA.get_all_active_students_from_db()
         AdminGUI.display_active_students(active_students)
         AdminGUI.display_create_student_success_message_GUI()
+        AdminGUI.refresh_create_new_student_page()
 
     @classmethod
     def create_new_teacher(cls):
@@ -154,6 +166,7 @@ class Admin():
         teachers = AdminDA.get_all_teachers_from_db()
         AdminGUI.display_saved_teachers_GUI(teachers)
         AdminGUI.display_create_teacher_success_message_GUI()
+        AdminGUI.refresh_create_new_teacher_page()
 
 
     @classmethod
@@ -164,6 +177,7 @@ class Admin():
             return
         student_details_tuple = AdminDA.get_student_details_tuple_by_id(student_id)
         AdminGUI.display_student_details_from_tuple(student_details_tuple)
+        AdminGUI.refresh_view_student_details_box()
 
     @classmethod
     def view_teacher_details(cls):
@@ -173,6 +187,7 @@ class Admin():
             return
         teacher_details_tuple = AdminDA.get_teacher_details_tuple_by_id(teacher_id)
         AdminGUI.display_teacher_details_from_tuple(teacher_details_tuple)
+        AdminGUI.refresh_view_teacher_details_box()
 
     @classmethod
     def view_admin_details(cls):
@@ -182,6 +197,8 @@ class Admin():
             return
         admin_details_tuple = AdminDA.get_admin_details_tuple_by_id(admin_id)
         AdminGUI.display_admin_details_from_tuple(admin_details_tuple)
+        AdminGUI.refresh_view_admin_details_box()
+
 
     @classmethod
     def view_school_class_details(cls):
@@ -189,47 +206,119 @@ class Admin():
         if (school_class_id == None):
             AdminGUI.display_view_school_class_box_can_not_empty_message()
             return
-        school_class_details_tuples_list = AdminDA.get_school_class_details_tuples_list_by_id(school_class_id)
-        AdminGUI.display_school_class_details_from_tuples_list(school_class_details_tuples_list)
+        school_class_details = AdminDA.get_school_class_details_tuples_list_by_id(school_class_id)
+        AdminGUI.display_school_class_details(school_class_details)
+        AdminGUI.refresh_view_or_modify_school_class_drop_box()
 
     @classmethod
     def de_activate_student_by_id(cls):
         student_id = AdminGUI.get_student_id_to_de_activate()
         student_id_valid = AdminDA.is_student_id_to_de_activate_valid(student_id)
         if (not student_id_valid):
-            AdminGUI.display_de_activate_student_id_input_box_can_not_empty_message()
+            AdminGUI.display_de_activate_student_id_input_invalid_message()
             return
         AdminDA.de_activate_student_by_id_in_db(student_id)
-        de_activated_students_tuples_list = AdminDA.get_all_de_activated_students_from_db()
-        AdminGUI.display_de_activated_students_from_tuples_list(de_activated_students_tuples_list)
+        de_activated_students= AdminDA.get_all_de_activated_students_from_db()
+        AdminGUI.display_de_activated_students(de_activated_students)
         active_students = AdminDA.get_all_active_students_from_db()
         AdminGUI.display_active_students(active_students)
+        AdminGUI.refresh_de_activate_student_id_input_box()
+
+    @classmethod
+    def re_activate_student_by_id(cls):
+        student_id = AdminGUI.get_student_id_to_re_activate()
+        student_id_valid = AdminDA.is_student_id_to_re_activate_valid(student_id)
+        if (not student_id_valid):
+            AdminGUI.display_re_activate_student_id_input_invalid_message()
+            return
+        AdminDA.re_activate_student_by_id_in_db(student_id)
+        active_students = AdminDA.get_all_active_students_from_db()
+        AdminGUI.display_active_students(active_students)
+        de_activated_students = AdminDA.get_all_de_activated_students_from_db()
+        AdminGUI.display_de_activated_students(de_activated_students)
+        AdminGUI.refresh_re_activate_student_id_input_box()
 
     @classmethod
     def de_activate_teacher_by_id(cls):
         teacher_id = AdminGUI.get_teacher_id_to_de_activate()
         teacher_id_valid = AdminDA.is_teacher_id_to_de_activate_valid(teacher_id)
         if (not teacher_id_valid):
-            AdminGUI.display_de_activate_teacher_id_input_box_can_not_empty_message()
+            AdminGUI.display_de_activate_teacher_id_input_invalid_message()
             return
         AdminDA.de_activate_teacher_by_id_in_db(teacher_id)
         de_activated_teachers_tuples_list = AdminDA.get_all_de_activated_teachers_from_db()
         AdminGUI.display_de_activated_teachers(de_activated_teachers_tuples_list)
         active_teachers = AdminDA.get_all_active_teachers_from_db()
         AdminGUI.display_active_teachers(active_teachers)
+        AdminGUI.refresh_de_activate_teacher_id_input_box()
 
     @classmethod
     def re_activate_teacher_by_id(cls):
         teacher_id = AdminGUI.get_teacher_id_to_re_activate()
         teacher_id_valid = AdminDA.is_teacher_id_to_re_activate_valid(teacher_id)
         if (not teacher_id_valid):
-            AdminGUI.display_de_activate_teacher_id_input_box_can_not_empty_message()
+            AdminGUI.display_re_activate_teacher_id_input_invalid_message()
             return
-        AdminDA.de_activate_teacher_by_id_in_db(teacher_id)
-        de_activated_teachers_tuples_list = AdminDA.get_all_de_activated_teachers_from_db()
-        AdminGUI.display_de_activated_teachers(de_activated_teachers_tuples_list)
+        AdminDA.re_activate_teacher_by_id_in_db(teacher_id)
         active_teachers = AdminDA.get_all_active_teachers_from_db()
         AdminGUI.display_active_teachers(active_teachers)
+        de_activated_teachers = AdminDA.get_all_de_activated_teachers_from_db()
+        AdminGUI.display_de_activated_teachers(de_activated_teachers)
+        AdminGUI.refresh_re_activate_teacher_id_input_box()
+
+
+    @classmethod
+    def create_unique_school_class_id(cls):
+        year_level_text = AdminGUI.get_year_level_to_create_school_class_id()
+        year_level_valid = cls.is_year_level_input_valid(year_level_text)
+        if (not year_level_valid):
+            AdminGUI.display_year_level_input_not_valid_message()
+            return
+        class_id_text = AdminGUI.get_class_id_to_create_school_class_id()
+        class_id_valid = cls.is_class_id_input_valid(class_id_text)
+        if (not class_id_valid):
+            AdminGUI.display_class_id_input_not_valid_message()
+            return
+        formatted_class_id_text = cls.format_class_id_text(class_id_text)
+        unique_school_class_id_text = year_level_text + formatted_class_id_text
+        unique_school_class_id = int(unique_school_class_id_text)
+        AdminDA.insert_new_school_class_to_db(unique_school_class_id, int(year_level_text))
+        active_school_classes = AdminDA.get_all_active_school_classes_from_db()
+        AdminGUI.display_active_school_classes(active_school_classes)
+        de_activated_school_classes = AdminDA.get_all_de_activated_school_classes_from_db()
+        AdminGUI.display_de_activated_school_classes(de_activated_school_classes)
+        AdminGUI.display_create_new_school_class_success_message()
+        AdminGUI.refresh_create_new_school_class_page()
+
+    @classmethod
+    def is_year_level_input_valid(cls, year_level_text):
+        if (year_level_text == ""):
+            return False
+        try :
+            year_level = int(year_level_text)
+            return (1 <= year_level and year_level <= 13)
+        except:
+            return False
+
+    @classmethod
+    def is_class_id_input_valid(cls, class_id_text):
+        if (class_id_text == ""):
+            return False
+        try :
+            class_id = int(class_id_text)
+            return (1 <= class_id and class_id <= 999)
+        except:
+            return False
+
+    @classmethod
+    def format_class_id_text(cls, class_id_text):
+        class_id = int(class_id_text)
+        if (1 <= class_id and class_id <= 9):
+            return ("00" + class_id_text)
+        elif (10 <= class_id and class_id <= 99):
+            return ("0" + class_id_text)
+        return class_id_text
+
 
     def __str__(self):
         return ("This is Admin Object")

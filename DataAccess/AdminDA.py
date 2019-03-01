@@ -172,6 +172,18 @@ class AdminDA():
         cls.__cursor.execute(insert_new_teacher_query, (teacher_pk, teacher_full_name, date_of_birth))
         cls.__db_connection.commit()
 
+    @classmethod
+    def insert_new_school_class_to_db(cls, school_class_pk, year_level):
+        query = '''
+                INSERT INTO school_class (
+                    school_class_pk,
+                    year_level)
+                VALUES
+                    (?, ?)
+                '''
+        cls.__cursor.execute(query, (school_class_pk, year_level))
+        cls.__db_connection.commit()
+
 
     @classmethod
     def get_student_details_tuple_by_id(cls, student_pk):
@@ -239,14 +251,52 @@ class AdminDA():
         return school_class_details_tuples_list
 
     @classmethod
-    def is_student_id_to_de_activate_valid(cls, student_id):
-        total_number_of_students = cls.get_total_number_of_students_from_db()
-        return ((1 <= student_id) and (student_id <= total_number_of_students))
+    def is_student_id_to_de_activate_valid(cls, student_pk):
+        query = '''
+                SELECT student_pk
+                FROM student
+                WHERE student_pk = ?
+                AND active = 1
+                '''
+        cls.__cursor.execute(query, (student_pk, ))
+        student_tuple = cls.__cursor.fetchone()
+        return student_tuple is not None
 
     @classmethod
-    def is_teacher_id_to_de_activate_valid(cls, teacher_id):
-        total_number_of_teachers = cls.get_total_number_of_teachers_from_db()
-        return ((1 <= teacher_id) and (teacher_id <= total_number_of_teachers))
+    def is_student_id_to_re_activate_valid(cls, student_pk):
+        query = '''
+                SELECT student_pk
+                FROM student
+                WHERE student_pk = ?
+                AND active = 0
+                '''
+        cls.__cursor.execute(query, (student_pk, ))
+        student_tuple = cls.__cursor.fetchone()
+        return student_tuple is not None
+
+    @classmethod
+    def is_teacher_id_to_de_activate_valid(cls, teacher_pk):
+        query = '''
+                SELECT teacher_pk
+                FROM teacher
+                WHERE teacher_pk = ?
+                AND active = 1
+                '''
+        cls.__cursor.execute(query, (teacher_pk, ))
+        teacher_tuple = cls.__cursor.fetchone()
+        return teacher_tuple is not None
+
+    @classmethod
+    def is_teacher_id_to_re_activate_valid(cls, teacher_pk):
+        query = '''
+                SELECT teacher_pk
+                FROM teacher
+                WHERE teacher_pk = ?
+                AND active = 0
+                '''
+        cls.__cursor.execute(query, (teacher_pk, ))
+        teacher_tuple = cls.__cursor.fetchone()
+        return teacher_tuple is not None
 
     @classmethod
     def de_activate_student_by_id_in_db(cls, student_pk):
@@ -259,10 +309,30 @@ class AdminDA():
         cls.__db_connection.commit()
 
     @classmethod
+    def re_activate_student_by_id_in_db(cls, student_pk):
+        update_student_active_flag_query = '''
+                                            UPDATE student
+                                            SET active = 1
+                                            WHERE student_pk = ?
+                                            '''
+        cls.__cursor.execute(update_student_active_flag_query, (student_pk, ))
+        cls.__db_connection.commit()
+
+    @classmethod
     def de_activate_teacher_by_id_in_db(cls, teacher_pk):
         update_teacher_active_flag_query = '''
                                             UPDATE teacher
                                             SET active = 0
+                                            WHERE teacher_pk = ?
+                                            '''
+        cls.__cursor.execute(update_teacher_active_flag_query, (teacher_pk, ))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def re_activate_teacher_by_id_in_db(cls, teacher_pk):
+        update_teacher_active_flag_query = '''
+                                            UPDATE teacher
+                                            SET active = 1
                                             WHERE teacher_pk = ?
                                             '''
         cls.__cursor.execute(update_teacher_active_flag_query, (teacher_pk, ))

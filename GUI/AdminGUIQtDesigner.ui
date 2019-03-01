@@ -288,7 +288,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
@@ -860,70 +860,82 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
         <string>Create School Class</string>
        </attribute>
-       <widget class="QLabel" name="label_68">
+       <widget class="QWidget" name="">
         <property name="geometry">
          <rect>
-          <x>160</x>
-          <y>150</y>
-          <width>271</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>What is the School Class Year Level? </string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_38">
-        <property name="geometry">
-         <rect>
-          <x>440</x>
+          <x>217</x>
           <y>170</y>
-          <width>113</width>
-          <height>22</height>
+          <width>601</width>
+          <height>281</height>
          </rect>
         </property>
-       </widget>
-       <widget class="QLabel" name="label_69">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>270</y>
-          <width>241</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>What is the School CLass ID?</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_42">
-        <property name="geometry">
-         <rect>
-          <x>440</x>
-          <y>290</y>
-          <width>113</width>
-          <height>22</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_38">
-        <property name="geometry">
-         <rect>
-          <x>310</x>
-          <y>410</y>
-          <width>241</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Create Unique School Class ID</string>
-        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_8">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_68">
+             <property name="text">
+              <string>What is the School Class Year Level? </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_38"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_63">
+             <property name="text">
+              <string>(This is a number between 1 and 13)</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_22">
+           <item>
+            <widget class="QLabel" name="label_69">
+             <property name="text">
+              <string>What is the CLass ID?</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_42"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_64">
+             <property name="text">
+              <string>(This is a number between 1 and 999)</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_38">
+           <property name="text">
+            <string>Create Unique School Class</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_67">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_15">
@@ -933,8 +945,8 @@
        <widget class="QTableWidget" name="tableWidget">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>110</y>
+          <x>80</x>
+          <y>90</y>
           <width>511</width>
           <height>491</height>
          </rect>
@@ -946,10 +958,10 @@
          <enum>QAbstractItemView::DragOnly</enum>
         </property>
         <property name="rowCount">
-         <number>13</number>
+         <number>20</number>
         </property>
         <property name="columnCount">
-         <number>4</number>
+         <number>5</number>
         </property>
         <attribute name="horizontalHeaderVisible">
          <bool>false</bool>
@@ -970,6 +982,14 @@
         <row/>
         <row/>
         <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
         <column/>
         <column/>
         <column/>
@@ -1033,10 +1053,10 @@
        <widget class="QPushButton" name="pushButton_7">
         <property name="geometry">
          <rect>
-          <x>710</x>
-          <y>260</y>
-          <width>200</width>
-          <height>50</height>
+          <x>660</x>
+          <y>270</y>
+          <width>301</width>
+          <height>61</height>
          </rect>
         </property>
         <property name="minimumSize">
@@ -1046,7 +1066,7 @@
          </size>
         </property>
         <property name="text">
-         <string>View Or Modify School Class</string>
+         <string>View Or Modify School Class On Next Page</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_35">
@@ -1116,13 +1136,13 @@
           <x>80</x>
           <y>30</y>
           <width>251</width>
-          <height>100</height>
+          <height>50</height>
          </rect>
         </property>
         <property name="minimumSize">
          <size>
           <width>200</width>
-          <height>100</height>
+          <height>50</height>
          </size>
         </property>
         <property name="text">
@@ -1206,6 +1226,31 @@
           <widget class="QLineEdit" name="lineEdit_41"/>
          </item>
         </layout>
+       </widget>
+       <widget class="QLabel" name="label_70">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>90</y>
+          <width>251</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Number Of Students:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_12">
@@ -1368,17 +1413,17 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_10">
        <attribute name="title">
-        <string>Modify Student</string>
+        <string>Student Activation</string>
        </attribute>
        <widget class="QTableWidget" name="tableWidget_10">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>170</y>
+          <x>310</x>
+          <y>160</y>
           <width>381</width>
           <height>381</height>
          </rect>
@@ -1412,8 +1457,8 @@
        <widget class="QLabel" name="label_39">
         <property name="geometry">
          <rect>
-          <x>120</x>
-          <y>120</y>
+          <x>430</x>
+          <y>110</y>
           <width>131</width>
           <height>41</height>
          </rect>
@@ -1425,8 +1470,8 @@
        <widget class="QWidget" name="layoutWidget_5">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>580</y>
+          <x>330</x>
+          <y>550</y>
           <width>346</width>
           <height>32</height>
          </rect>
@@ -1446,15 +1491,19 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_9"/>
+          <widget class="QLineEdit" name="lineEdit_9">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
        <widget class="QLabel" name="label_38">
         <property name="geometry">
          <rect>
-          <x>80</x>
-          <y>80</y>
+          <x>390</x>
+          <y>60</y>
           <width>231</width>
           <height>31</height>
          </rect>
@@ -1469,8 +1518,8 @@
        <widget class="QLabel" name="label_40">
         <property name="geometry">
          <rect>
-          <x>90</x>
-          <y>630</y>
+          <x>390</x>
+          <y>600</y>
           <width>221</width>
           <height>31</height>
          </rect>
@@ -1485,8 +1534,8 @@
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>30</y>
+          <x>330</x>
+          <y>20</y>
           <width>346</width>
           <height>32</height>
          </rect>
@@ -1506,15 +1555,24 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_8"/>
+          <widget class="QLineEdit" name="lineEdit_8">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget">
+      </widget>
+      <widget class="QWidget" name="tab_17">
+       <attribute name="title">
+        <string>Modify Student</string>
+       </attribute>
+       <widget class="QWidget" name="layoutWidget_6">
         <property name="geometry">
          <rect>
-          <x>550</x>
-          <y>80</y>
+          <x>320</x>
+          <y>40</y>
           <width>391</width>
           <height>511</height>
          </rect>
@@ -1531,7 +1589,7 @@
               </size>
              </property>
              <property name="text">
-              <string>Modify Student Details By ID</string>
+              <string>Load Student Details By ID</string>
              </property>
             </widget>
            </item>
@@ -1550,15 +1608,9 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_13">
            <item>
-            <widget class="QPushButton" name="pushButton_11">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>30</height>
-              </size>
-             </property>
+            <widget class="QLabel" name="label_48">
              <property name="text">
-              <string>Modify Student Full Name</string>
+              <string>Student Full Name</string>
              </property>
             </widget>
            </item>
@@ -1577,15 +1629,9 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_14">
            <item>
-            <widget class="QPushButton" name="pushButton_12">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>30</height>
-              </size>
-             </property>
+            <widget class="QLabel" name="label_49">
              <property name="text">
-              <string>Modify Student User Name</string>
+              <string>student User Name</string>
              </property>
             </widget>
            </item>
@@ -1604,15 +1650,9 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_17">
            <item>
-            <widget class="QPushButton" name="pushButton_15">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>30</height>
-              </size>
-             </property>
+            <widget class="QLabel" name="label_50">
              <property name="text">
-              <string>Modify Student Password</string>
+              <string>Student Password</string>
              </property>
             </widget>
            </item>
@@ -1631,20 +1671,14 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_15">
            <item>
-            <widget class="QPushButton" name="pushButton_13">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>30</height>
-              </size>
-             </property>
+            <widget class="QLabel" name="label_51">
              <property name="text">
-              <string>Modify Student Date Of Birth</string>
+              <string>Student Date Of Birth</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_13"/>
+            <widget class="QLineEdit" name="lineEdit_4"/>
            </item>
           </layout>
          </item>
@@ -1657,16 +1691,29 @@
          </item>
         </layout>
        </widget>
+       <widget class="QPushButton" name="pushButton_11">
+        <property name="geometry">
+         <rect>
+          <x>450</x>
+          <y>570</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Commit Modification</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_11">
        <attribute name="title">
-        <string>Modify Teacher</string>
+        <string>Teacher Activation</string>
        </attribute>
        <widget class="QLabel" name="label_56">
         <property name="geometry">
          <rect>
-          <x>160</x>
-          <y>130</y>
+          <x>430</x>
+          <y>110</y>
           <width>131</width>
           <height>41</height>
          </rect>
@@ -1678,8 +1725,8 @@
        <widget class="QWidget" name="layoutWidget_15">
         <property name="geometry">
          <rect>
-          <x>70</x>
-          <y>590</y>
+          <x>320</x>
+          <y>550</y>
           <width>346</width>
           <height>32</height>
          </rect>
@@ -1699,15 +1746,19 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_32"/>
+          <widget class="QLineEdit" name="lineEdit_32">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
        <widget class="QTableWidget" name="tableWidget_12">
         <property name="geometry">
          <rect>
-          <x>50</x>
-          <y>180</y>
+          <x>300</x>
+          <y>160</y>
           <width>381</width>
           <height>381</height>
          </rect>
@@ -1738,158 +1789,11 @@
         <column/>
         <column/>
        </widget>
-       <widget class="QWidget" name="layoutWidget_16">
-        <property name="geometry">
-         <rect>
-          <x>590</x>
-          <y>90</y>
-          <width>391</width>
-          <height>511</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_9">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_35">
-           <item>
-            <widget class="QPushButton" name="pushButton_33">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Modify Teacher Details By ID</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_33"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_63">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_36">
-           <item>
-            <widget class="QPushButton" name="pushButton_34">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Modify Teacher Full Name</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_34"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_64">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_37">
-           <item>
-            <widget class="QPushButton" name="pushButton_35">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Modify Teacher User Name</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_35"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_65">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_38">
-           <item>
-            <widget class="QPushButton" name="pushButton_36">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Modify Teacher Password</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_36"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_66">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_39">
-           <item>
-            <widget class="QPushButton" name="pushButton_37">
-             <property name="minimumSize">
-              <size>
-               <width>200</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Modify Teacher Date Of Birth</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_37"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_67">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
        <widget class="QWidget" name="layoutWidget_17">
         <property name="geometry">
          <rect>
-          <x>70</x>
-          <y>40</y>
+          <x>320</x>
+          <y>20</y>
           <width>346</width>
           <height>32</height>
          </rect>
@@ -1920,8 +1824,8 @@
        <widget class="QLabel" name="label_5">
         <property name="geometry">
          <rect>
-          <x>130</x>
-          <y>90</y>
+          <x>390</x>
+          <y>60</y>
           <width>211</width>
           <height>41</height>
          </rect>
@@ -1931,6 +1835,169 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_47">
+        <property name="geometry">
+         <rect>
+          <x>360</x>
+          <y>600</y>
+          <width>250</width>
+          <height>50</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>250</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_18">
+       <attribute name="title">
+        <string>Modify Teacher</string>
+       </attribute>
+       <widget class="QWidget" name="layoutWidget_7">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>30</y>
+          <width>391</width>
+          <height>511</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_16">
+           <item>
+            <widget class="QPushButton" name="pushButton_12">
+             <property name="minimumSize">
+              <size>
+               <width>200</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Load Teacher Details By ID</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_13"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_52">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_18">
+           <item>
+            <widget class="QLabel" name="label_53">
+             <property name="text">
+              <string>Teacher Full Name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_14"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_54">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_19">
+           <item>
+            <widget class="QLabel" name="label_55">
+             <property name="text">
+              <string>Teacher User Name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_16"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_58">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_20">
+           <item>
+            <widget class="QLabel" name="label_59">
+             <property name="text">
+              <string>Teacher Password</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_17"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_60">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_21">
+           <item>
+            <widget class="QLabel" name="label_61">
+             <property name="text">
+              <string>Teacher Date Of Birth</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_18"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_62">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QPushButton" name="pushButton_13">
+        <property name="geometry">
+         <rect>
+          <x>430</x>
+          <y>560</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Commit Modification</string>
         </property>
        </widget>
       </widget>
