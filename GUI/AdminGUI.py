@@ -217,6 +217,35 @@ class AdminGUI():
         return class_id_text
 
     @classmethod
+    def get_student_id_to_remove_from_school_class(cls):
+        student_id_text = cls.__ui_mainwindow.lineEdit_40.text()
+        try:
+            student_id = int(student_id_text)
+            return student_id
+        except:
+            return None
+
+    @classmethod
+    def get_student_id_to_add_to_school_class(cls):
+        student_id_text = cls.__ui_mainwindow.lineEdit_41.text()
+        try:
+            student_id = int(student_id_text)
+            return student_id
+        except:
+            return None
+
+    @classmethod
+    def get_school_class_id_to_add_or_remove_student(cls):
+        school_class_id_label_text = cls.__ui_mainwindow.label_36.text()
+        school_class_id_label_text_split = school_class_id_label_text.split(" ")
+        school_class_id_text = school_class_id_label_text_split.pop()
+        try:
+            school_class_id = int(school_class_id_text)
+            return school_class_id
+        except:
+            return None
+
+    @classmethod
     def display_student_details_from_tuple(cls, student_details_tuple):
         cls.__ui_mainwindow.label_7.setText("Full Name: " + student_details_tuple[0])
         cls.__ui_mainwindow.label_8.setText("User Name: " + student_details_tuple[1])
@@ -330,6 +359,15 @@ class AdminGUI():
         cls.__ui_mainwindow.label_67.setText("Create New School Class Success")
 
     @classmethod
+    def display_student_id_to_remove_invalid_message(cls):
+        cls.__ui_mainwindow.label_65.setText("Invalid Student ID To Remove")
+
+    @classmethod
+    def display_student_id_to_add_invalid_message(cls):
+        cls.__ui_mainwindow.label_66.setText("Invalid Student ID To Add")
+
+
+    @classmethod
     def display_de_activated_students(cls, students_tuples_list):
         cls.__ui_mainwindow.tableWidget_10.clear()
         row = 0
@@ -378,6 +416,25 @@ class AdminGUI():
         cls.__ui_mainwindow.label_23.clear()
 
     @classmethod
+    def display_students_in_school_class(cls, students_tuples_list):
+        number_of_students = len(students_tuples_list)
+        cls.__ui_mainwindow.label_70.setText("Number Of Students: " + str(number_of_students))
+        cls.__ui_mainwindow.tableWidget_9.clear()
+        row = 0
+        col = 0
+        for student_tuple in students_tuples_list:
+            student_text = (str(student_tuple[0]) + " " + student_tuple[1])
+            student_item = QTableWidgetItem(student_text)
+            cls.__ui_mainwindow.tableWidget_9.setItem(row, col, student_item)
+            if (col >= 1):
+                col = 0
+                row += 1
+            else:
+                col += 1
+
+
+
+    @classmethod
     def refresh_create_new_student_page(cls):
         cls.__ui_mainwindow.lineEdit.clear()
         cls.__ui_mainwindow.lineEdit_2.clear()
@@ -411,27 +468,14 @@ class AdminGUI():
         cls.__ui_mainwindow.tableWidget_7.clear()
 
     @classmethod
-    def refresh_de_activate_student_id_input_box(cls):
+    def refresh_student_activation_page(cls):
         cls.__ui_mainwindow.lineEdit_8.clear()
         cls.__ui_mainwindow.lineEdit_9.clear()
         cls.__ui_mainwindow.label_38.clear()
         cls.__ui_mainwindow.label_40.clear()
 
     @classmethod
-    def refresh_re_activate_student_id_input_box(cls):
-        cls.__ui_mainwindow.lineEdit_8.clear()
-        cls.__ui_mainwindow.lineEdit_9.clear()
-        cls.__ui_mainwindow.label_38.clear()
-        cls.__ui_mainwindow.label_40.clear()
-
-    @classmethod
-    def refresh_de_activate_teacher_id_input_box(cls):
-        cls.__ui_mainwindow.lineEdit_39.clear()
-        cls.__ui_mainwindow.lineEdit_32.clear()
-        cls.__ui_mainwindow.label_47.clear()
-
-    @classmethod
-    def refresh_re_activate_teacher_id_input_box(cls):
+    def refresh_teacher_activation_page(cls):
         cls.__ui_mainwindow.lineEdit_32.clear()
         cls.__ui_mainwindow.label_47.clear()
         cls.__ui_mainwindow.lineEdit_39.clear()
@@ -439,6 +483,13 @@ class AdminGUI():
     @classmethod
     def refresh_view_or_modify_school_class_drop_box(cls):
         cls.__ui_mainwindow.tableWidget_8.clear()
+
+    @classmethod
+    def refresh_add_or_remove_student_from_school_class_page(cls):
+        cls.__ui_mainwindow.lineEdit_40.clear()
+        cls.__ui_mainwindow.label_65.clear()
+        cls.__ui_mainwindow.lineEdit_41.clear()
+        cls.__ui_mainwindow.label_66.clear()
 
     def __str__(self):
         return ("This is AdminGUI Object")

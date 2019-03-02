@@ -5,6 +5,8 @@ from OOPCourseWorkTwo.DataAccess.AdminDA import AdminDA
 
 from OOPCourseWorkTwo.GUI.AdminGUI import AdminGUI
 
+import sys
+import os
 
 class Admin():
 
@@ -12,8 +14,9 @@ class Admin():
         pass
 
     @classmethod
-    def setup(cls, connection, ui_mainwindow):
+    def setup(cls, connection, ui_mainwindow, mainwindow):
         cls.__ui_mainwindow = ui_mainwindow
+        cls.__mainwindow = mainwindow
         AdminDA.setup(connection)
         AdminGUI.setup(ui_mainwindow)
 
@@ -50,6 +53,10 @@ class Admin():
         cls.re_activate_student_by_id_button_pressed()
         cls.de_activate_teacher_by_id_button_pressed()
         cls.re_activate_teacher_by_id_button_pressed()
+        cls.remove_student_from_school_class_by_id_button_pressed()
+        cls.add_student_to_school_class_by_id_button_pressed()
+        cls.close_button_pressed()
+
 
 
 
@@ -98,6 +105,17 @@ class Admin():
     def create_unique_school_class_id_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_38.clicked.connect(cls.create_unique_school_class_id)
 
+    @classmethod
+    def remove_student_from_school_class_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_40.clicked.connect(cls.remove_student_from_school_class_by_id)
+
+    @classmethod
+    def add_student_to_school_class_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_41.clicked.connect(cls.add_student_to_school_class_by_id)
+
+    @classmethod
+    def close_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton.clicked.connect(cls.close_application)
 
     @classmethod
     def create_new_student(cls):
@@ -222,7 +240,7 @@ class Admin():
         AdminGUI.display_de_activated_students(de_activated_students)
         active_students = AdminDA.get_all_active_students_from_db()
         AdminGUI.display_active_students(active_students)
-        AdminGUI.refresh_de_activate_student_id_input_box()
+        AdminGUI.refresh_student_activation_page()
 
     @classmethod
     def re_activate_student_by_id(cls):
@@ -236,7 +254,7 @@ class Admin():
         AdminGUI.display_active_students(active_students)
         de_activated_students = AdminDA.get_all_de_activated_students_from_db()
         AdminGUI.display_de_activated_students(de_activated_students)
-        AdminGUI.refresh_re_activate_student_id_input_box()
+        AdminGUI.refresh_student_activation_page()
 
     @classmethod
     def de_activate_teacher_by_id(cls):
@@ -250,7 +268,7 @@ class Admin():
         AdminGUI.display_de_activated_teachers(de_activated_teachers_tuples_list)
         active_teachers = AdminDA.get_all_active_teachers_from_db()
         AdminGUI.display_active_teachers(active_teachers)
-        AdminGUI.refresh_de_activate_teacher_id_input_box()
+        AdminGUI.refresh_teacher_activation_page()
 
     @classmethod
     def re_activate_teacher_by_id(cls):
@@ -264,7 +282,7 @@ class Admin():
         AdminGUI.display_active_teachers(active_teachers)
         de_activated_teachers = AdminDA.get_all_de_activated_teachers_from_db()
         AdminGUI.display_de_activated_teachers(de_activated_teachers)
-        AdminGUI.refresh_re_activate_teacher_id_input_box()
+        AdminGUI.refresh_teacher_activation_page()
 
 
     @classmethod
@@ -319,6 +337,36 @@ class Admin():
             return ("0" + class_id_text)
         return class_id_text
 
+    @classmethod
+    def remove_student_from_school_class_by_id(cls):
+        student_id = AdminGUI.get_student_id_to_remove_from_school_class()
+        school_class_id = AdminGUI.get_school_class_id_to_add_or_remove_student()
+        student_id_valid = AdminDA.is_student_id_to_remove_from_school_class_valid(student_id, school_class_id)
+        if (not student_id_valid):
+            AdminGUI.display_student_id_to_remove_invalid_message()
+            return
+        AdminDA.remove_student_from_school_class_in_db(student_id, school_class_id)
+        students_in_school_class = AdminDA.get_students_in_school_class(school_class_id)
+        AdminGUI.display_students_in_school_class(students_in_school_class)
+        AdminGUI.refresh_add_or_remove_student_from_school_class_page()
+
+
+    @classmethod
+    def add_student_to_school_class_by_id(cls):
+        student_id = AdminGUI.get_student_id_to_add_to_school_class()
+        school_class_id = AdminGUI.get_school_class_id_to_add_or_remove_student()
+        student_id_valid = AdminDA.is_student_id_to_add_to_school_class_valid(student_id, school_class_id)
+        if (not student_id_valid):
+            AdminGUI.display_student_id_to_add_invalid_message()
+            return
+        AdminDA.add_student_to_school_class_in_db(student_id, school_class_id)
+        students_in_school_class = AdminDA.get_students_in_school_class(school_class_id)
+        AdminGUI.display_students_in_school_class(students_in_school_class)
+        AdminGUI.refresh_add_or_remove_student_from_school_class_page()
+
+    @classmethod
+    def close_application(cls):
+        cls.__mainwindow.close()
 
     def __str__(self):
         return ("This is Admin Object")

@@ -15,16 +15,16 @@ from sqlite3 import Error
 class Main():
 
     def __init__(self):
-        app = QtWidgets.QApplication(sys.argv)
+        self.__app = QtWidgets.QApplication(sys.argv)
         self.__mainwindow = QtWidgets.QMainWindow()
-        self.show_login_screen(self.__mainwindow)
+        self.setup_login_screen(self.__mainwindow)
         self.__db_connection = self.connect_to_database()
         self.ui.pushButton.clicked.connect(self.login_to_application)
         self.__mainwindow.show()
-        sys.exit(app.exec_())
+        sys.exit(self.__app.exec_())
 
 
-    def show_login_screen(self, mainwindow):
+    def setup_login_screen(self, mainwindow):
         self.ui = Ui_LoginMainWindow()
         self.ui.setupUi(mainwindow)
 
@@ -95,15 +95,25 @@ class Main():
                 self.ui = Ui_AdminMainWindow()
                 self.ui.setupUi(self.__mainwindow)
                 self.__mainwindow.show()
-                Admin.setup(self.__db_connection, self.ui)
+                Admin.setup(self.__db_connection, self.ui, self.__mainwindow)
                 Admin.display_saved_users()
                 Admin.actions()
+                self.ui.pushButton_42.clicked.connect(self.reload_application)
             elif (user_type == "Teacher"):
                 self.ui = Ui_TeacherMainWindow()
+                self.ui.setupUi(self.__mainwindow)
+                self.__mainwindow.show()
             elif (user_type == "Student"):
                 self.ui = Ui_StudentMainWindow()
         except:
             self.display_invalid_login_error_message()
+
+    def reload_application(self):
+        self.__mainwindow.close()
+        self.setup_login_screen(self.__mainwindow)
+        self.ui.pushButton.clicked.connect(self.login_to_application)
+        self.__mainwindow.show()
+
 
 if __name__ == "__main__":
     Main()

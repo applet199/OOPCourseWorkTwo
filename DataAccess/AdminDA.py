@@ -299,6 +299,49 @@ class AdminDA():
         return teacher_tuple is not None
 
     @classmethod
+    def is_student_id_to_remove_from_school_class_valid(cls, student_pk, school_class_fk):
+        if (student_pk == None or school_class_fk == None):
+            return False
+        query = '''
+                SELECT student_pk
+                FROM student
+                WHERE student_pk = ?
+                AND school_class_fk = ?
+                '''
+        cls.__cursor.execute(query, (student_pk, school_class_fk))
+        student = cls.__cursor.fetchone()
+        return student is not None
+
+    @classmethod
+    def is_student_id_to_add_to_school_class_valid(cls, student_pk, school_class_fk):
+        if (student_pk == None or school_class_fk == None):
+            return False
+        student_active = cls.is_student_active(student_pk)
+        if (not student_active):
+            return False
+        query = '''
+                SELECT student_pk
+                FROM student
+                WHERE student_pk = ?
+                AND school_class_fk = ?
+                '''
+        cls.__cursor.execute(query, (student_pk, school_class_fk))
+        student = cls.__cursor.fetchone()
+        return student is None
+
+    @classmethod
+    def is_student_active(cls, student_pk):
+        query = '''
+                SELECT student_pk
+                FROM student
+                WHERE student_pk = ?
+                AND active = 1
+                '''
+        cls.__cursor.execute(query, (student_pk, ))
+        student = cls.__cursor.fetchone()
+        return student is not None
+
+    @classmethod
     def de_activate_student_by_id_in_db(cls, student_pk):
         update_student_active_flag_query = '''
                                             UPDATE student
@@ -372,6 +415,55 @@ class AdminDA():
         cls.__cursor.execute(query)
         school_classes_tuples_list = cls.__cursor.fetchall()
         return school_classes_tuples_list
+
+    @classmethod
+    def remove_student_from_school_class_in_db(cls, student_pk, school_class_pk):
+        update_student_query = '''
+                               UPDATE student
+                               SET school_class_fk = 0
+                               WHERE student_pk = ?
+                               '''
+        cls.__cursor.execute(update_student_query, (student_pk, ))
+        cls.__db_connection.commit()
+        update_school_class_query = '''
+                                    UPDATE school_class
+                                    SET number_of_students = number_of_students - 1
+                                    WHERE school_class_pk = ?
+                                    '''
+        cls.__cursor.execute(update_school_class_query, (school_class_pk, ))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def add_student_to_school_class_in_db(cls, student_pk, school_class_pk):
+        update_student_query = '''
+                               UPDATE student
+                               SET school_class_fk = ?
+                               WHERE student_pk = ?
+                               '''
+        cls.__cursor.execute(update_student_query, (school_class_pk, student_pk))
+        cls.__db_connection.commit()
+        update_school_class_query = '''
+                                    UPDATE school_class
+                                    SET number_of_students = number_of_students + 1
+                                    WHERE school_class_pk = ?
+                                    '''
+        cls.__cursor.execute(update_school_class_query, (school_class_pk, ))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def get_students_in_school_class(cls, school_class_fk):
+        query = '''
+                SELECT student_pk,
+                       student_full_name
+                FROM student
+                WHERE school_class_fk = ?
+                '''
+        cls.__cursor.execute(query, (school_class_fk, ))
+        students_in_school_class = cls.__cursor.fetchall()
+        return students_in_school_class
+
+
+
 
     def __str__(self):
         return ("This is AdminDA Object")
