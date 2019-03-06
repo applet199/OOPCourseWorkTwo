@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QLineEdit, QPushButton, QApplication, QMainWindow, QLabel
 
 from OOPCourseWorkTwo.BusinessLogic.Admin import Admin
+from OOPCourseWorkTwo.BusinessLogic.Teacher import Teacher
 
 from OOPCourseWorkTwo.GUI.LoginGUIQtDesigner import Ui_LoginMainWindow
 from OOPCourseWorkTwo.GUI.AdminGUIQtDesigner import Ui_AdminMainWindow
@@ -103,6 +104,9 @@ class Main():
                 self.ui = Ui_TeacherMainWindow()
                 self.ui.setupUi(self.__mainwindow)
                 self.__mainwindow.show()
+                Teacher.setup(self.__db_connection, self.ui, self.__mainwindow)
+                Teacher.display_saved_questions()
+                Teacher.actions()
             elif (user_type == "Student"):
                 self.ui = Ui_StudentMainWindow()
         except:

@@ -1,3 +1,9 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QPushButton, QApplication, QMainWindow, QDialog
+
+from OOPCourseWorkTwo.DataAccess.TeacherDA import TeacherDA
+
+from OOPCourseWorkTwo.GUI.TeacherGUI import TeacherGUI
 
 
 
@@ -7,13 +13,41 @@ class Teacher():
         pass
 
     @classmethod
-    def setup_application(cls, connection, ui_mainwindow):
-        cls.__db_connection = connection
+    def setup(cls, connection, ui_mainwindow, mainwindow):
         cls.__ui_mainwindow = ui_mainwindow
+        cls.__mainwindow = mainwindow
+        TeacherDA.setup(connection)
+        TeacherGUI.setup(ui_mainwindow)
+
+    @classmethod
+    def display_saved_questions(cls):
+        pass
 
     @classmethod
     def actions(cls):
-        pass
+        cls.create_five_options_question_button_pressed()
+        cls.preview_five_options_question_button_pressed()
+
+    @classmethod
+    def create_five_options_question_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton.clicked.connect(cls.create_five_options_question)
+
+    @classmethod
+    def preview_five_options_question_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_5.clicked.connect(cls.preview_five_options_question)
+
+    @classmethod
+    def create_five_options_question(cls):
+        five_options_question_details = TeacherGUI.get_five_options_question_details()
+        TeacherDA.insert_five_options_question_into_db(five_options_question_details)
+
+    @classmethod
+    def preview_five_options_question(cls):
+        TeacherGUI.display_five_options_question_dialog_preview()
+
+
+
+
 
     def __str__(self):
         return ("This is Teacher Object")
