@@ -39,6 +39,8 @@ class Ui_LoginMainWindow(object):
         self.horizontalLayout_2.addWidget(self.label_2)
         self.lineEdit_2 = QtWidgets.QLineEdit(self.layoutWidget)
         self.lineEdit_2.setMinimumSize(QtCore.QSize(150, 0))
+        self.lineEdit_2.setInputMethodHints(QtCore.Qt.ImhHiddenText|QtCore.Qt.ImhNoAutoUppercase|QtCore.Qt.ImhNoPredictiveText|QtCore.Qt.ImhSensitiveData)
+        self.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.horizontalLayout_2.addWidget(self.lineEdit_2)
         self.verticalLayout.addLayout(self.horizontalLayout_2)

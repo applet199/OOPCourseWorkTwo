@@ -40,7 +40,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_7">
        <attribute name="title">
@@ -1438,7 +1438,7 @@
           <x>330</x>
           <y>30</y>
           <width>303</width>
-          <height>25</height>
+          <height>30</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_13">
@@ -1931,7 +1931,7 @@
      <x>0</x>
      <y>0</y>
      <width>1132</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

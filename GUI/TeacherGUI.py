@@ -63,6 +63,10 @@ class TeacherGUI():
             correct_answers_list.append("E")
         return (question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, year_level_text, phrase_tag_text, correct_answers_list)
 
+    @classmethod
+    def display_all_active_questions(cls):
+        pass
+
 
     def __str__(self):
         return ("This is TeacherGUI Object")

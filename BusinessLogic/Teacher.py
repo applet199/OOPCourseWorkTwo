@@ -40,6 +40,8 @@ class Teacher():
     def create_five_options_question(cls):
         five_options_question_details = TeacherGUI.get_five_options_question_details()
         TeacherDA.insert_five_options_question_into_db(five_options_question_details)
+        all_active_questions = TeacherDA.get_all_active_questions_from_db()
+        TeacherGUI.display_all_active_questions(all_active_questions)
 
     @classmethod
     def preview_five_options_question(cls):
