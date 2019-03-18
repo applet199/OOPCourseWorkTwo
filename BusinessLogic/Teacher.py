@@ -26,32 +26,58 @@ class Teacher():
 
     @classmethod
     def actions(cls):
-        cls.create_five_options_question_button_pressed()
-        cls.preview_five_options_question_button_pressed()
+        cls.create_single_answer_question_button_pressed()
+        cls.preview_single_answer_question_button_pressed()
+        cls.create_multiple_answers_question_button_pressed()
+        cls.preview_multiple_answers_question_button_pressed()
 
     @classmethod
-    def create_five_options_question_button_pressed(cls):
-        cls.__ui_mainwindow.pushButton.clicked.connect(cls.create_five_options_question)
+    def create_single_answer_question_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton.clicked.connect(cls.create_single_answer_question)
 
     @classmethod
-    def preview_five_options_question_button_pressed(cls):
-        cls.__ui_mainwindow.pushButton_5.clicked.connect(cls.preview_five_options_question)
+    def preview_single_answer_question_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_5.clicked.connect(cls.preview_single_answer_question)
 
     @classmethod
-    def create_five_options_question(cls):
-        five_options_question_details = TeacherGUI.get_five_options_question_details()
-        if (five_options_question_details == None):
-            TeacherGUI.display_invalid_question_creation_message()
+    def create_multiple_answers_question_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_7.clicked.connect(cls.create_multiple_answers_question)
+
+    @classmethod
+    def preview_multiple_answers_question_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_6.clicked.connect(cls.preview_multiple_answers_question)
+
+    @classmethod
+    def create_single_answer_question(cls):
+        single_answer_question_details = TeacherGUI.get_single_answer_question_details()
+        if (single_answer_question_details == None):
+            TeacherGUI.display_invalid_single_answer_question_creation_message()
             return
-        TeacherDA.insert_five_options_question_into_db(five_options_question_details)
+        TeacherDA.insert_single_answer_question_into_db(single_answer_question_details)
         all_active_questions = TeacherDA.get_all_active_questions_from_db()
         TeacherGUI.display_all_active_questions(all_active_questions)
-        TeacherGUI.display_create_five_options_question_success()
-        TeacherGUI.refresh_create_five_options_question_page()
+        TeacherGUI.display_create_single_answer_question_success()
+        TeacherGUI.refresh_create_single_answer_question_page()
 
     @classmethod
-    def preview_five_options_question(cls):
-        TeacherGUI.display_five_options_question_dialog_preview()
+    def preview_single_answer_question(cls):
+        TeacherGUI.display_single_answer_question_dialog_preview()
+
+    @classmethod
+    def create_multiple_answers_question(cls):
+        multiple_answers_question_details = TeacherGUI.get_multiple_answers_question_details()
+        if (multiple_answers_question_details == None):
+            TeacherGUI.display_invalid_multiple_answers_question_creation_message()
+            return
+        TeacherDA.insert_multiple_answers_question_into_db(multiple_answers_question_details)
+        all_active_questions = TeacherDA.get_all_active_questions_from_db()
+        TeacherGUI.display_all_active_questions(all_active_questions)
+        TeacherGUI.display_create_multiple_answers_question_success()
+        TeacherGUI.refresh_create_multiple_answers_question_page()
+
+    @classmethod
+    def preview_multiple_answers_question(cls):
+        TeacherGUI.display_multiple_answers_question_dialog_preview()
 
 
 
