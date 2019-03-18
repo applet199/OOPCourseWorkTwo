@@ -26,7 +26,7 @@ class TeacherDA():
         option_C_text = five_options_question_details[3]
         option_D_text = five_options_question_details[4]
         option_E_text = five_options_question_details[5]
-        year_level = int(five_options_question_details[6])
+        year_level = five_options_question_details[6]
         question_tag = five_options_question_details[7]
         correct_ansewrs = cls.get_correct_answers_string_for_five_options_question(five_options_question_details[8])
         insert_into_question_table_query = '''
@@ -87,7 +87,14 @@ class TeacherDA():
 
     @classmethod
     def get_all_active_questions_from_db(cls):
-        pass
+        select_all_active_question_query='''
+            SELECT question_pk
+            FROM question
+            WHERE active = 1
+        '''
+        cls.__cursor.execute(select_all_active_question_query)
+        all_active_questions_tuple = cls.__cursor.fetchall()
+        return all_active_questions_tuple
 
     def __str__(self):
         return ("This is TeacherDA Object")

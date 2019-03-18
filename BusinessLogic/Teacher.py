@@ -21,7 +21,8 @@ class Teacher():
 
     @classmethod
     def display_saved_questions(cls):
-        pass
+        all_active_questions = TeacherDA.get_all_active_questions_from_db()
+        TeacherGUI.display_all_active_questions(all_active_questions)
 
     @classmethod
     def actions(cls):
@@ -39,9 +40,14 @@ class Teacher():
     @classmethod
     def create_five_options_question(cls):
         five_options_question_details = TeacherGUI.get_five_options_question_details()
+        if (five_options_question_details == None):
+            TeacherGUI.display_invalid_question_creation_message()
+            return
         TeacherDA.insert_five_options_question_into_db(five_options_question_details)
         all_active_questions = TeacherDA.get_all_active_questions_from_db()
         TeacherGUI.display_all_active_questions(all_active_questions)
+        TeacherGUI.display_create_five_options_question_success()
+        TeacherGUI.refresh_create_five_options_question_page()
 
     @classmethod
     def preview_five_options_question(cls):
