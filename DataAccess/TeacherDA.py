@@ -104,6 +104,40 @@ class TeacherDA():
         cls.__db_connection.commit()
 
     @classmethod
+    def insert_essay_question_into_db(cls, essay_question_details):
+        total_number_of_questions_tuple = cls.get_total_number_of_questions_in_db()
+        question_pk = total_number_of_questions_tuple[0] + 1
+
+        total_number_of_essay_questions_tuple = cls.get_total_number_of_essay_questions_in_db()
+        essay_question_pk = total_number_of_essay_questions_tuple[0] + 1
+
+        question_body = essay_question_details[0]
+        year_level = essay_question_details[1]
+        question_tag = essay_question_details[2]
+
+        insert_into_question_table_query = '''
+           INSERT INTO question (
+             question_pk,
+             question_type,
+             points,
+             year_level,
+             question_tag
+             )
+           VALUES (?, ?, ?, ?, ?)
+        '''
+        cls.__cursor.execute(insert_into_question_table_query, (question_pk, "Essay", 10, year_level, question_tag))
+        cls.__db_connection.commit()
+        insert_into_essay_question_table_query = '''
+            INSERT INTO essay_question (
+              essay_question_pk,
+              question_body
+              )
+            VALUES (?, ?)
+        '''
+        cls.__cursor.execute(insert_into_essay_question_table_query, (essay_question_pk, question_body))
+        cls.__db_connection.commit()
+
+    @classmethod
     def get_total_number_of_questions_in_db(cls):
         select_all_from_question_query = '''
             SELECT count(*)
@@ -116,8 +150,8 @@ class TeacherDA():
     @classmethod
     def get_total_number_of_single_answer_questions_in_db(cls):
         select_all_from_single_answer_question_query = '''
-        SELECT count(*)
-        FROM single_answer_question
+            SELECT count(*)
+            FROM single_answer_question
         '''
         cls.__cursor.execute(select_all_from_single_answer_question_query)
         total_number_of_single_answer_questions = cls.__cursor.fetchone()
@@ -126,12 +160,22 @@ class TeacherDA():
     @classmethod
     def get_total_number_of_multiple_answers_questions_in_db(cls):
         select_all_from_multiple_answers_question_query = '''
-        SELECT count(*)
-        FROM multiple_answers_question
+            SELECT count(*)
+            FROM multiple_answers_question
         '''
         cls.__cursor.execute(select_all_from_multiple_answers_question_query)
         total_number_of_multiple_answers_questions = cls.__cursor.fetchone()
         return total_number_of_multiple_answers_questions
+
+    @classmethod
+    def get_total_number_of_essay_questions_in_db(cls):
+        select_all_from_essay_question_query = '''
+            SELECT count(*)
+            FROM essay_question
+        '''
+        cls.__cursor.execute(select_all_from_essay_question_query)
+        total_number_of_essay_questions = cls.__cursor.fetchone()
+        return total_number_of_essay_questions
 
     @classmethod
     def get_correct_answer_string_for_single_answer_question(cls, correct_answer_list):

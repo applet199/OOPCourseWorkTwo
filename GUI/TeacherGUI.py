@@ -5,6 +5,8 @@ from PyQt5.QtCore import QDate, QTime, QDateTime, Qt
 
 from OOPCourseWorkTwo.GUI.SingleAnswerQuestionDialog import Ui_SingleAnswerQuestionDialog
 from OOPCourseWorkTwo.GUI.MultipleAnswersQuestionDialog import Ui_MultipleAnswersQuestionDialog
+from OOPCourseWorkTwo.GUI.EssayQuestionDialog import Ui_EssayQuestionDialog
+
 
 class TeacherGUI():
 
@@ -53,6 +55,19 @@ class TeacherGUI():
         cls.__ui_dialog.label_5.setText("C " + option_C_text)
         cls.__ui_dialog.label_6.setText("D " + option_D_text)
         cls.__ui_dialog.label_7.setText("E " + option_E_text)
+        cls.__dialog.show()
+        cls.__ui_dialog.pushButton.clicked.connect(cls.close_dialog)
+
+    @classmethod
+    def display_essay_question_dialog_preview(cls):
+        question_body = cls.__ui_mainwindow.textEdit_19.toPlainText()
+        cls.__dialog = QtWidgets.QDialog()
+        cls.__ui_dialog = Ui_EssayQuestionDialog()
+        cls.__ui_dialog.setupUi(cls.__dialog)
+        if (question_body == ""):
+            cls.__ui_dialog.label.setText("Question Body")
+        else:
+            cls.__ui_dialog.label.setText(question_body)
         cls.__dialog.show()
         cls.__ui_dialog.pushButton.clicked.connect(cls.close_dialog)
 
@@ -156,6 +171,24 @@ class TeacherGUI():
         return (question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, year_level, phrase_tag_text, correct_answers_list)
 
     @classmethod
+    def get_essay_question_details(cls):
+        question_body = cls.__ui_mainwindow.textEdit_19.toPlainText()
+        if (question_body == ""):
+            return None
+        year_level_text = cls.__ui_mainwindow.lineEdit_26.text()
+        if (year_level_text == ""):
+            return None
+        try:
+            year_level = int(year_level_text)
+        except:
+            return None
+        phrase_tag_text = cls.__ui_mainwindow.lineEdit_27.text()
+        if (phrase_tag_text == ""):
+            return None
+        return (question_body, year_level, phrase_tag_text)
+
+
+    @classmethod
     def display_all_active_questions(cls, active_questions_tuple):
         row = 0
         col = 0
@@ -186,6 +219,14 @@ class TeacherGUI():
     @classmethod
     def display_invalid_multiple_answers_question_creation_message(cls):
         cls.__ui_mainwindow.label_11.setText("Invalid Multiple Answers Question Creation")
+
+    @classmethod
+    def display_invalid_essay_question_creation_message(cls):
+        cls.__ui_mainwindow.label_42.setText("Invalid Essay Question Creation")
+
+    @classmethod
+    def display_create_essay_question_success(cls):
+        cls.__ui_mainwindow.label_42.setText("Create Essay Question Success")
 
 
     @classmethod
@@ -219,6 +260,14 @@ class TeacherGUI():
         cls.__ui_mainwindow.checkBox_3.setChecked(False)
         cls.__ui_mainwindow.checkBox_4.setChecked(False)
         cls.__ui_mainwindow.checkBox_5.setChecked(False)
+
+    @classmethod
+    def refresh_create_essay_question_page(cls):
+        cls.__ui_mainwindow.textEdit_19.clear()
+        cls.__ui_mainwindow.lineEdit_26.clear()
+        cls.__ui_mainwindow.lineEdit_27.clear()
+
+
 
     def __str__(self):
         return ("This is TeacherGUI Object")

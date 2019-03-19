@@ -30,6 +30,8 @@ class Teacher():
         cls.preview_single_answer_question_button_pressed()
         cls.create_multiple_answers_question_button_pressed()
         cls.preview_multiple_answers_question_button_pressed()
+        cls.create_essay_question_button_pressed()
+        cls.preview_essay_question_button_pressed()
 
     @classmethod
     def create_single_answer_question_button_pressed(cls):
@@ -46,6 +48,14 @@ class Teacher():
     @classmethod
     def preview_multiple_answers_question_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_6.clicked.connect(cls.preview_multiple_answers_question)
+
+    @classmethod
+    def create_essay_question_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_28.clicked.connect(cls.create_essay_question)
+
+    @classmethod
+    def preview_essay_question_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_29.clicked.connect(cls.preview_essay_question)
 
     @classmethod
     def create_single_answer_question(cls):
@@ -79,7 +89,21 @@ class Teacher():
     def preview_multiple_answers_question(cls):
         TeacherGUI.display_multiple_answers_question_dialog_preview()
 
+    @classmethod
+    def create_essay_question(cls):
+        essay_question_details = TeacherGUI.get_essay_question_details()
+        if (essay_question_details == None):
+            TeacherGUI.display_invalid_essay_question_creation_message()
+            return
+        TeacherDA.insert_essay_question_into_db(essay_question_details)
+        all_active_questions = TeacherDA.get_all_active_questions_from_db()
+        TeacherGUI.display_all_active_questions(all_active_questions)
+        TeacherGUI.display_create_essay_question_success()
+        TeacherGUI.refresh_create_essay_question_page()
 
+    @classmethod
+    def preview_essay_question(cls):
+        TeacherGUI.display_essay_question_dialog_preview()
 
 
 
