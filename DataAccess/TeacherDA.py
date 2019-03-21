@@ -200,5 +200,22 @@ class TeacherDA():
         all_active_questions_tuple = cls.__cursor.fetchall()
         return all_active_questions_tuple
 
+    @classmethod
+    def get_question_type_by_id(cls, question_pk):
+        select_question_type_by_id_query = '''
+            SELECT question_type
+            FROM question
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(select_question_type_by_id_query, (question_pk, ))
+        question_type = cls.__cursor.fetchone()
+        return question_type
+
+    @classmethod
+    def get_single_answer_question_details_by_id(cls, question_pk):
+        pass
+
+
+
     def __str__(self):
         return ("This is TeacherDA Object")
