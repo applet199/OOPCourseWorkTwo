@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -40,7 +40,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_7">
        <attribute name="title">
@@ -725,7 +725,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_11">
        <attribute name="title">
@@ -920,51 +920,29 @@ p, li { white-space: pre-wrap; }
          <string/>
         </property>
        </widget>
-       <widget class="QWidget" name="layoutWidget">
+       <widget class="QWidget" name="">
         <property name="geometry">
          <rect>
-          <x>300</x>
-          <y>150</y>
-          <width>391</width>
-          <height>171</height>
+          <x>350</x>
+          <y>250</y>
+          <width>331</width>
+          <height>81</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_15">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <widget class="QPushButton" name="pushButton_8">
-             <property name="text">
-              <string>View Question By ID</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_8">
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QPushButton" name="pushButton_8">
+           <property name="text">
+            <string>View or Modify Question By ID</string>
+           </property>
+          </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <item>
-            <widget class="QPushButton" name="pushButton_9">
-             <property name="text">
-              <string>Modify Question By ID</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="lineEdit_9">
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLineEdit" name="lineEdit_8">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

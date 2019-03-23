@@ -212,7 +212,7 @@ class TeacherDA():
         return question_type
 
     @classmethod
-    def get_single_answer_question_details_by_id(cls, question_pk):
+    def get_multiple_choice_question_details_by_id(cls, question_pk):
         pass
 
 

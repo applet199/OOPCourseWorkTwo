@@ -274,7 +274,7 @@ class TeacherGUI():
         return question_id
 
     @classmethod
-    def view_single_answer_question_by_id(cls, question_pk):
+    def view_or_modify_multiple_choice_question_details(cls, question_details):
 
 
 
