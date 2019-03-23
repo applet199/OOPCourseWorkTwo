@@ -32,7 +32,8 @@ class Teacher():
         cls.preview_multiple_answers_question_button_pressed()
         cls.create_essay_question_button_pressed()
         cls.preview_essay_question_button_pressed()
-        cls.view_or_modify_question_by_id_button_pressed()
+        cls.load_question_details_by_id_button_pressed()
+        cls.modify_question_button_pressed()
 
     @classmethod
     def create_single_answer_question_button_pressed(cls):
@@ -59,8 +60,13 @@ class Teacher():
         cls.__ui_mainwindow.pushButton_29.clicked.connect(cls.preview_essay_question)
 
     @classmethod
-    def view_or_modify_question_by_id_button_pressed(cls):
-        cls.__ui_mainwindow.pushButton_8.clicked.connect(cls.view_or_modify_question_by_id)
+    def load_question_details_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_8.clicked.connect(cls.load_question_details_by_id)
+
+    @classmethod
+    def modify_question_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_9.clicked.connect(cls.modify_question)
+
 
 
     @classmethod
@@ -112,18 +118,21 @@ class Teacher():
         TeacherGUI.display_essay_question_dialog_preview()
 
     @classmethod
-    def view_or_modify_question_by_id(cls):
-        question_id = TeacherGUI.get_question_id_to_view_or_modify()
+    def load_question_details_by_id(cls):
+        question_id = TeacherGUI.get_question_id_to_load()
         question_type = TeacherDA.get_question_type_by_id(question_id)
 
-        if (question_type == "Single Answer" or question_type == "Multiple Answers"):
-            multiple_choice_question_details = TeacherDA.get_multiple_choice_question_details_by_id(question_id)
-            modified_multiple_choice_question_details = TeacherGUI.view_and_return_modified_multiple_choice_question_details(multiple_choice_question_details)
-            TeacherDA.update_multiple_choice_question_details_in_db(modified_multiple_choice_question_details)
+        if (question_type == "Single Answer"):
+            single_answer_question_details = TeacherDA.get_single_answer_question_details_by_id(question_id)
+            TeacherGUI.load_single_answer_question_details(single_answer_question_details)
+
+        if (question_type == "Multiple Answers"):
+            multiple_answers_question_details = TeacherDA.get_multiple_answers_question_details_by_id(question_id)
+            TeacherGUI.load_multiple_answers_question_details(multiple_answers_question_details)
 
         elif (question_type == "Essay"):
             essay_question_details = TeacherDA.get_essay_question_details_by_id(question_id)
-            TeacherGUI.view_essay_question_details(essay_question_details)
+            TeacherGUI.load_essay_question_details(essay_question_details)
 
 
     def __str__(self):

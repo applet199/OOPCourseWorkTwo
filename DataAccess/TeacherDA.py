@@ -50,11 +50,12 @@ class TeacherDA():
               option_C_text,
               option_D_text,
               option_E_text,
-              correct_answer
+              correct_answer,
+              question_fk
               )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)
         '''
-        cls.__cursor.execute(insert_into_single_answer_question_table_query, (single_answer_question_pk, question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_ansewr))
+        cls.__cursor.execute(insert_into_single_answer_question_table_query, (single_answer_question_pk, question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_ansewr, question_pk))
         cls.__db_connection.commit()
 
 
@@ -212,8 +213,27 @@ class TeacherDA():
         return question_type
 
     @classmethod
-    def get_multiple_choice_question_details_by_id(cls, question_pk):
-        pass
+    def get_single_answer_question_details_by_id(cls, question_pk):
+        select_single_answer_question_details_query = '''
+            SELECT question_pk,
+                question_type,
+                points,
+                year_level,
+                question_tag,
+                question_body,
+                option_A_text,
+                option_B_text,
+                option_C_text,
+                option_D_text,
+                option_E_text,
+                correct_answer
+            FROM question
+            INNER JOIN single_answer_question on question_pk = question_fk
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(select_single_answer_question_details_query, (question_pk, ))
+        question_details = cls.__cursor.fetchall()
+        return question_details
 
 
 
