@@ -145,7 +145,8 @@ class TeacherDA():
             FROM question
         '''
         cls.__cursor.execute(select_all_from_question_query)
-        total_number_of_questions = cls.__cursor.fetchone()
+        total_number_of_questions_tuple = cls.__cursor.fetchone()
+        total_number_of_questions = total_number_of_questions_tuple[0]
         return total_number_of_questions
 
     @classmethod
@@ -209,7 +210,8 @@ class TeacherDA():
             WHERE question_pk = ?
         '''
         cls.__cursor.execute(select_question_type_by_id_query, (question_pk, ))
-        question_type = cls.__cursor.fetchone()
+        question_type_tuple = cls.__cursor.fetchone()
+        question_type = question_type_tuple[0]
         return question_type
 
     @classmethod
@@ -232,7 +234,8 @@ class TeacherDA():
             WHERE question_pk = ?
         '''
         cls.__cursor.execute(select_single_answer_question_details_query, (question_pk, ))
-        question_details = cls.__cursor.fetchall()
+        question_details_list = cls.__cursor.fetchall()
+        question_details = question_details_list[0]
         return question_details
 
 

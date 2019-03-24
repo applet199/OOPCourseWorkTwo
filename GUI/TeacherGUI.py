@@ -262,6 +262,31 @@ class TeacherGUI():
         cls.__ui_mainwindow.checkBox_5.setChecked(False)
 
     @classmethod
+    def refresh_view_or_modify_question_page(cls):
+        cls.__ui_mainwindow.lineEdit_5.clear()
+        cls.__ui_mainwindow.label_45.setText("Question ID: ")
+        cls.__ui_mainwindow.label_47.setText("Question Type: ")
+        cls.__ui_mainwindow.textEdit_7.clear()
+        cls.__ui_mainwindow.textEdit_8.clear()
+        cls.__ui_mainwindow.textEdit_9.clear()
+        cls.__ui_mainwindow.textEdit_10.clear()
+        cls.__ui_mainwindow.textEdit_11.clear()
+        cls.__ui_mainwindow.textEdit_20.clear()
+        cls.__ui_mainwindow.lineEdit_6.clear()
+        cls.__ui_mainwindow.lineEdit_8.clear()
+        cls.__ui_mainwindow.lineEdit_28.clear()
+        cls.__ui_mainwindow.radioButton_6.setAutoExclusive(False)
+        cls.__ui_mainwindow.radioButton_6.setChecked(False)
+        cls.__ui_mainwindow.radioButton_7.setAutoExclusive(False)
+        cls.__ui_mainwindow.radioButton_7.setChecked(False)
+        cls.__ui_mainwindow.radioButton_8.setAutoExclusive(False)
+        cls.__ui_mainwindow.radioButton_8.setChecked(False)
+        cls.__ui_mainwindow.radioButton_9.setAutoExclusive(False)
+        cls.__ui_mainwindow.radioButton_9.setChecked(False)
+        cls.__ui_mainwindow.radioButton_10.setAutoExclusive(False)
+        cls.__ui_mainwindow.radioButton_10.setChecked(False)
+
+    @classmethod
     def refresh_create_essay_question_page(cls):
         cls.__ui_mainwindow.textEdit_19.clear()
         cls.__ui_mainwindow.lineEdit_26.clear()
@@ -270,8 +295,11 @@ class TeacherGUI():
     @classmethod
     def get_question_id_to_load(cls):
         question_id_text = cls.__ui_mainwindow.lineEdit_5.text()
-        question_id = int(question_id_text)
-        return question_id
+        try:
+            question_id = int(question_id_text)
+            return question_id
+        except:
+            return None
 
     @classmethod
     def load_single_answer_question_details(cls, question_details):
@@ -279,7 +307,7 @@ class TeacherGUI():
         question_type = question_details[1]
         points = question_details[2]
         year_level = question_details[3]
-        question_tag == question_details[4]
+        question_tag = question_details[4]
         question_body = question_details[5]
         option_A_text = question_details[6]
         option_B_text = question_details[7]
@@ -288,9 +316,34 @@ class TeacherGUI():
         option_E_text = question_details[10]
         correct_answer = question_details[11]
 
+        cls.__ui_mainwindow.label_45.setText("Question ID: " + str(question_id))
+        cls.__ui_mainwindow.label_47.setText("Question Type: " + str(question_type))
+        cls.__ui_mainwindow.textEdit_7.setText(question_body)
+        cls.__ui_mainwindow.textEdit_8.setText(option_A_text)
+        cls.__ui_mainwindow.textEdit_9.setText(option_B_text)
+        cls.__ui_mainwindow.textEdit_10.setText(option_C_text)
+        cls.__ui_mainwindow.textEdit_11.setText(option_D_text)
+        cls.__ui_mainwindow.textEdit_20.setText(option_E_text)
+        cls.__ui_mainwindow.lineEdit_6.setText(str(year_level))
+        cls.__ui_mainwindow.lineEdit_8.setText(question_tag)
+        cls.__ui_mainwindow.lineEdit_28.setText(str(points))
+
+        if (correct_answer == "A"):
+            cls.__ui_mainwindow.radioButton_6.setChecked(True)
+        elif (correct_answer == "B"):
+            cls.__ui_mainwindow.radioButton_7.setChecked(True)
+        elif (correct_answer == "C"):
+            cls.__ui_mainwindow.radioButton_8.setChecked(True)
+        elif (correct_answer == "D"):
+            cls.__ui_mainwindow.radioButton_9.setChecked(True)
+        elif (correct_answer == "E"):
+            cls.__ui_mainwindow.radioButton_10.setChecked(True)
 
 
 
+    @classmethod
+    def display_question_id_invalid_to_load_message(cls):
+        cls.__ui_mainwindow.label_12.setText("Invalid Question ID To Load")
 
 
     def __str__(self):
