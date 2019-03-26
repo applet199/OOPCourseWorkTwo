@@ -918,7 +918,7 @@ class Ui_TeacherMainWindow(object):
 
         self.retranslateUi(TeacherMainWindow)
         self.tabWidget.setCurrentIndex(1)
-        self.tabWidget_4.setCurrentIndex(0)
+        self.tabWidget_4.setCurrentIndex(1)
         self.tabWidget_5.setCurrentIndex(1)
         self.tabWidget_6.setCurrentIndex(2)
         self.tabWidget_7.setCurrentIndex(0)

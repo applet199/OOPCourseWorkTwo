@@ -967,6 +967,9 @@ p, li { white-space: pre-wrap; }
            <property name="text">
             <string/>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
           </widget>
          </item>
         </layout>
@@ -998,6 +1001,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QLineEdit" name="lineEdit_28">
            <property name="text">
             <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -1250,6 +1256,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QLineEdit" name="lineEdit_6">
            <property name="text">
             <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>

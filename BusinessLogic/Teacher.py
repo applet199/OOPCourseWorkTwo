@@ -119,13 +119,15 @@ class Teacher():
 
     @classmethod
     def load_question_details_by_id(cls):
-        TeacherGUI.refresh_view_or_modify_question_page()
+
         question_id = TeacherGUI.get_question_id_to_load()
         is_question_id_valid = cls.is_question_id_valid(question_id)
         if (not is_question_id_valid):
             TeacherGUI.display_question_id_invalid_to_load_message()
             return
         question_type = TeacherDA.get_question_type_by_id(question_id)
+
+        TeacherGUI.refresh_view_or_modify_question_page()
 
         if (question_type == "Single Answer"):
             single_answer_question_details = TeacherDA.get_single_answer_question_details_by_id(question_id)
@@ -141,7 +143,28 @@ class Teacher():
 
     @classmethod
     def modify_question(cls):
-        pass
+        question_type = TeacherGUI.get_question_type_to_modify()
+        if (question_type == "Single Answer"):
+            single_answer_question_details = TeacherGUI.get_single_answer_question_details_to_modify()
+            if (single_answer_question_details == None):
+                TeacherGUI.display_invalid_modification_message()
+                return
+            TeacherDA.update_single_answer_question_details_in_db(single_answer_question_details)
+            TeacherGUI.refresh_view_or_modify_question_page()
+        elif (question_type == "Multiple Answers"):
+            multiple_answers_question_details = TeacherGUI.get_multiple_answers_question_details_to_modify()
+            if (multiple_answers_question_details == None):
+                TeacherGUI.display_invalid_modification_message()
+                return
+            TeacherDA.update_multiple_answers_question_details_in_db(multiple_answers_question_details)
+            TeacherGUI.refresh_view_or_modify_question_page()
+        elif (question_type == "Essay"):
+            essay_question_details = TeacherGUI.get_essay_question_details_to_modify()
+            if (essay_question_details == None):
+                TeacherGUI.display_invalid_modification_message()
+                return
+            TeacherDA.update_essay_question_details_in_db(essay_question_details)
+            TeacherGUI.refresh_view_or_modify_question_page()
 
 
     @classmethod
@@ -154,6 +177,9 @@ class Teacher():
         if (question_id > total_number_of_questions_in_db):
             return False
         return True
+
+
+
 
     def __str__(self):
         return ("This is Teacher Object")

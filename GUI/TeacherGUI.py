@@ -228,6 +228,10 @@ class TeacherGUI():
     def display_create_essay_question_success(cls):
         cls.__ui_mainwindow.label_42.setText("Create Essay Question Success")
 
+    @classmethod
+    def display_invalid_modification_message(cls):
+        cls.__ui_mainwindow.label_57.setText("Invalid Modification")
+
 
     @classmethod
     def refresh_create_single_answer_question_page(cls):
@@ -266,6 +270,7 @@ class TeacherGUI():
         cls.__ui_mainwindow.lineEdit_5.clear()
         cls.__ui_mainwindow.label_45.setText("Question ID: ")
         cls.__ui_mainwindow.label_47.setText("Question Type: ")
+        cls.__ui_mainwindow.label_57.clear()
         cls.__ui_mainwindow.textEdit_7.clear()
         cls.__ui_mainwindow.textEdit_8.clear()
         cls.__ui_mainwindow.textEdit_9.clear()
@@ -339,12 +344,91 @@ class TeacherGUI():
         elif (correct_answer == "E"):
             cls.__ui_mainwindow.radioButton_10.setChecked(True)
 
+    @classmethod
+    def load_essay_question_details(cls, question_details):
+        question_id = question_details[0]
+        question_type = question_details[1]
+        points = question_details[2]
+        year_level = question_details[3]
+        question_tag = question_details[4]
+        question_body = question_details[5]
 
+        cls.__ui_mainwindow.label_45.setText("Question ID: " + str(question_id))
+        cls.__ui_mainwindow.label_47.setText("Question Type: " + str(question_type))
+        cls.__ui_mainwindow.textEdit_7.setText(question_body)
+        cls.__ui_mainwindow.radioButton_6.setDisabled(True)
+        cls.__ui_mainwindow.radioButton_7.setDisabled(True)
+        cls.__ui_mainwindow.radioButton_8.setDisabled(True)
+        cls.__ui_mainwindow.radioButton_9.setDisabled(True)
+        cls.__ui_mainwindow.radioButton_10.setDisabled(True)
+        cls.__ui_mainwindow.textEdit_8.setDisabled(True)
+        cls.__ui_mainwindow.textEdit_9.setDisabled(True)
+        cls.__ui_mainwindow.textEdit_10.setDisabled(True)
+        cls.__ui_mainwindow.textEdit_11.setDisabled(True)
+        cls.__ui_mainwindow.textEdit_20.setDisabled(True)
+        cls.__ui_mainwindow.lineEdit_6.setText(str(year_level))
+        cls.__ui_mainwindow.lineEdit_8.setText(question_tag)
+        cls.__ui_mainwindow.lineEdit_28.setText(str(points))
 
     @classmethod
     def display_question_id_invalid_to_load_message(cls):
         cls.__ui_mainwindow.label_12.setText("Invalid Question ID To Load")
 
+    @classmethod
+    def get_question_type_to_modify(cls):
+        question_type_text = cls.__ui_mainwindow.label_47.text()
+        if (question_type_text == "Question Type: Single Answer"):
+            return "Single Answer"
+        elif (question_type_text == "Question Type: Multiple Answers"):
+            return "Multiple Answers"
+        elif (question_type_text == "Question Type: Essay"):
+            return "Essay"
+
+    @classmethod
+    def get_single_answer_question_details_to_modify(cls):
+        question_pk = cls.get_question_id_to_modify()
+        question_type = cls.get_question_type_to_modify()
+        points = int(cls.__ui_mainwindow.lineEdit_28.text())
+        year_level = int(cls.__ui_mainwindow.lineEdit_6.text())
+        question_tag = cls.__ui_mainwindow.lineEdit_8.text()
+        question_body = cls.__ui_mainwindow.textEdit_7.toPlainText()
+        option_A_text = cls.__ui_mainwindow.textEdit_8.toPlainText()
+        option_B_text = cls.__ui_mainwindow.textEdit_9.toPlainText()
+        option_C_text = cls.__ui_mainwindow.textEdit_10.toPlainText()
+        option_D_text = cls.__ui_mainwindow.textEdit_11.toPlainText()
+        option_E_text = cls.__ui_mainwindow.textEdit_20.toPlainText()
+        correct_answer = cls.get_single_correct_answer_to_modify()
+        if (correct_answer == None):
+            return None
+        return (question_pk, question_type, points, year_level, question_tag,question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_answer)
+
+
+    @classmethod
+    def get_question_id_to_modify(cls):
+        question_id_text = cls.__ui_mainwindow.label_45.text()
+        question_id_text_split = question_id_text.split()
+        question_id = int(question_id_text_split.pop())
+        return question_id
+
+
+    @classmethod
+    def get_single_correct_answer_to_modify(cls):
+        correct_answer = ""
+        if (cls.__ui_mainwindow.radioButton_6.isChecked()):
+            correct_answer = correct_answer + "A"
+        if (cls.__ui_mainwindow.radioButton_7.isChecked()):
+            correct_answer = correct_answer + "B"
+        if (cls.__ui_mainwindow.radioButton_8.isChecked()):
+            correct_answer = correct_answer + "C"
+        if (cls.__ui_mainwindow.radioButton_9.isChecked()):
+            correct_answer = correct_answer + "D"
+        if (cls.__ui_mainwindow.radioButton_10.isChecked()):
+            correct_answer = correct_answer + "E"
+        if (len(correct_answer) == 0):
+            return None
+        if (len(correct_answer) > 1):
+            return None
+        return correct_answer
 
     def __str__(self):
         return ("This is TeacherGUI Object")
