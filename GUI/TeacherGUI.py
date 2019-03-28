@@ -280,6 +280,16 @@ class TeacherGUI():
         cls.__ui_mainwindow.lineEdit_6.clear()
         cls.__ui_mainwindow.lineEdit_8.clear()
         cls.__ui_mainwindow.lineEdit_28.clear()
+        cls.__ui_mainwindow.radioButton_6.setDisabled(False)
+        cls.__ui_mainwindow.radioButton_7.setDisabled(False)
+        cls.__ui_mainwindow.radioButton_8.setDisabled(False)
+        cls.__ui_mainwindow.radioButton_9.setDisabled(False)
+        cls.__ui_mainwindow.radioButton_10.setDisabled(False)
+        cls.__ui_mainwindow.textEdit_8.setDisabled(False)
+        cls.__ui_mainwindow.textEdit_9.setDisabled(False)
+        cls.__ui_mainwindow.textEdit_10.setDisabled(False)
+        cls.__ui_mainwindow.textEdit_11.setDisabled(False)
+        cls.__ui_mainwindow.textEdit_20.setDisabled(False)
         cls.__ui_mainwindow.radioButton_6.setAutoExclusive(False)
         cls.__ui_mainwindow.radioButton_6.setChecked(False)
         cls.__ui_mainwindow.radioButton_7.setAutoExclusive(False)
@@ -375,6 +385,11 @@ class TeacherGUI():
         cls.__ui_mainwindow.label_12.setText("Invalid Question ID To Load")
 
     @classmethod
+    def display_modification_success_message(cls):
+        cls.__ui_mainwindow.label_57.setText("Modification Success")
+
+
+    @classmethod
     def get_question_type_to_modify(cls):
         question_type_text = cls.__ui_mainwindow.label_47.text()
         if (question_type_text == "Question Type: Single Answer"):
@@ -402,6 +417,25 @@ class TeacherGUI():
             return None
         return (question_pk, question_type, points, year_level, question_tag,question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_answer)
 
+    @classmethod
+    def get_essay_question_details_to_modify(cls):
+        question_pk = cls.get_question_id_to_modify()
+        question_type = cls.get_question_type_to_modify()
+        try:
+            points = int(cls.__ui_mainwindow.lineEdit_28.text())
+        except:
+            return None
+        try:
+            year_level = int(cls.__ui_mainwindow.lineEdit_6.text())
+        except:
+            return None
+        question_tag = cls.__ui_mainwindow.lineEdit_8.text()
+        if (question_tag == ""):
+            return None
+        question_body = cls.__ui_mainwindow.textEdit_7.toPlainText()
+        if (question_body == ""):
+            return None
+        return (question_pk, question_type, points, year_level, question_tag, question_body)
 
     @classmethod
     def get_question_id_to_modify(cls):

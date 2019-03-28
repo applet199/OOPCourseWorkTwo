@@ -151,6 +151,7 @@ class Teacher():
                 return
             TeacherDA.update_single_answer_question_details_in_db(single_answer_question_details)
             TeacherGUI.refresh_view_or_modify_question_page()
+            TeacherGUI.display_modification_success_message()
         elif (question_type == "Multiple Answers"):
             multiple_answers_question_details = TeacherGUI.get_multiple_answers_question_details_to_modify()
             if (multiple_answers_question_details == None):
@@ -158,6 +159,7 @@ class Teacher():
                 return
             TeacherDA.update_multiple_answers_question_details_in_db(multiple_answers_question_details)
             TeacherGUI.refresh_view_or_modify_question_page()
+            TeacherGUI.display_modification_success_message()
         elif (question_type == "Essay"):
             essay_question_details = TeacherGUI.get_essay_question_details_to_modify()
             if (essay_question_details == None):
@@ -165,6 +167,9 @@ class Teacher():
                 return
             TeacherDA.update_essay_question_details_in_db(essay_question_details)
             TeacherGUI.refresh_view_or_modify_question_page()
+            TeacherGUI.display_modification_success_message()
+        else:
+            TeacherGUI.display_invalid_modification_message()
 
 
     @classmethod

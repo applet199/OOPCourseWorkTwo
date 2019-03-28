@@ -298,6 +298,33 @@ class TeacherDA():
         cls.__cursor.execute(update_single_answer_question_table_query, (question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_answer, question_pk))
         cls.__db_connection.commit()
 
+    @classmethod
+    def update_essay_question_details_in_db(cls, question_details):
+        question_pk = question_details[0]
+        question_type = question_details[1]
+        points = question_details[2]
+        year_level = question_details[3]
+        question_tag = question_details[4]
+        question_body = question_details[5]
+        update_question_table_query = '''
+            UPDATE question
+            SET points = ?,
+                year_level = ?,
+                question_tag = ?
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(update_question_table_query, (points, year_level, question_tag, question_pk))
+        cls.__db_connection.commit()
+
+        update_essay_question_table_query = '''
+            UPDATE essay_question
+            SET question_body = ?
+            WHERE question_fk = ?
+        '''
+        cls.__cursor.execute(update_essay_question_table_query, (question_body, question_pk))
+        cls.__db_connection.commit()
+
+
 
     def __str__(self):
         return ("This is TeacherDA Object")
