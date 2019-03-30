@@ -106,6 +106,7 @@ class Main():
                 self.__mainwindow.show()
                 Teacher.setup(self.__db_connection, self.ui, self.__mainwindow)
                 Teacher.display_saved_questions()
+                Teacher.display_saved_school_classes()
                 Teacher.actions()
             elif (user_type == "Student"):
                 self.ui = Ui_StudentMainWindow()

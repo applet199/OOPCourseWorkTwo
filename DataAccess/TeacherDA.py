@@ -11,6 +11,17 @@ class TeacherDA():
         cls.__db_connection = connection
         cls.__cursor = connection.cursor()
 
+    @classmethod
+    def get_all_active_school_classes_from_db(cls):
+        query = '''
+                SELECT school_class_pk
+                FROM school_class
+                WHERE active = 1
+                '''
+        cls.__cursor.execute(query)
+        active_school_classes = cls.__cursor.fetchall()
+        return active_school_classes
+
 
     @classmethod
     def insert_single_answer_question_into_db(cls, single_answer_question_details):

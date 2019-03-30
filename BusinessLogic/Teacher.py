@@ -25,6 +25,11 @@ class Teacher():
         TeacherGUI.display_all_active_questions(all_active_questions)
 
     @classmethod
+    def display_saved_school_classes(cls):
+        all_active_school_classes = TeacherDA.get_all_active_school_classes_from_db()
+        TeacherGUI.display_all_active_school_classes(all_active_school_classes)
+
+    @classmethod
     def actions(cls):
         cls.create_single_answer_question_button_pressed()
         cls.preview_single_answer_question_button_pressed()
@@ -34,6 +39,7 @@ class Teacher():
         cls.preview_essay_question_button_pressed()
         cls.load_question_details_by_id_button_pressed()
         cls.modify_question_button_pressed()
+        cls.view_students_in_school_class_by_id_button_pressed()
 
     @classmethod
     def create_single_answer_question_button_pressed(cls):
@@ -67,7 +73,9 @@ class Teacher():
     def modify_question_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_9.clicked.connect(cls.modify_question)
 
-
+    @classmethod
+    def view_students_in_school_class_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_30.clicked.connect(cls.view_students_in_school_class_by_id)
 
     @classmethod
     def create_single_answer_question(cls):
@@ -170,6 +178,10 @@ class Teacher():
             TeacherGUI.display_modification_success_message()
         else:
             TeacherGUI.display_invalid_modification_message()
+
+    @classmethod
+    def view_students_in_school_class_by_id(cls):
+        pass
 
 
     @classmethod

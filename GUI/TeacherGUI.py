@@ -17,6 +17,20 @@ class TeacherGUI():
     def setup(cls, ui_mainwindow):
         cls.__ui_mainwindow = ui_mainwindow
 
+    @classmethod
+    def display_all_active_school_classes(cls, school_classes):
+        cls.__ui_mainwindow.tableWidget_14.clear()
+        row = 0
+        col = 0
+        for (school_class_id, ) in school_classes:
+            school_class_text = "Class "  + str(school_class_id)
+            school_class_item = QTableWidgetItem(school_class_text)
+            cls.__ui_mainwindow.tableWidget_14.setItem(row, col, school_class_item)
+            if (col >= 4):
+                col = 0
+                row += 1
+            else:
+                col += 1
 
     @classmethod
     def display_single_answer_question_dialog_preview(cls):
