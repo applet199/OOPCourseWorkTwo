@@ -425,13 +425,6 @@ class AdminDA():
                                '''
         cls.__cursor.execute(update_student_query, (student_pk, ))
         cls.__db_connection.commit()
-        update_school_class_query = '''
-                                    UPDATE school_class
-                                    SET number_of_students = number_of_students - 1
-                                    WHERE school_class_pk = ?
-                                    '''
-        cls.__cursor.execute(update_school_class_query, (school_class_pk, ))
-        cls.__db_connection.commit()
 
     @classmethod
     def add_student_to_school_class_in_db(cls, student_pk, school_class_pk):
@@ -441,13 +434,6 @@ class AdminDA():
                                WHERE student_pk = ?
                                '''
         cls.__cursor.execute(update_student_query, (school_class_pk, student_pk))
-        cls.__db_connection.commit()
-        update_school_class_query = '''
-                                    UPDATE school_class
-                                    SET number_of_students = number_of_students + 1
-                                    WHERE school_class_pk = ?
-                                    '''
-        cls.__cursor.execute(update_school_class_query, (school_class_pk, ))
         cls.__db_connection.commit()
 
     @classmethod

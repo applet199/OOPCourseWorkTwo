@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QLineEdit, QPushButton, QApplication, QMainWindow, Q
 
 from OOPCourseWorkTwo.BusinessLogic.Admin import Admin
 from OOPCourseWorkTwo.BusinessLogic.Teacher import Teacher
+from OOPCourseWorkTwo.BusinessLogic.Student import Student
 
 from OOPCourseWorkTwo.GUI.LoginGUIQtDesigner import Ui_LoginMainWindow
 from OOPCourseWorkTwo.GUI.AdminGUIQtDesigner import Ui_AdminMainWindow
@@ -83,7 +84,30 @@ class Main():
             return None
         user_type = user_type_tuple[0]
         self.__user_type = user_type
+        if (user_type == "Student"):
+            self.__student_id = self.get_student_id_for_student_user()
         return user_type
+
+    def get_student_id_for_student_user(self):
+        login_name = self.get_login_name_from_login_screen()
+        cursor = self.__db_connection.cursor()
+        query = '''
+            SELECT user_full_name
+            FROM user
+            WHERE login_name = ?
+        '''
+        cursor.execute(query, (login_name,))
+        user_full_name_tuple = cursor.fetchone()
+        user_full_name = user_full_name_tuple[0]
+        query = '''
+            SELECT student_pk
+            FROM student
+            WHERE student_full_name = ?
+        '''
+        cursor.execute(query, (user_full_name,))
+        student_id_tuple = cursor.fetchone()
+        student_id = student_id_tuple[0]
+        return student_id
 
     def display_invalid_login_error_message(self):
         self.ui.label_3.setText("Login Failed")
@@ -108,9 +132,16 @@ class Main():
                 Teacher.display_saved_questions()
                 Teacher.display_saved_school_classes()
                 Teacher.display_saved_exams()
+                Teacher.display_saved_not_completed_exams()
                 Teacher.actions()
             elif (user_type == "Student"):
                 self.ui = Ui_StudentMainWindow()
+                self.ui.setupUi(self.__mainwindow)
+                self.__mainwindow.show()
+                Student.setup(self.__db_connection, self.ui, self.__mainwindow)
+                Student.set_student_id_for_current_session(self.__student_id)
+                Student.display_current_not_completed_exams()
+
         except:
             self.display_invalid_login_error_message()
 

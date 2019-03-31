@@ -153,16 +153,17 @@ class TeacherDA():
 
 
     @classmethod
-    def insert_exam_into_db(cls, exam_pk, list_of_questions_ids, list_of_school_classes_ids):
+    def insert_exam_into_db(cls, exam_pk, questions_ids, school_classes_ids, exam_status):
         query = '''
             INSERT INTO exam (
               exam_pk,
-              list_of_questions_ids,
-              list_of_school_classes_ids
+              questions_ids,
+              school_classes_ids,
+              exam_status
               )
-            VALUES (?, ?, ?)
+            VALUES (?, ?, ?, ?)
         '''
-        cls.__cursor.execute(query, (exam_pk, list_of_questions_ids, list_of_school_classes_ids))
+        cls.__cursor.execute(query, (exam_pk, questions_ids, school_classes_ids, exam_status))
         cls.__db_connection.commit()
 
 
@@ -254,6 +255,17 @@ class TeacherDA():
         cls.__cursor.execute(query)
         all_exams_tuple = cls.__cursor.fetchall()
         return all_exams_tuple
+
+    @classmethod
+    def get_not_completed_exams_from_db(cls):
+        query='''
+            SELECT exam_pk
+            FROM exam
+            WHERE exam_status = ?
+        '''
+        cls.__cursor.execute(query, ("Not Completed", ))
+        not_completed_exams_tuple = cls.__cursor.fetchall()
+        return not_completed_exams_tuple
 
     @classmethod
     def get_question_type_by_id(cls, question_pk):
@@ -472,6 +484,8 @@ class TeacherDA():
         cls.__cursor.execute(query, (question_id, ))
         question_pk_tuple = cls.__cursor.fetchone()
         return question_pk_tuple != None
+
+
 
     def __str__(self):
         return ("This is TeacherDA Object")

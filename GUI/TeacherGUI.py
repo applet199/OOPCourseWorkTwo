@@ -48,6 +48,22 @@ class TeacherGUI():
                 col += 1
 
     @classmethod
+    def display_not_completed_exams(cls, not_completed_exams):
+        cls.__ui_mainwindow.tableWidget_16.clear()
+        row = 0
+        col = 0
+        for (exam_id, ) in not_completed_exams:
+            exam_text = "Exam "  + str(exam_id)
+            exam_item = QTableWidgetItem(exam_text)
+            cls.__ui_mainwindow.tableWidget_16.setItem(row, col, exam_item)
+            if (col >= 6):
+                col = 0
+                row += 1
+            else:
+                col += 1
+
+
+    @classmethod
     def display_single_answer_question_dialog_preview(cls):
         question_body = cls.__ui_mainwindow.textEdit.toPlainText()
         option_A_text = cls.__ui_mainwindow.textEdit_2.toPlainText()
@@ -774,39 +790,42 @@ class TeacherGUI():
 
     @classmethod
     def is_question_id_already_added_to_current_exam(cls, question_id):
-        list_of_question_ids_in_current_exam = cls.get_list_of_question_ids_in_current_exam()
-        return list_of_question_ids_in_current_exam.count(question_id) == 1
+        string_of_question_ids_in_current_exam = cls.get_string_of_question_ids_in_current_exam()
+        list_of_question_ids = string_of_question_ids_in_current_exam.split(" ")
+        return list_of_question_ids.count(str(question_id)) == 1
 
     @classmethod
     def is_school_class_id_already_added_to_current_exam(cls, school_class_id):
-        list_of_school_classes_ids_in_current_exam = cls.get_list_of_school_classes_ids_in_current_exam()
-        return list_of_school_classes_ids_in_current_exam.count(school_class_id) == 1
+        string_of_school_classes_ids_in_current_exam = cls.get_string_of_school_classes_ids_in_current_exam()
+        list_of_school_classes_ids = string_of_school_classes_ids_in_current_exam.split(" ")
+        return list_of_school_classes_ids.count(str(school_class_id)) == 1
 
     @classmethod
-    def get_list_of_question_ids_in_current_exam(cls):
-        list_of_question_ids = []
+    def get_string_of_question_ids_in_current_exam(cls):
+        string_of_question_ids = ""
         col = 0
         for row in range(10):
             question_item = cls.__ui_mainwindow.tableWidget_3.item(row, col)
             if (question_item != None):
                 question_text = question_item.text()
                 question_text_split = question_text.split(" ")
-                question_id = int(question_text_split.pop())
-                list_of_question_ids.append(question_id)
-        return list_of_question_ids
+                question_id = question_text_split.pop()
+                string_of_question_ids = string_of_question_ids + question_id + " "
+        return string_of_question_ids
 
     @classmethod
-    def get_list_of_school_classes_ids_in_current_exam(cls):
-        list_of_school_classes_ids = []
+    def get_string_of_school_classes_ids_in_current_exam(cls):
+        string_of_school_classes_ids = ""
         col = 0
         for row in range(10):
             school_class_item = cls.__ui_mainwindow.tableWidget_4.item(row, col)
             if (school_class_item != None):
                 school_class_text = school_class_item.text()
                 school_class_text_split = school_class_text.split(" ")
-                school_class_id = int(school_class_text_split.pop())
-                list_of_school_classes_ids.append(school_class_id)
-        return list_of_school_classes_ids
+                school_class_id = school_class_text_split.pop()
+                string_of_school_classes_ids = string_of_school_classes_ids + school_class_id + " "
+        return string_of_school_classes_ids
+
 
 
     def __str__(self):

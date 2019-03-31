@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1132</width>
+    <width>1131</width>
     <height>857</height>
    </rect>
   </property>
@@ -1659,7 +1659,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_15">
        <attribute name="title">
@@ -1953,11 +1953,11 @@ p, li { white-space: pre-wrap; }
           <x>800</x>
           <y>270</y>
           <width>111</width>
-          <height>311</height>
+          <height>201</height>
          </rect>
         </property>
         <property name="rowCount">
-         <number>10</number>
+         <number>5</number>
         </property>
         <property name="columnCount">
          <number>1</number>
@@ -1968,11 +1968,6 @@ p, li { white-space: pre-wrap; }
         <attribute name="verticalHeaderVisible">
          <bool>false</bool>
         </attribute>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
         <row/>
         <row/>
         <row/>
@@ -2130,7 +2125,7 @@ p, li { white-space: pre-wrap; }
          </rect>
         </property>
         <property name="text">
-         <string>(Maximum 10)</string>
+         <string>(Maximum 5)</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_26">
@@ -2293,6 +2288,252 @@ p, li { white-space: pre-wrap; }
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>Exams In Progress</string>
+     </attribute>
+     <widget class="QTabWidget" name="tabWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>1061</width>
+        <height>711</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_6">
+       <attribute name="title">
+        <string>Current Not Completed Exams</string>
+       </attribute>
+       <widget class="QTableWidget" name="tableWidget_16">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>80</y>
+          <width>881</width>
+          <height>491</height>
+         </rect>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::NoSelection</enum>
+        </property>
+        <property name="rowCount">
+         <number>13</number>
+        </property>
+        <property name="columnCount">
+         <number>7</number>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_9">
+       <attribute name="title">
+        <string>Exams Ready To Be Marked</string>
+       </attribute>
+       <widget class="QTableWidget" name="tableWidget_17">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>70</y>
+          <width>511</width>
+          <height>561</height>
+         </rect>
+        </property>
+        <property name="rowCount">
+         <number>15</number>
+        </property>
+        <property name="columnCount">
+         <number>4</number>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+       </widget>
+       <widget class="QLabel" name="label_16">
+        <property name="geometry">
+         <rect>
+          <x>690</x>
+          <y>380</y>
+          <width>211</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>670</x>
+          <y>190</y>
+          <width>251</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_23">
+         <item>
+          <widget class="QLineEdit" name="lineEdit_29"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_31">
+           <property name="text">
+            <string>Mark Exam By ID</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_24">
+       <attribute name="title">
+        <string>Exams Already Marked</string>
+       </attribute>
+       <widget class="QTableWidget" name="tableWidget_18">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>50</y>
+          <width>641</width>
+          <height>581</height>
+         </rect>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::NoSelection</enum>
+        </property>
+        <property name="rowCount">
+         <number>15</number>
+        </property>
+        <property name="columnCount">
+         <number>5</number>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_10">
+        <property name="geometry">
+         <rect>
+          <x>740</x>
+          <y>140</y>
+          <width>251</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_36">
+         <item>
+          <widget class="QLineEdit" name="lineEdit_30"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_32">
+           <property name="text">
+            <string>Release Exam Result By ID</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QLabel" name="label_48">
+        <property name="geometry">
+         <rect>
+          <x>770</x>
+          <y>330</y>
+          <width>201</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
     <widget class="QWidget" name="tab_21">
      <attribute name="title">
       <string>Exam Results Bank</string>
@@ -2307,7 +2548,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_22">
        <attribute name="title">
@@ -2373,10 +2614,10 @@ p, li { white-space: pre-wrap; }
        <widget class="QPushButton" name="pushButton_24">
         <property name="geometry">
          <rect>
-          <x>280</x>
+          <x>210</x>
           <y>20</y>
-          <width>221</width>
-          <height>41</height>
+          <width>291</width>
+          <height>51</height>
          </rect>
         </property>
         <property name="text">
@@ -2388,22 +2629,28 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>520</x>
           <y>30</y>
-          <width>113</width>
-          <height>20</height>
+          <width>111</width>
+          <height>31</height>
          </rect>
         </property>
        </widget>
        <widget class="QTableWidget" name="tableWidget_12">
         <property name="geometry">
          <rect>
-          <x>80</x>
-          <y>310</y>
-          <width>111</width>
-          <height>311</height>
+          <x>90</x>
+          <y>200</y>
+          <width>131</width>
+          <height>191</height>
          </rect>
         </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::NoSelection</enum>
+        </property>
         <property name="rowCount">
-         <number>10</number>
+         <number>5</number>
         </property>
         <property name="columnCount">
          <number>1</number>
@@ -2419,18 +2666,13 @@ p, li { white-space: pre-wrap; }
         <row/>
         <row/>
         <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
         <column/>
        </widget>
        <widget class="QLabel" name="label_31">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>200</y>
+          <x>70</x>
+          <y>150</y>
           <width>161</width>
           <height>31</height>
          </rect>
@@ -2445,8 +2687,8 @@ p, li { white-space: pre-wrap; }
        <widget class="QLabel" name="label_32">
         <property name="geometry">
          <rect>
-          <x>390</x>
-          <y>70</y>
+          <x>710</x>
+          <y>30</y>
           <width>181</width>
           <height>41</height>
          </rect>
@@ -2461,8 +2703,8 @@ p, li { white-space: pre-wrap; }
        <widget class="QLabel" name="label_33">
         <property name="geometry">
          <rect>
-          <x>380</x>
-          <y>110</y>
+          <x>390</x>
+          <y>80</y>
           <width>211</width>
           <height>41</height>
          </rect>
@@ -2477,10 +2719,10 @@ p, li { white-space: pre-wrap; }
        <widget class="QTableWidget" name="tableWidget_13">
         <property name="geometry">
          <rect>
-          <x>370</x>
-          <y>310</y>
-          <width>211</width>
-          <height>311</height>
+          <x>340</x>
+          <y>230</y>
+          <width>261</width>
+          <height>381</height>
          </rect>
         </property>
         <property name="rowCount">
@@ -2512,7 +2754,7 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>700</x>
-          <y>200</y>
+          <y>140</y>
           <width>264</width>
           <height>61</height>
          </rect>
@@ -2533,8 +2775,8 @@ p, li { white-space: pre-wrap; }
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>350</x>
-          <y>200</y>
+          <x>340</x>
+          <y>140</y>
           <width>266</width>
           <height>61</height>
          </rect>
@@ -2555,10 +2797,10 @@ p, li { white-space: pre-wrap; }
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>700</x>
-          <y>310</y>
+          <x>680</x>
+          <y>240</y>
           <width>311</width>
-          <height>321</height>
+          <height>381</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_20">
@@ -2647,7 +2889,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1132</width>
+     <width>1131</width>
      <height>26</height>
     </rect>
    </property>

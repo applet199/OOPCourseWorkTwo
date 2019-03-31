@@ -274,7 +274,6 @@ class AdminGUI():
     def display_school_class_details(cls, school_class_details_tuples_list):
         cls.__ui_mainwindow.tableWidget_9.clear()
         number_of_students = len(school_class_details_tuples_list)
-        cls.__ui_mainwindow.label_70.setText("Number Of Students: " + str(number_of_students))
         if (number_of_students == 0):
             return
         row = 0
@@ -418,7 +417,6 @@ class AdminGUI():
     @classmethod
     def display_students_in_school_class(cls, students_tuples_list):
         number_of_students = len(students_tuples_list)
-        cls.__ui_mainwindow.label_70.setText("Number Of Students: " + str(number_of_students))
         cls.__ui_mainwindow.tableWidget_9.clear()
         row = 0
         col = 0

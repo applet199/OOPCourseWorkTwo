@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -40,7 +40,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -878,7 +878,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
@@ -1198,31 +1198,6 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QLabel" name="label_70">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>90</y>
-          <width>251</width>
-          <height>50</height>
-         </rect>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>200</width>
-          <height>50</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Number Of Students:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
@@ -1320,6 +1295,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_48">
          <item>
           <widget class="QPushButton" name="pushButton_48">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="minimumSize">
             <size>
              <width>200</width>
@@ -1332,7 +1310,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_48"/>
+          <widget class="QLineEdit" name="lineEdit_48">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -1364,6 +1346,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_49">
          <item>
           <widget class="QPushButton" name="pushButton_49">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="minimumSize">
             <size>
              <width>200</width>
@@ -1376,7 +1361,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_49"/>
+          <widget class="QLineEdit" name="lineEdit_49">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -1397,6 +1386,9 @@
         </property>
        </widget>
        <widget class="QTableWidget" name="tableWidget_13">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>310</x>
@@ -1480,6 +1472,9 @@
         <string>Student Activation</string>
        </attribute>
        <widget class="QTableWidget" name="tableWidget_10">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>310</x>
@@ -1542,6 +1537,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_11">
          <item>
           <widget class="QPushButton" name="pushButton_9">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="minimumSize">
             <size>
              <width>200</width>
@@ -1555,6 +1553,9 @@
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit_9">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
            </property>
@@ -1606,6 +1607,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_10">
          <item>
           <widget class="QPushButton" name="pushButton_8">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="minimumSize">
             <size>
              <width>200</width>
@@ -1619,6 +1623,9 @@
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit_8">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
            </property>
@@ -1817,6 +1824,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_34">
          <item>
           <widget class="QPushButton" name="pushButton_32">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="minimumSize">
             <size>
              <width>200</width>
@@ -1830,6 +1840,9 @@
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit_32">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
            </property>
@@ -1838,6 +1851,9 @@
         </layout>
        </widget>
        <widget class="QTableWidget" name="tableWidget_12">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>300</x>
@@ -1887,6 +1903,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_41">
          <item>
           <widget class="QPushButton" name="pushButton_39">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="minimumSize">
             <size>
              <width>200</width>
@@ -1900,6 +1919,9 @@
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit_39">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
            </property>

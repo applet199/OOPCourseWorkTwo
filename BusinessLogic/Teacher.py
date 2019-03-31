@@ -5,8 +5,6 @@ from OOPCourseWorkTwo.DataAccess.TeacherDA import TeacherDA
 
 from OOPCourseWorkTwo.GUI.TeacherGUI import TeacherGUI
 
-
-
 class Teacher():
 
     def __init__(self):
@@ -33,6 +31,11 @@ class Teacher():
     def display_saved_exams(cls):
         all_exams = TeacherDA.get_all_exams_from_db()
         TeacherGUI.display_all_exams(all_exams)
+
+    @classmethod
+    def display_saved_not_completed_exams(cls):
+        not_completed_exams = TeacherDA.get_not_completed_exams_from_db()
+        TeacherGUI.display_not_completed_exams(not_completed_exams)
 
     @classmethod
     def actions(cls):
@@ -302,11 +305,11 @@ class Teacher():
 
     @classmethod
     def create_exam(cls):
-        list_of_question_ids = str(TeacherGUI.get_list_of_question_ids_in_current_exam())
-        list_of_school_classes_ids = str(TeacherGUI.get_list_of_school_classes_ids_in_current_exam())
+        string_of_question_ids = TeacherGUI.get_string_of_question_ids_in_current_exam()
+        string_of_school_classes_ids = TeacherGUI.get_string_of_school_classes_ids_in_current_exam()
         total_number_of_exams = TeacherDA.get_total_number_of_exams_in_db()
         exam_pk = total_number_of_exams + 1
-        TeacherDA.insert_exam_into_db(exam_pk, list_of_question_ids, list_of_school_classes_ids)
+        TeacherDA.insert_exam_into_db(exam_pk, string_of_question_ids, string_of_school_classes_ids, "Not Completed")
         all_exams = TeacherDA.get_all_exams_from_db()
         TeacherGUI.display_all_exams(all_exams)
         TeacherGUI.display_create_exam_success_message()

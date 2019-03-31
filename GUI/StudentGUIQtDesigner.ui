@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>10</y>
+      <y>70</y>
       <width>1081</width>
-      <height>761</height>
+      <height>701</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -33,10 +33,10 @@
      <widget class="QTableWidget" name="tableWidget">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>240</y>
-        <width>211</width>
-        <height>311</height>
+        <x>360</x>
+        <y>150</y>
+        <width>261</width>
+        <height>381</height>
        </rect>
       </property>
       <property name="rowCount">
@@ -67,14 +67,14 @@
      <widget class="QLabel" name="label_13">
       <property name="geometry">
        <rect>
-        <x>380</x>
-        <y>140</y>
-        <width>221</width>
-        <height>41</height>
+        <x>340</x>
+        <y>70</y>
+        <width>311</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>List Of Current Incomplete Exams</string>
+       <string>List Of Current Not Completed Exams</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -111,21 +111,24 @@
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>440</x>
-        <y>90</y>
-        <width>47</width>
-        <height>13</height>
+        <x>730</x>
+        <y>30</y>
+        <width>251</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
         <x>400</x>
-        <y>120</y>
+        <y>70</y>
         <width>171</width>
         <height>51</height>
        </rect>
@@ -140,25 +143,60 @@
      <widget class="QLabel" name="label_3">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>160</y>
+        <x>50</x>
+        <y>70</y>
         <width>271</width>
         <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>Number Of Questiions Not Yet Completed In Exam: </string>
+       <string>Questiions Not Yet Completed: </string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QTableWidget" name="tableWidget_3">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>230</y>
-        <width>171</width>
-        <height>421</height>
+        <x>120</x>
+        <y>140</y>
+        <width>131</width>
+        <height>381</height>
        </rect>
       </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="dragDropMode">
+       <enum>QAbstractItemView::DragOnly</enum>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="rowCount">
+       <number>10</number>
+      </property>
+      <property name="columnCount">
+       <number>1</number>
+      </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column/>
      </widget>
      <widget class="QLabel" name="label_4">
       <property name="geometry">
@@ -218,14 +256,17 @@
      <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
-        <x>740</x>
-        <y>140</y>
+        <x>730</x>
+        <y>80</y>
         <width>231</width>
         <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>Number Of Questions Already Completed: </string>
+       <string>Questions Already Completed: </string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QLabel" name="label_7">
@@ -244,12 +285,47 @@
      <widget class="QTableWidget" name="tableWidget_5">
       <property name="geometry">
        <rect>
-        <x>770</x>
-        <y>230</y>
-        <width>161</width>
-        <height>421</height>
+        <x>780</x>
+        <y>140</y>
+        <width>131</width>
+        <height>381</height>
        </rect>
       </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="tabKeyNavigation">
+       <bool>false</bool>
+      </property>
+      <property name="showDropIndicator" stdset="0">
+       <bool>false</bool>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::NoSelection</enum>
+      </property>
+      <property name="rowCount">
+       <number>10</number>
+      </property>
+      <property name="columnCount">
+       <number>1</number>
+      </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column/>
      </widget>
      <widget class="QPushButton" name="pushButton_3">
       <property name="geometry">
@@ -376,6 +452,22 @@
      </widget>
     </widget>
    </widget>
+   <widget class="QLabel" name="label_14">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>20</y>
+      <width>251</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Student ID: </string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -383,7 +475,7 @@
      <x>0</x>
      <y>0</y>
      <width>1117</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
