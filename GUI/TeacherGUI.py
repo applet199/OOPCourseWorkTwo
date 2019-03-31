@@ -64,11 +64,11 @@ class TeacherGUI():
         cls.__ui_dialog = Ui_MultipleAnswersQuestionDialog()
         cls.__ui_dialog.setupUi(cls.__dialog)
         cls.__ui_dialog.label.setText(question_body)
-        cls.__ui_dialog.label_3.setText("A " + option_A_text)
-        cls.__ui_dialog.label_4.setText("B " + option_B_text)
-        cls.__ui_dialog.label_5.setText("C " + option_C_text)
-        cls.__ui_dialog.label_6.setText("D " + option_D_text)
-        cls.__ui_dialog.label_7.setText("E " + option_E_text)
+        cls.__ui_dialog.label_3.setText(option_A_text)
+        cls.__ui_dialog.label_4.setText(option_B_text)
+        cls.__ui_dialog.label_5.setText(option_C_text)
+        cls.__ui_dialog.label_6.setText(option_D_text)
+        cls.__ui_dialog.label_7.setText(option_E_text)
         cls.__dialog.show()
         cls.__ui_dialog.pushButton.clicked.connect(cls.close_dialog)
 
@@ -285,6 +285,7 @@ class TeacherGUI():
         cls.__ui_mainwindow.label_45.setText("Question ID: ")
         cls.__ui_mainwindow.label_47.setText("Question Type: ")
         cls.__ui_mainwindow.label_57.clear()
+        cls.__ui_mainwindow.label_12.clear()
         cls.__ui_mainwindow.textEdit_7.clear()
         cls.__ui_mainwindow.textEdit_8.clear()
         cls.__ui_mainwindow.textEdit_9.clear()
@@ -369,6 +370,45 @@ class TeacherGUI():
             cls.__ui_mainwindow.radioButton_10.setChecked(True)
 
     @classmethod
+    def load_multiple_answers_question_details(cls, question_details):
+        question_id = question_details[0]
+        question_type = question_details[1]
+        points = question_details[2]
+        year_level = question_details[3]
+        question_tag = question_details[4]
+        question_body = question_details[5]
+        option_A_text = question_details[6]
+        option_B_text = question_details[7]
+        option_C_text = question_details[8]
+        option_D_text = question_details[9]
+        option_E_text = question_details[10]
+        correct_answers = question_details[11]
+
+        cls.__ui_mainwindow.label_45.setText("Question ID: " + str(question_id))
+        cls.__ui_mainwindow.label_47.setText("Question Type: " + str(question_type))
+        cls.__ui_mainwindow.textEdit_7.setText(question_body)
+        cls.__ui_mainwindow.textEdit_8.setText(option_A_text)
+        cls.__ui_mainwindow.textEdit_9.setText(option_B_text)
+        cls.__ui_mainwindow.textEdit_10.setText(option_C_text)
+        cls.__ui_mainwindow.textEdit_11.setText(option_D_text)
+        cls.__ui_mainwindow.textEdit_20.setText(option_E_text)
+        cls.__ui_mainwindow.lineEdit_6.setText(str(year_level))
+        cls.__ui_mainwindow.lineEdit_8.setText(question_tag)
+        cls.__ui_mainwindow.lineEdit_28.setText(str(points))
+
+        if (correct_answers.count("A") == 1):
+            cls.__ui_mainwindow.radioButton_6.setChecked(True)
+        if (correct_answers.count("B") == 1):
+            cls.__ui_mainwindow.radioButton_7.setChecked(True)
+        if (correct_answers.count("C") == 1):
+            cls.__ui_mainwindow.radioButton_8.setChecked(True)
+        if (correct_answers.count("D") == 1):
+            cls.__ui_mainwindow.radioButton_9.setChecked(True)
+        if (correct_answers.count("E") == 1):
+            cls.__ui_mainwindow.radioButton_10.setChecked(True)
+
+
+    @classmethod
     def load_essay_question_details(cls, question_details):
         question_id = question_details[0]
         question_type = question_details[1]
@@ -402,6 +442,11 @@ class TeacherGUI():
     def display_modification_success_message(cls):
         cls.__ui_mainwindow.label_57.setText("Modification Success")
 
+    @classmethod
+    def display_invalid_school_class_id_message(cls):
+        cls.__ui_mainwindow.label_14.setText("Invalid School Class ID")
+        cls.__ui_mainwindow.tableWidget_15.clear()
+
 
     @classmethod
     def get_question_type_to_modify(cls):
@@ -430,6 +475,24 @@ class TeacherGUI():
         if (correct_answer == None):
             return None
         return (question_pk, question_type, points, year_level, question_tag,question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_answer)
+
+    @classmethod
+    def get_multiple_answers_question_details_to_modify(cls):
+        question_pk = cls.get_question_id_to_modify()
+        question_type = cls.get_question_type_to_modify()
+        points = int(cls.__ui_mainwindow.lineEdit_28.text())
+        year_level = int(cls.__ui_mainwindow.lineEdit_6.text())
+        question_tag = cls.__ui_mainwindow.lineEdit_8.text()
+        question_body = cls.__ui_mainwindow.textEdit_7.toPlainText()
+        option_A_text = cls.__ui_mainwindow.textEdit_8.toPlainText()
+        option_B_text = cls.__ui_mainwindow.textEdit_9.toPlainText()
+        option_C_text = cls.__ui_mainwindow.textEdit_10.toPlainText()
+        option_D_text = cls.__ui_mainwindow.textEdit_11.toPlainText()
+        option_E_text = cls.__ui_mainwindow.textEdit_20.toPlainText()
+        correct_answers = cls.get_multiple_correct_answers_to_modify()
+        if (correct_answers == None):
+            return None
+        return (question_pk, question_type, points, year_level, question_tag,question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_answers)
 
     @classmethod
     def get_essay_question_details_to_modify(cls):
@@ -477,6 +540,53 @@ class TeacherGUI():
         if (len(correct_answer) > 1):
             return None
         return correct_answer
+
+    @classmethod
+    def get_multiple_correct_answers_to_modify(cls):
+        correct_answers = ""
+        if (cls.__ui_mainwindow.radioButton_6.isChecked()):
+            correct_answers = correct_answers + "A"
+        if (cls.__ui_mainwindow.radioButton_7.isChecked()):
+            correct_answers = correct_answers + "B"
+        if (cls.__ui_mainwindow.radioButton_8.isChecked()):
+            correct_answers = correct_answers + "C"
+        if (cls.__ui_mainwindow.radioButton_9.isChecked()):
+            correct_answers = correct_answers + "D"
+        if (cls.__ui_mainwindow.radioButton_10.isChecked()):
+            correct_answers = correct_answers + "E"
+        if (len(correct_answers) == 0):
+            return None
+        if (len(correct_answers) > 4):
+            return None
+        return correct_answers
+
+    @classmethod
+    def get_school_class_id_to_view_students(cls):
+        school_class_id_text = cls.__ui_mainwindow.lineEdit_9.text()
+        try:
+            school_class_id = int(school_class_id_text)
+            return school_class_id
+        except:
+            return None
+
+    @classmethod
+    def display_school_class_details(cls, school_class_details):
+        cls.__ui_mainwindow.tableWidget_15.clear()
+        row = 0
+        col = 0
+        for (student, ) in school_class_details:
+            student_item = QTableWidgetItem(student)
+            cls.__ui_mainwindow.tableWidget_15.setItem(row, col, student_item)
+            if (col >= 1):
+                col = 0
+                row += 1
+            else:
+                col += 1
+
+    @classmethod
+    def refresh_view_school_class_details_page(cls):
+        cls.__ui_mainwindow.label_14.clear()
+
 
     def __str__(self):
         return ("This is TeacherGUI Object")

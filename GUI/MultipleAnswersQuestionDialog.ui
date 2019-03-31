@@ -100,11 +100,11 @@
           </size>
          </property>
          <property name="text">
-          <string/>
+          <string>A</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QLabel" name="label_3">
          <property name="minimumSize">
           <size>
@@ -139,12 +139,18 @@
           </size>
          </property>
          <property name="text">
-          <string/>
+          <string>B</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QLabel" name="label_4">
+         <property name="minimumSize">
+          <size>
+           <width>310</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -172,12 +178,18 @@
           </size>
          </property>
          <property name="text">
-          <string/>
+          <string>C</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QLabel" name="label_5">
+         <property name="minimumSize">
+          <size>
+           <width>310</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -205,12 +217,18 @@
           </size>
          </property>
          <property name="text">
-          <string/>
+          <string>D</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QLabel" name="label_6">
+         <property name="minimumSize">
+          <size>
+           <width>310</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -238,12 +256,18 @@
           </size>
          </property>
          <property name="text">
-          <string/>
+          <string>D</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QLabel" name="label_7">
+         <property name="minimumSize">
+          <size>
+           <width>310</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="text">
           <string/>
          </property>

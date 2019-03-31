@@ -40,6 +40,11 @@ class Teacher():
         cls.load_question_details_by_id_button_pressed()
         cls.modify_question_button_pressed()
         cls.view_students_in_school_class_by_id_button_pressed()
+        cls.add_question_to_exam_by_id_button_pressed()
+        cls.remove_question_from_exam_by_id_button_pressed()
+        cls.add_school_class_to_exam_by_id_button_pressed()
+        cls.remove_school_class_from_exam_by_id_button_pressed()
+        cls.create_exam_button_pressed()
 
     @classmethod
     def create_single_answer_question_button_pressed(cls):
@@ -76,6 +81,26 @@ class Teacher():
     @classmethod
     def view_students_in_school_class_by_id_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_30.clicked.connect(cls.view_students_in_school_class_by_id)
+
+    @classmethod
+    def add_question_to_exam_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_10.clicked.connect(cls.add_question_to_exam_by_id)
+
+    @classmethod
+    def remove_question_from_exam_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_12.clicked.connect(cls.remove_question_from_exam_by_id)
+
+    @classmethod
+    def add_school_class_to_exam_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_11.clicked.connect(cls.add_school_class_to_exam_by_id)
+
+    @classmethod
+    def remove_school_class_from_exam_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_13.clicked.connect(cls.remove_school_class_from_exam_by_id)
+
+    @classmethod
+    def create_exam_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_14.clicked.connect(cls.create_exam)
 
     @classmethod
     def create_single_answer_question(cls):
@@ -181,7 +206,14 @@ class Teacher():
 
     @classmethod
     def view_students_in_school_class_by_id(cls):
-        pass
+        school_class_id = TeacherGUI.get_school_class_id_to_view_students()
+        school_class_id_valid = TeacherDA.is_school_class_id_valid(school_class_id)
+        if (not school_class_id_valid):
+            TeacherGUI.display_invalid_school_class_id_message()
+            return
+        school_class_details = TeacherDA.get_school_class_details_by_id(school_class_id)
+        TeacherGUI.display_school_class_details(school_class_details)
+        TeacherGUI.refresh_view_school_class_details_page()
 
 
     @classmethod
@@ -195,8 +227,34 @@ class Teacher():
             return False
         return True
 
+    @classmethod
+    def add_question_to_exam_by_id(cls):
+        number_of_questions_in_current_exam = TeacherGUI.get_number_of_questions_in_current_exam()
+        if (number_of_questions_in_current_exam == 10):
+            TeacherGUI.display_number_of_questions_full_in_current_exam_message()
+            return
+        question_id = TeacherGUI.get_question_id_to_add_to_exam()
+        question_id_valid = TeacherDA.is_question_id_valid(question_id)
+        if (not question_id_valid):
+            TeacherGUI.display_question_id_invalid_message()
+            return
+        TeacherGUI.add_question_id_to_current_exam(question_id)
 
+    @classmethod
+    def remove_question_from_exam_by_id(cls):
+        pass
 
+    @classmethod
+    def add_school_class_to_exam_by_id(cls):
+        pass
+
+    @classmethod
+    def remove_school_class_from_exam_by_id(cls):
+        pass
+
+    @classmethod
+    def create_exam(cls):
+        pass
 
     def __str__(self):
         return ("This is Teacher Object")

@@ -25,11 +25,11 @@ class TeacherDA():
 
     @classmethod
     def insert_single_answer_question_into_db(cls, single_answer_question_details):
-        total_number_of_questions_tuple = cls.get_total_number_of_questions_in_db()
-        question_pk = total_number_of_questions_tuple[0] + 1
+        total_number_of_questions = cls.get_total_number_of_questions_in_db()
+        question_pk = total_number_of_questions + 1
 
-        total_number_of_single_answer_questions_tuple = cls.get_total_number_of_single_answer_questions_in_db()
-        single_answer_question_pk = total_number_of_single_answer_questions_tuple[0] + 1
+        total_number_of_single_answer_questions = cls.get_total_number_of_single_answer_questions_in_db()
+        single_answer_question_pk = total_number_of_single_answer_questions + 1
 
         question_body = single_answer_question_details[0]
         option_A_text = single_answer_question_details[1]
@@ -72,11 +72,11 @@ class TeacherDA():
 
     @classmethod
     def insert_multiple_answers_question_into_db(cls, multiple_answers_question_details):
-        total_number_of_questions_tuple = cls.get_total_number_of_questions_in_db()
-        question_pk = total_number_of_questions_tuple[0] + 1
+        total_number_of_questions = cls.get_total_number_of_questions_in_db()
+        question_pk = total_number_of_questions + 1
 
-        total_number_of_multiple_answers_questions_tuple = cls.get_total_number_of_multiple_answers_questions_in_db()
-        multiple_answers_question_pk = total_number_of_multiple_answers_questions_tuple[0] + 1
+        total_number_of_multiple_answers_questions = cls.get_total_number_of_multiple_answers_questions_in_db()
+        multiple_answers_question_pk = total_number_of_multiple_answers_questions + 1
 
         question_body = multiple_answers_question_details[0]
         option_A_text = multiple_answers_question_details[1]
@@ -108,11 +108,12 @@ class TeacherDA():
               option_C_text,
               option_D_text,
               option_E_text,
-              correct_answers
+              correct_answers,
+              question_fk
               )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         '''
-        cls.__cursor.execute(insert_into_multiple_answers_question_table_query, (multiple_answers_question_pk, question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_ansewrs))
+        cls.__cursor.execute(insert_into_multiple_answers_question_table_query, (multiple_answers_question_pk, question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_answers, question_pk))
         cls.__db_connection.commit()
 
     @classmethod
@@ -179,7 +180,7 @@ class TeacherDA():
             FROM multiple_answers_question
         '''
         cls.__cursor.execute(select_all_from_multiple_answers_question_query)
-        total_number_of_multiple_answers_questions = cls.__cursor.fetchone()
+        total_number_of_multiple_answers_questions_tuple = cls.__cursor.fetchone()
         total_number_of_multiple_answers_questions = total_number_of_multiple_answers_questions_tuple[0]
         return total_number_of_multiple_answers_questions
 
@@ -203,7 +204,7 @@ class TeacherDA():
     def get_correct_answers_string_for_multiple_answers_question(cls, correct_answers_list):
         correct_answers_string = ""
         for answer in correct_answers_list:
-            correct_answers_string = correct_answers_string + answer + " "
+            correct_answers_string = correct_answers_string + answer
         return correct_answers_string
 
     @classmethod
@@ -252,6 +253,31 @@ class TeacherDA():
         question_details_list = cls.__cursor.fetchall()
         question_details = question_details_list[0]
         return question_details
+
+    @classmethod
+    def get_multiple_answers_question_details_by_id(cls, question_pk):
+        select_multiple_answers_question_details_query = '''
+            SELECT question_pk,
+                question_type,
+                points,
+                year_level,
+                question_tag,
+                question_body,
+                option_A_text,
+                option_B_text,
+                option_C_text,
+                option_D_text,
+                option_E_text,
+                correct_answers
+            FROM question
+            INNER JOIN multiple_answers_question on question_pk = question_fk
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(select_multiple_answers_question_details_query, (question_pk, ))
+        question_details_list = cls.__cursor.fetchall()
+        question_details = question_details_list[0]
+        return question_details
+
 
     @classmethod
     def get_essay_question_details_by_id(cls, question_pk):
@@ -310,6 +336,46 @@ class TeacherDA():
         cls.__db_connection.commit()
 
     @classmethod
+    def update_multiple_answers_question_details_in_db(cls, question_details):
+        question_pk = question_details[0]
+        question_type = question_details[1]
+        points = question_details[2]
+        year_level = question_details[3]
+        question_tag = question_details[4]
+        question_body = question_details[5]
+        option_A_text = question_details[6]
+        option_B_text = question_details[7]
+        option_C_text = question_details[8]
+        option_D_text = question_details[9]
+        option_E_text = question_details[10]
+        correct_answers = question_details[11]
+        update_question_table_query = '''
+            UPDATE question
+            SET points = ?,
+                year_level = ?,
+                question_tag = ?
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(update_question_table_query, (points, year_level, question_tag, question_pk))
+        cls.__db_connection.commit()
+
+        update_multiple_answers_question_table_query = '''
+            UPDATE multiple_answers_question
+            SET question_body = ?,
+                option_A_text = ?,
+                option_B_text = ?,
+                option_C_text = ?,
+                option_D_text = ?,
+                option_E_text = ?,
+                correct_answers = ?
+            WHERE question_fk = ?
+        '''
+        cls.__cursor.execute(update_multiple_answers_question_table_query, (question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_answers, question_pk))
+        cls.__db_connection.commit()
+
+
+
+    @classmethod
     def update_essay_question_details_in_db(cls, question_details):
         question_pk = question_details[0]
         question_type = question_details[1]
@@ -335,6 +401,29 @@ class TeacherDA():
         cls.__cursor.execute(update_essay_question_table_query, (question_body, question_pk))
         cls.__db_connection.commit()
 
+    @classmethod
+    def is_school_class_id_valid(cls, school_class_id):
+        query = '''
+                SELECT school_class_pk
+                FROM school_class
+                WHERE active = 1 AND school_class_pk = ?
+                '''
+        cls.__cursor.execute(query, (school_class_id, ))
+        active_school_class = cls.__cursor.fetchone()
+        return active_school_class != None
+
+    @classmethod
+    def get_school_class_details_by_id(cls, school_class_id):
+        query = '''
+                SELECT student_full_name
+                FROM student
+                INNER JOIN school_class
+                ON student.school_class_fk = school_class.school_class_pk
+                WHERE student.active = 1 AND school_class.active = 1 AND school_class_pk = ?
+                '''
+        cls.__cursor.execute(query, (school_class_id, ))
+        active_students_in_school_class = cls.__cursor.fetchall()
+        return active_students_in_school_class
 
 
     def __str__(self):
