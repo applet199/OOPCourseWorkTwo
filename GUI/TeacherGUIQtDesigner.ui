@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -1288,6 +1288,12 @@ p, li { white-space: pre-wrap; }
         <height>561</height>
        </rect>
       </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::NoSelection</enum>
+      </property>
       <property name="rowCount">
        <number>15</number>
       </property>
@@ -1329,6 +1335,12 @@ p, li { white-space: pre-wrap; }
         <width>261</width>
         <height>381</height>
        </rect>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::NoSelection</enum>
       </property>
       <property name="rowCount">
        <number>10</number>
@@ -1403,6 +1415,9 @@ p, li { white-space: pre-wrap; }
       <string>Create Exam</string>
      </attribute>
      <widget class="QTableWidget" name="tableWidget_3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -1410,6 +1425,15 @@ p, li { white-space: pre-wrap; }
         <width>111</width>
         <height>381</height>
        </rect>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="dragDropOverwriteMode">
+       <bool>true</bool>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::NoSelection</enum>
       </property>
       <property name="rowCount">
        <number>10</number>
@@ -1463,6 +1487,12 @@ p, li { white-space: pre-wrap; }
         <height>191</height>
        </rect>
       </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::NoSelection</enum>
+      </property>
       <property name="rowCount">
        <number>5</number>
       </property>
@@ -1504,11 +1534,17 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="label_17">
       <property name="geometry">
        <rect>
-        <x>410</x>
-        <y>600</y>
-        <width>241</width>
+        <x>320</x>
+        <y>590</y>
+        <width>400</width>
         <height>51</height>
        </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>400</width>
+        <height>50</height>
+       </size>
       </property>
       <property name="text">
        <string/>
@@ -1537,7 +1573,11 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_10"/>
+          <widget class="QLineEdit" name="lineEdit_10">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -1551,7 +1591,11 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_12"/>
+          <widget class="QLineEdit" name="lineEdit_12">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -1565,7 +1609,11 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_11"/>
+          <widget class="QLineEdit" name="lineEdit_11">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -1579,7 +1627,11 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_13"/>
+          <widget class="QLineEdit" name="lineEdit_13">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -1607,7 +1659,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_15">
        <attribute name="title">
@@ -1621,6 +1673,12 @@ p, li { white-space: pre-wrap; }
           <width>1011</width>
           <height>611</height>
          </rect>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::NoSelection</enum>
         </property>
         <property name="rowCount">
          <number>20</number>
@@ -1673,10 +1731,10 @@ p, li { white-space: pre-wrap; }
        <widget class="QPushButton" name="pushButton_15">
         <property name="geometry">
          <rect>
-          <x>280</x>
-          <y>50</y>
-          <width>171</width>
-          <height>31</height>
+          <x>150</x>
+          <y>20</y>
+          <width>251</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="text">
@@ -1686,24 +1744,33 @@ p, li { white-space: pre-wrap; }
        <widget class="QLineEdit" name="lineEdit_14">
         <property name="geometry">
          <rect>
-          <x>500</x>
-          <y>50</y>
+          <x>450</x>
+          <y>30</y>
           <width>161</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
        <widget class="QTableWidget" name="tableWidget_6">
         <property name="geometry">
          <rect>
-          <x>610</x>
-          <y>320</y>
+          <x>600</x>
+          <y>180</y>
           <width>111</width>
-          <height>311</height>
+          <height>191</height>
          </rect>
         </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::NoSelection</enum>
+        </property>
         <property name="rowCount">
-         <number>10</number>
+         <number>5</number>
         </property>
         <property name="columnCount">
          <number>1</number>
@@ -1719,24 +1786,19 @@ p, li { white-space: pre-wrap; }
         <row/>
         <row/>
         <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
         <column/>
        </widget>
        <widget class="QLabel" name="label_19">
         <property name="geometry">
          <rect>
-          <x>190</x>
-          <y>230</y>
+          <x>240</x>
+          <y>120</y>
           <width>211</width>
           <height>31</height>
          </rect>
         </property>
         <property name="text">
-         <string>Number Of Questions In Exam: </string>
+         <string>Questions In Exam: </string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1748,11 +1810,17 @@ p, li { white-space: pre-wrap; }
        <widget class="QTableWidget" name="tableWidget_7">
         <property name="geometry">
          <rect>
-          <x>250</x>
-          <y>320</y>
-          <width>111</width>
-          <height>311</height>
+          <x>270</x>
+          <y>180</y>
+          <width>131</width>
+          <height>381</height>
          </rect>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::NoSelection</enum>
         </property>
         <property name="rowCount">
          <number>10</number>
@@ -1781,14 +1849,14 @@ p, li { white-space: pre-wrap; }
        <widget class="QLabel" name="label_21">
         <property name="geometry">
          <rect>
-          <x>580</x>
-          <y>230</y>
+          <x>560</x>
+          <y>130</y>
           <width>211</width>
           <height>31</height>
          </rect>
         </property>
         <property name="text">
-         <string>Number Of School Classes In Exam: </string>
+         <string>School Classes In Exam: </string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1800,8 +1868,8 @@ p, li { white-space: pre-wrap; }
        <widget class="QLabel" name="label_18">
         <property name="geometry">
          <rect>
-          <x>390</x>
-          <y>200</y>
+          <x>420</x>
+          <y>100</y>
           <width>161</width>
           <height>51</height>
          </rect>
@@ -1816,10 +1884,10 @@ p, li { white-space: pre-wrap; }
        <widget class="QLabel" name="label_20">
         <property name="geometry">
          <rect>
-          <x>410</x>
-          <y>130</y>
-          <width>151</width>
-          <height>31</height>
+          <x>680</x>
+          <y>10</y>
+          <width>221</width>
+          <height>51</height>
          </rect>
         </property>
         <property name="text">
@@ -2239,7 +2307,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_22">
        <attribute name="title">

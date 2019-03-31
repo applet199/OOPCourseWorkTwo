@@ -30,6 +30,11 @@ class Teacher():
         TeacherGUI.display_all_active_school_classes(all_active_school_classes)
 
     @classmethod
+    def display_saved_exams(cls):
+        all_exams = TeacherDA.get_all_exams_from_db()
+        TeacherGUI.display_all_exams(all_exams)
+
+    @classmethod
     def actions(cls):
         cls.create_single_answer_question_button_pressed()
         cls.preview_single_answer_question_button_pressed()
@@ -238,23 +243,76 @@ class Teacher():
         if (not question_id_valid):
             TeacherGUI.display_question_id_invalid_message()
             return
+        question_id_already_added_to_current_exam = TeacherGUI.is_question_id_already_added_to_current_exam(question_id)
+        if (question_id_already_added_to_current_exam):
+            TeacherGUI.display_question_id_already_added_to_current_exam_message()
+            return
         TeacherGUI.add_question_id_to_current_exam(question_id)
 
     @classmethod
     def remove_question_from_exam_by_id(cls):
-        pass
+        number_of_questions_in_current_exam = TeacherGUI.get_number_of_questions_in_current_exam()
+        if (number_of_questions_in_current_exam == 0):
+            TeacherGUI.display_no_question_in_current_exam_message()
+            return
+        question_id = TeacherGUI.get_question_id_to_remove_from_exam()
+        question_id_valid = TeacherDA.is_question_id_valid(question_id)
+        if (not question_id_valid):
+            TeacherGUI.display_question_id_invalid_message()
+            return
+        question_id_already_added_to_current_exam = TeacherGUI.is_question_id_already_added_to_current_exam(question_id)
+        if (not question_id_already_added_to_current_exam):
+            TeacherGUI.display_question_id_not_already_in_current_exam_message()
+            return
+        TeacherGUI.remove_question_id_from_current_exam(question_id)
 
     @classmethod
     def add_school_class_to_exam_by_id(cls):
-        pass
+        number_of_school_classes_in_current_exam = TeacherGUI.get_number_of_school_classes_in_current_exam()
+        if (number_of_school_classes_in_current_exam == 5):
+            TeacherGUI.display_number_of_school_classes_full_in_current_exam_message()
+            return
+        school_class_id = TeacherGUI.get_school_class_id_to_add_to_exam()
+        school_class_id_valid = TeacherDA.is_school_class_id_valid(school_class_id)
+        if (not school_class_id_valid):
+            TeacherGUI.display_school_class_id_invalid_message()
+            return
+        school_class_id_already_added_to_current_exam = TeacherGUI.is_school_class_id_already_added_to_current_exam(school_class_id)
+        if (school_class_id_already_added_to_current_exam):
+            TeacherGUI.display_school_class_id_already_added_to_current_exam_message()
+            return
+        TeacherGUI.add_school_class_id_to_current_exam(school_class_id)
 
     @classmethod
     def remove_school_class_from_exam_by_id(cls):
-        pass
+        number_of_school_classes_in_current_exam = TeacherGUI.get_number_of_school_classes_in_current_exam()
+        if (number_of_school_classes_in_current_exam == 0):
+            TeacherGUI.display_no_school_class_in_current_exam_message()
+            return
+        school_class_id = TeacherGUI.get_school_class_id_to_remove_from_exam()
+        school_class_id_valid = TeacherDA.is_school_class_id_valid(school_class_id)
+        if (not school_class_id_valid):
+            TeacherGUI.display_school_class_id_invalid_message()
+            return
+        school_class_id_already_added_to_current_exam = TeacherGUI.is_school_class_id_already_added_to_current_exam(school_class_id)
+        if (not school_class_id_already_added_to_current_exam):
+            TeacherGUI.display_school_class_id_not_already_in_current_exam_message()
+            return
+        TeacherGUI.remove_school_class_id_from_current_exam(school_class_id)
 
     @classmethod
     def create_exam(cls):
-        pass
+        list_of_question_ids = str(TeacherGUI.get_list_of_question_ids_in_current_exam())
+        list_of_school_classes_ids = str(TeacherGUI.get_list_of_school_classes_ids_in_current_exam())
+        total_number_of_exams = TeacherDA.get_total_number_of_exams_in_db()
+        exam_pk = total_number_of_exams + 1
+        TeacherDA.insert_exam_into_db(exam_pk, list_of_question_ids, list_of_school_classes_ids)
+        all_exams = TeacherDA.get_all_exams_from_db()
+        TeacherGUI.display_all_exams(all_exams)
+        TeacherGUI.display_create_exam_success_message()
+        TeacherGUI.refresh_create_exam_page()
+
+
 
     def __str__(self):
         return ("This is Teacher Object")

@@ -33,6 +33,21 @@ class TeacherGUI():
                 col += 1
 
     @classmethod
+    def display_all_exams(cls, all_exams):
+        cls.__ui_mainwindow.tableWidget_5.clear()
+        row = 0
+        col = 0
+        for (exam_id, ) in all_exams:
+            exam_text = "Exam "  + str(exam_id)
+            exam_item = QTableWidgetItem(exam_text)
+            cls.__ui_mainwindow.tableWidget_5.setItem(row, col, exam_item)
+            if (col >= 9):
+                col = 0
+                row += 1
+            else:
+                col += 1
+
+    @classmethod
     def display_single_answer_question_dialog_preview(cls):
         question_body = cls.__ui_mainwindow.textEdit.toPlainText()
         option_A_text = cls.__ui_mainwindow.textEdit_2.toPlainText()
@@ -323,6 +338,15 @@ class TeacherGUI():
         cls.__ui_mainwindow.lineEdit_27.clear()
 
     @classmethod
+    def refresh_create_exam_page(cls):
+        cls.__ui_mainwindow.tableWidget_3.clear()
+        cls.__ui_mainwindow.tableWidget_4.clear()
+        cls.__ui_mainwindow.lineEdit_10.clear()
+        cls.__ui_mainwindow.lineEdit_11.clear()
+        cls.__ui_mainwindow.lineEdit_12.clear()
+        cls.__ui_mainwindow.lineEdit_13.clear()
+
+    @classmethod
     def get_question_id_to_load(cls):
         question_id_text = cls.__ui_mainwindow.lineEdit_5.text()
         try:
@@ -586,6 +610,203 @@ class TeacherGUI():
     @classmethod
     def refresh_view_school_class_details_page(cls):
         cls.__ui_mainwindow.label_14.clear()
+
+    @classmethod
+    def get_number_of_questions_in_current_exam(cls):
+        number_of_questions = 0
+        row = 0
+        col = 0
+        for counter in range(10):
+            if (cls.__ui_mainwindow.tableWidget_3.item(row, col) != None):
+                number_of_questions += 1
+                row += 1
+        return number_of_questions
+
+    @classmethod
+    def get_number_of_school_classes_in_current_exam(cls):
+        number_of_school_classes = 0
+        row = 0
+        col = 0
+        for counter in range(5):
+            if (cls.__ui_mainwindow.tableWidget_4.item(row, col) != None):
+                number_of_school_classes += 1
+                row += 1
+        return number_of_school_classes
+
+    @classmethod
+    def display_number_of_questions_full_in_current_exam_message(cls):
+        cls.__ui_mainwindow.label_17.setText("Questions Are Full In Current Exam")
+
+    @classmethod
+    def display_number_of_school_classes_full_in_current_exam_message(cls):
+        cls.__ui_mainwindow.label_17.setText("School Classes Are Full In Current Exam")
+
+    @classmethod
+    def display_no_question_in_current_exam_message(cls):
+        cls.__ui_mainwindow.label_17.setText("No Question In Current Exam")
+
+    @classmethod
+    def display_no_school_class_in_current_exam_message(cls):
+        cls.__ui_mainwindow.label_17.setText("No School Class In Current Exam")
+
+    @classmethod
+    def display_question_id_already_added_to_current_exam_message(cls):
+        cls.__ui_mainwindow.label_17.setText("Question ID Already Added To Current Exam")
+
+    @classmethod
+    def display_school_class_id_already_added_to_current_exam_message(cls):
+        cls.__ui_mainwindow.label_17.setText("School Class ID Already Added To Current Exam")
+
+    @classmethod
+    def display_question_id_invalid_message(cls):
+        cls.__ui_mainwindow.label_17.setText("Question ID Invalid")
+
+    @classmethod
+    def display_school_class_id_invalid_message(cls):
+        cls.__ui_mainwindow.label_17.setText("School CLass ID Invalid")
+
+    @classmethod
+    def display_question_id_not_already_in_current_exam_message(cls):
+        cls.__ui_mainwindow.label_17.setText("Question ID Not Aleady In Current Exam")
+
+    @classmethod
+    def display_school_class_id_not_already_in_current_exam_message(cls):
+        cls.__ui_mainwindow.label_17.setText("School Class ID Not Aleady In Current Exam")
+
+    @classmethod
+    def display_create_exam_success_message(cls):
+        cls.__ui_mainwindow.label_17.setText("Create Exam Success")
+
+
+    @classmethod
+    def get_question_id_to_add_to_exam(cls):
+        question_id_text = cls.__ui_mainwindow.lineEdit_10.text()
+        try:
+            question_id = int(question_id_text)
+            return question_id
+        except:
+            return None
+
+    @classmethod
+    def get_school_class_id_to_add_to_exam(cls):
+        school_class_id_text = cls.__ui_mainwindow.lineEdit_11.text()
+        try:
+            school_class_id = int(school_class_id_text)
+            return school_class_id
+        except:
+            return None
+
+    @classmethod
+    def get_question_id_to_remove_from_exam(cls):
+        question_id_text = cls.__ui_mainwindow.lineEdit_12.text()
+        try:
+            question_id = int(question_id_text)
+            return question_id
+        except:
+            return None
+
+    @classmethod
+    def get_school_class_id_to_remove_from_exam(cls):
+        school_class_id_text = cls.__ui_mainwindow.lineEdit_13.text()
+        try:
+            school_class_id = int(school_class_id_text)
+            return school_class_id
+        except:
+            return None
+
+    @classmethod
+    def add_question_id_to_current_exam(cls, question_id):
+        row = 0
+        col = 0
+        for counter in range(10):
+            if (cls.__ui_mainwindow.tableWidget_3.item(row, col) == None):
+                question_text = "Question " + str(question_id)
+                question_item = QTableWidgetItem(question_text)
+                cls.__ui_mainwindow.tableWidget_3.setItem(row, col, question_item)
+                cls.__ui_mainwindow.lineEdit_10.clear()
+                cls.__ui_mainwindow.label_17.clear()
+                return
+            row += 1
+
+    @classmethod
+    def add_school_class_id_to_current_exam(cls, school_class_id):
+        row = 0
+        col = 0
+        for counter in range(10):
+            if (cls.__ui_mainwindow.tableWidget_4.item(row, col) == None):
+                school_class_text = "CLass " + str(school_class_id)
+                school_class_item = QTableWidgetItem(school_class_text)
+                cls.__ui_mainwindow.tableWidget_4.setItem(row, col, school_class_item)
+                cls.__ui_mainwindow.lineEdit_11.clear()
+                cls.__ui_mainwindow.label_17.clear()
+                return
+            row += 1
+
+    @classmethod
+    def remove_question_id_from_current_exam(cls, question_id):
+        col = 0
+        for row in range(10):
+            question_item = cls.__ui_mainwindow.tableWidget_3.item(row, col)
+            if (question_item != None):
+                question_text = question_item.text()
+                question_text_split = question_text.split(" ")
+                question_id_in_exam = int(question_text_split.pop())
+                if (question_id_in_exam == question_id):
+                    cls.__ui_mainwindow.tableWidget_3.takeItem(row, col)
+                    cls.__ui_mainwindow.lineEdit_12.clear()
+                    cls.__ui_mainwindow.label_17.clear()
+                    return
+
+    @classmethod
+    def remove_school_class_id_from_current_exam(cls, school_class_id):
+        col = 0
+        for row in range(5):
+            school_class_item = cls.__ui_mainwindow.tableWidget_4.item(row, col)
+            if (school_class_item != None):
+                school_class_text = school_class_item.text()
+                school_class_text_split = school_class_text.split(" ")
+                school_class_id_in_exam = int(school_class_text_split.pop())
+                if (school_class_id_in_exam == school_class_id):
+                    cls.__ui_mainwindow.tableWidget_4.takeItem(row, col)
+                    cls.__ui_mainwindow.lineEdit_13.clear()
+                    cls.__ui_mainwindow.label_17.clear()
+                    return
+
+    @classmethod
+    def is_question_id_already_added_to_current_exam(cls, question_id):
+        list_of_question_ids_in_current_exam = cls.get_list_of_question_ids_in_current_exam()
+        return list_of_question_ids_in_current_exam.count(question_id) == 1
+
+    @classmethod
+    def is_school_class_id_already_added_to_current_exam(cls, school_class_id):
+        list_of_school_classes_ids_in_current_exam = cls.get_list_of_school_classes_ids_in_current_exam()
+        return list_of_school_classes_ids_in_current_exam.count(school_class_id) == 1
+
+    @classmethod
+    def get_list_of_question_ids_in_current_exam(cls):
+        list_of_question_ids = []
+        col = 0
+        for row in range(10):
+            question_item = cls.__ui_mainwindow.tableWidget_3.item(row, col)
+            if (question_item != None):
+                question_text = question_item.text()
+                question_text_split = question_text.split(" ")
+                question_id = int(question_text_split.pop())
+                list_of_question_ids.append(question_id)
+        return list_of_question_ids
+
+    @classmethod
+    def get_list_of_school_classes_ids_in_current_exam(cls):
+        list_of_school_classes_ids = []
+        col = 0
+        for row in range(10):
+            school_class_item = cls.__ui_mainwindow.tableWidget_4.item(row, col)
+            if (school_class_item != None):
+                school_class_text = school_class_item.text()
+                school_class_text_split = school_class_text.split(" ")
+                school_class_id = int(school_class_text_split.pop())
+                list_of_school_classes_ids.append(school_class_id)
+        return list_of_school_classes_ids
 
 
     def __str__(self):

@@ -151,6 +151,22 @@ class TeacherDA():
         cls.__cursor.execute(insert_into_essay_question_table_query, (essay_question_pk, question_body, question_pk))
         cls.__db_connection.commit()
 
+
+    @classmethod
+    def insert_exam_into_db(cls, exam_pk, list_of_questions_ids, list_of_school_classes_ids):
+        query = '''
+            INSERT INTO exam (
+              exam_pk,
+              list_of_questions_ids,
+              list_of_school_classes_ids
+              )
+            VALUES (?, ?, ?)
+        '''
+        cls.__cursor.execute(query, (exam_pk, list_of_questions_ids, list_of_school_classes_ids))
+        cls.__db_connection.commit()
+
+
+
     @classmethod
     def get_total_number_of_questions_in_db(cls):
         select_all_from_question_query = '''
@@ -161,6 +177,17 @@ class TeacherDA():
         total_number_of_questions_tuple = cls.__cursor.fetchone()
         total_number_of_questions = total_number_of_questions_tuple[0]
         return total_number_of_questions
+
+    @classmethod
+    def get_total_number_of_exams_in_db(cls):
+        query = '''
+            SELECT count(*)
+            FROM exam
+        '''
+        cls.__cursor.execute(query)
+        total_number_of_exams_tuple = cls.__cursor.fetchone()
+        total_number_of_exams = total_number_of_exams_tuple[0]
+        return total_number_of_exams
 
     @classmethod
     def get_total_number_of_single_answer_questions_in_db(cls):
@@ -217,6 +244,16 @@ class TeacherDA():
         cls.__cursor.execute(select_all_active_question_query)
         all_active_questions_tuple = cls.__cursor.fetchall()
         return all_active_questions_tuple
+
+    @classmethod
+    def get_all_exams_from_db(cls):
+        query='''
+            SELECT exam_pk
+            FROM exam
+        '''
+        cls.__cursor.execute(query)
+        all_exams_tuple = cls.__cursor.fetchall()
+        return all_exams_tuple
 
     @classmethod
     def get_question_type_by_id(cls, question_pk):
@@ -425,6 +462,16 @@ class TeacherDA():
         active_students_in_school_class = cls.__cursor.fetchall()
         return active_students_in_school_class
 
+    @classmethod
+    def is_question_id_valid(cls, question_id):
+        query = '''
+            SELECT question_pk
+            FROM question
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(query, (question_id, ))
+        question_pk_tuple = cls.__cursor.fetchone()
+        return question_pk_tuple != None
 
     def __str__(self):
         return ("This is TeacherDA Object")
