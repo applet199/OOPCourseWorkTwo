@@ -49,9 +49,12 @@ class Student():
         exam_id_valid = cls.is_exam_id_valid(exam_id)
         if (not exam_id_valid):
             StudentGUI.display_exam_id_invalid_to_load_details_message()
+            StudentGUI.refresh_exam_id_label()
             return
         exam_details = StudentDA.get_exam_details_by_id(exam_id)
         StudentGUI.display_exam_details_to_work_on(exam_details)
+        StudentGUI.refresh_load_exam_details_by_id_input_box()
+        StudentGUI.refresh_load_exam_error_message_label()
 
     @classmethod
     def work_on_selected_question(cls):
@@ -59,15 +62,29 @@ class Student():
         question_type = StudentDA.get_question_type_by_id(question_id)
         if (question_type == "Single Answer"):
             single_answer_question_details = StudentDA.get_single_answer_question_details_by_id(question_id)
-            single_answer_question_ui_dialog = StudentGUI.setup_single_answer_question_ui_dialog_to_work_on(single_answer_question_details)
-            single_answer_question_ui_dialog.pushButton_2.clicked.connect(cls.submit_answer_for_single_answer_question(single_answer_question_ui_dialog))
+            cls.__ui_dialog = StudentGUI.setup_single_answer_question_ui_dialog_to_work_on(single_answer_question_details)
+            cls.__ui_dialog.pushButton_2.clicked.connect(cls.submit_single_answer_question)
         elif (question_type == "Multiple Answers"):
             multiple_answers_question_details = StudentDA.get_multiple_answers_question_details_by_id(question_id)
             StudentGUI.display_multiple_answers_question_details_to_work_on(multiple_answers_question_details)
         elif (question_type == "Essay"):
             essay_question_details = StudentDA.get_essay_question_details_by_id(question_id)
             StudentGUI.display_essay_question_details_to_work_on(essay_question_details)
+        StudentGUI.refresh_work_on_question_drag_and_drop_box()
 
+    @classmethod
+    def submit_single_answer_question(cls):
+        student_answer = StudentGUI.get_student_answer_for_single_answer_question()
+        if (student_answer == None):
+            StudentGUI.display_invalid_answer_message()
+            return
+        exam_id = StudentGUI.get_current_exam_id()
+        StudentDA.insert_exam_result_by_id_to_db(exam_id)
+        question_id = StudentGUI.get_question_id_for_submitting_answer()
+        is_student_answer_correct = StudentDA.is_single_answer_correct_by_question_id(question_id, student_answer)
+        if (is_student_answer_correct):
+            question_points = StudentDA.get_question_points_by_id(question_id)
+            StudentDA.add_question_points_to_exam_result_by_student_id_in_DB(exam_id, cls.__student_id, question_points)
 
 
     @classmethod
@@ -76,11 +93,6 @@ class Student():
             return False
         not_completed_exams_ids_for_current_student = StudentGUI.get_not_completed_exams_ids_for_current_student()
         return not_completed_exams_ids_for_current_student.count(exam_id) == 1
-
-    @classmethod
-    def submit_answer_for_single_answer_question(cls, ui_dialog):
-        question_details_to_be_submitted = StudentGUI.get_single_answer_question_details_to_submit(ui_dialog)
-        TeacherDA.update_single_ques
 
     def __str__(self):
         return ("This is Student Object")
