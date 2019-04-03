@@ -56,6 +56,49 @@ class StudentDA():
         not_completed_exams_details_tuple = cls.__cursor.fetchall()
         return not_completed_exams_details_tuple
 
+    @classmethod
+    def get_exam_details_by_id(cls, exam_id):
+        query = '''
+            SELECT exam_pk,
+                questions_ids
+            FROM exam
+            WHERE exam_pk = ?
+        '''
+        cls.__cursor.execute(query, (exam_id, ))
+        exams_details_tuple = cls.__cursor.fetchone()
+        return exams_details_tuple
+
+    @classmethod
+    def get_question_type_by_id(cls, question_id):
+        query = '''
+            SELECT question_type
+            FROM question
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(query, (question_id, ))
+        question_type_tuple = cls.__cursor.fetchone()
+        return question_type_tuple[0]
+
+    @classmethod
+    def get_single_answer_question_details_by_id(cls, question_pk):
+        select_single_answer_question_details_query = '''
+            SELECT question_pk,
+                points,
+                question_body,
+                option_A_text,
+                option_B_text,
+                option_C_text,
+                option_D_text,
+                option_E_text,
+                correct_answer
+            FROM question
+            INNER JOIN single_answer_question on question_pk = question_fk
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(select_single_answer_question_details_query, (question_pk, ))
+        question_details_list = cls.__cursor.fetchall()
+        question_details = question_details_list[0]
+        return question_details
 
 
     def __str__(self):

@@ -310,6 +310,7 @@ class Teacher():
         total_number_of_exams = TeacherDA.get_total_number_of_exams_in_db()
         exam_pk = total_number_of_exams + 1
         TeacherDA.insert_exam_into_db(exam_pk, string_of_question_ids, string_of_school_classes_ids, "Not Completed")
+        TeacherDA.set_exam_to_all_students_in_all_relevant_school_classes(exam_pk, string_of_school_classes_ids)
         all_exams = TeacherDA.get_all_exams_from_db()
         TeacherGUI.display_all_exams(all_exams)
         TeacherGUI.display_create_exam_success_message()

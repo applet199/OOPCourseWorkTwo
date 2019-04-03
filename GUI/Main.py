@@ -141,7 +141,7 @@ class Main():
                 Student.setup(self.__db_connection, self.ui, self.__mainwindow)
                 Student.set_student_id_for_current_session(self.__student_id)
                 Student.display_current_not_completed_exams()
-
+                Student.actions()
         except:
             self.display_invalid_login_error_message()
 

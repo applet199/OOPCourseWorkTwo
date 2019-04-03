@@ -485,7 +485,48 @@ class TeacherDA():
         question_pk_tuple = cls.__cursor.fetchone()
         return question_pk_tuple != None
 
+    @classmethod
+    def set_exam_to_all_students_in_all_relevant_school_classes(cls, exam_pk, string_of_school_classes_ids):
+        school_classes_ids_list = string_of_school_classes_ids.split(" ")
+        students_ids_list = []
+        for school_class_id in school_classes_ids_list:
+            students_ids_in_school_class = cls.get_all_students_ids_in_school_class_by_id(school_class_id)
+            students_ids_list.extend(students_ids_in_school_class)
+        for student_id in students_ids_list:
+            select_query = '''
+                SELECT not_completed_exams_ids
+                FROM student
+                WHERE student_pk = ?
+            '''
+            cls.__cursor.execute(select_query, (student_id, ))
+            not_completed_exams_ids_string_tuple = cls.__cursor.fetchone()
+            not_completed_exams_ids = not_completed_exams_ids_string_tuple[0]
+            if (not_completed_exams_ids == None):
+                not_completed_exams_ids = ""
+            not_completed_exams_ids = str(not_completed_exams_ids)+ " " + str(exam_pk)
+            update_query = '''
+                UPDATE student
+                SET not_completed_exams_ids = ?
+                WHERE student_pk = ?
+            '''
+            cls.__cursor.execute(update_query, (not_completed_exams_ids, student_id))
+            cls.__db_connection.commit()
 
+    @classmethod
+    def get_all_students_ids_in_school_class_by_id(cls, school_class_id):
+        query = '''
+            SELECT student_pk
+            FROM student
+            INNER JOIN school_class
+            ON school_class_fk = school_class_pk
+            WHERE school_class_pk = ?
+        '''
+        cls.__cursor.execute(query, (school_class_id, ))
+        student_ids_tuple = cls.__cursor.fetchall()
+        students_ids_list = []
+        for (student_id,) in student_ids_tuple:
+            students_ids_list.append(student_id)
+        return students_ids_list
 
     def __str__(self):
         return ("This is TeacherDA Object")
