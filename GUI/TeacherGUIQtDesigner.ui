@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -2302,7 +2302,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
@@ -2361,47 +2361,6 @@ p, li { white-space: pre-wrap; }
        <attribute name="title">
         <string>Exams Ready To Be Marked</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_17">
-        <property name="geometry">
-         <rect>
-          <x>90</x>
-          <y>70</y>
-          <width>511</width>
-          <height>561</height>
-         </rect>
-        </property>
-        <property name="rowCount">
-         <number>15</number>
-        </property>
-        <property name="columnCount">
-         <number>4</number>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <column/>
-        <column/>
-        <column/>
-        <column/>
-       </widget>
        <widget class="QLabel" name="label_16">
         <property name="geometry">
          <rect>
@@ -2418,27 +2377,107 @@ p, li { white-space: pre-wrap; }
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QTabWidget" name="tabWidget_3">
         <property name="geometry">
          <rect>
-          <x>670</x>
-          <y>190</y>
-          <width>251</width>
-          <height>131</height>
+          <x>20</x>
+          <y>10</y>
+          <width>1021</width>
+          <height>661</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_23">
-         <item>
-          <widget class="QLineEdit" name="lineEdit_29"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_31">
-           <property name="text">
-            <string>Mark Exam By ID</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="tab_25">
+         <attribute name="title">
+          <string>Ready To Be Marked Exams Bank</string>
+         </attribute>
+         <widget class="QTableWidget" name="tableWidget_17">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>40</y>
+            <width>511</width>
+            <height>561</height>
+           </rect>
+          </property>
+          <property name="rowCount">
+           <number>15</number>
+          </property>
+          <property name="columnCount">
+           <number>4</number>
+          </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <row/>
+          <column/>
+          <column/>
+          <column/>
+          <column/>
+         </widget>
+         <widget class="QWidget" name="layoutWidget">
+          <property name="geometry">
+           <rect>
+            <x>660</x>
+            <y>190</y>
+            <width>251</width>
+            <height>131</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_23">
+           <item>
+            <widget class="QLineEdit" name="lineEdit_29"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_31">
+             <property name="text">
+              <string>Mark Exam By ID</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="tab_26">
+         <attribute name="title">
+          <string>Marking Exam</string>
+         </attribute>
+         <widget class="QLabel" name="label_49">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>20</y>
+            <width>171</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Exam ID: </string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </widget>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_24">

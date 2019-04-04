@@ -69,7 +69,8 @@ class Student():
             StudentGUI.display_multiple_answers_question_details_to_work_on(multiple_answers_question_details)
         elif (question_type == "Essay"):
             essay_question_details = StudentDA.get_essay_question_details_by_id(question_id)
-            StudentGUI.display_essay_question_details_to_work_on(essay_question_details)
+            cls.__ui_dialog = StudentGUI.setup_essay_question_ui_dialog_to_work_on(essay_question_details)
+            cls.__ui_dialog.pushButton_2.clicked.connect(cls.submit_essay_question)
         StudentGUI.refresh_work_on_question_drag_and_drop_box()
 
     @classmethod
@@ -87,7 +88,13 @@ class Student():
         if (is_student_answer_correct):
             question_points = StudentDA.get_question_points_by_id(question_id)
             StudentDA.add_question_points_to_exam_result_by_student_id_in_DB(exam_id, cls.__student_id, question_points)
+        StudentGUI.close_dialog()
+        StudentGUI.remove_question_from_not_completed_questions_by_id(question_id)
+        StudentGUI.add_question_to_completed_questions_by_id(question_id)
 
+    @classmethod
+    def submit_essay_question(cls):
+        pass
 
     @classmethod
     def is_exam_id_valid(cls, exam_id):

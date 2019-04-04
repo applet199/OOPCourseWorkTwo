@@ -92,13 +92,28 @@ class StudentDA():
                 option_E_text,
                 correct_answer
             FROM question
-            INNER JOIN single_answer_question on question_pk = question_fk
+            INNER JOIN single_answer_question ON question_pk = question_fk
             WHERE question_pk = ?
         '''
         cls.__cursor.execute(select_single_answer_question_details_query, (question_pk, ))
-        question_details_list = cls.__cursor.fetchall()
-        question_details = question_details_list[0]
+        question_details_tuple = cls.__cursor.fetchall()
+        question_details = question_details_tuple[0]
         return question_details
+
+    @classmethod
+    def get_essay_question_details_by_id(cls, question_pk):
+        query = '''
+            SELECT question_pk,
+                points,
+                question_body
+            FROM question
+            INNER JOIN essay_question
+            ON question_pk = question_fk
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(query, (question_pk,))
+        question_details_tuple = cls.__cursor.fetchone()
+        return question_details_tuple
 
     @classmethod
     def insert_exam_result_by_id_to_db(cls, exam_pk):
@@ -181,9 +196,22 @@ class StudentDA():
             if (student_id == student_pk):
                 old_points = int(old_points_string.strip(")"))
                 new_points = old_points + points
-                student_id_and_new_points = "(" + str(student_id) + "," + str(new_points) + ")"
-                aggregate_points_by_students_ids_string = aggregate_points_by_students_ids_string.replace(student_id_and_old_points, student_id_and_new_points)
-        cls.update_aggregate_points_by_students_ids_by_exam_id(exam_result_pk)
+                student_id_and_new_points_string = "(" + str(student_id) + "," + str(new_points) + ")"
+                student_id_and_old_points_string = "(" + str(student_id) + "," + str(old_points) + ")"
+                aggregate_points_by_students_ids_string = aggregate_points_by_students_ids_string.replace(student_id_and_old_points_string, student_id_and_new_points_string)
+        cls.update_aggregate_points_by_students_ids_by_exam_id_in_db(exam_result_pk, aggregate_points_by_students_ids_string)
+
+    @classmethod
+    def update_aggregate_points_by_students_ids_by_exam_id_in_db(cls, exam_result_pk, aggregate_points_by_students_ids):
+        query = '''
+            UPDATE exam_result
+            SET aggregate_points_by_students_ids = ?
+            WHERE exam_result_pk = ?
+        '''
+        cls.__cursor.execute(query, (aggregate_points_by_students_ids, exam_result_pk))
+        cls.__db_connection.commit()
+
+
 
     @classmethod
     def get_aggregate_points_by_students_ids_string_by_exam_result_id(cls, exam_result_pk):

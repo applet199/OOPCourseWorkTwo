@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QLineEdit, QRadioButton, QPushButton, QTableWidgetIt
 from PyQt5.QtCore import QDate, QTime, QDateTime, Qt
 
 from OOPCourseWorkTwo.GUI.SingleAnswerQuestionDialog import Ui_SingleAnswerQuestionDialog
+from OOPCourseWorkTwo.GUI.EssayQuestionDialog import Ui_EssayQuestionDialog
 
 class StudentGUI():
 
@@ -117,23 +118,38 @@ class StudentGUI():
         cls.__dialog.show()
         return cls.__ui_dialog
 
+    @classmethod
+    def setup_essay_question_ui_dialog_to_work_on(cls, question_details):
+        question_pk = question_details[0]
+        points = question_details[1]
+        question_body = question_details[2]
+        cls.__dialog = QtWidgets.QDialog()
+        cls.__ui_dialog = Ui_EssayQuestionDialog()
+        cls.__ui_dialog.setupUi(cls.__dialog)
+        cls.__ui_dialog.groupBox.setTitle("Question " + str(question_pk))
+        cls.__ui_dialog.label.setText(question_body)
+        cls.__ui_dialog.label_2.setText("Points: " + str(points))
+        cls.__ui_dialog.pushButton.clicked.connect(cls.close_dialog)
+        cls.__dialog.show()
+        return cls.__ui_dialog
+
 
     @classmethod
     def get_student_answer_for_single_answer_question(cls):
         student_answer = ""
         if (cls.__ui_dialog.radioButton.isChecked()):
-            student_answer = student_answer + "A "
+            student_answer = student_answer + "A"
         if (cls.__ui_dialog.radioButton_2.isChecked()):
-            student_answer = student_answer + "B "
+            student_answer = student_answer + "B"
         if (cls.__ui_dialog.radioButton_3.isChecked()):
-            student_answer = student_answer + "C "
+            student_answer = student_answer + "C"
         if (cls.__ui_dialog.radioButton_4.isChecked()):
-            student_answer = student_answer + "D "
+            student_answer = student_answer + "D"
         if (cls.__ui_dialog.radioButton_5.isChecked()):
-            student_answer = student_answer + "E "
-        if (student_answer.count == 0):
+            student_answer = student_answer + "E"
+        if (len(student_answer) == 0):
             return None
-        if (student_answer.count == 5):
+        if (len(student_answer) > 1):
             return None
         return student_answer
 
@@ -150,6 +166,54 @@ class StudentGUI():
         title_text_split = title_text.split(" ")
         question_id = title_text_split.pop()
         return question_id
+
+    @classmethod
+    def remove_question_from_not_completed_questions_by_id(cls, question_id):
+        question_to_remove = "Question " + str(question_id)
+        not_completed_questions = cls.get_not_completed_questions()
+        not_completed_questions.remove(question_to_remove)
+        row = 0
+        col = 0
+        cls.__ui_mainwindow.tableWidget_3.clear()
+        for question in not_completed_questions:
+            question_item = QTableWidgetItem(question)
+            cls.__ui_mainwindow.tableWidget_3.setItem(row, col, question_item)
+            row += 1
+
+    @classmethod
+    def get_not_completed_questions(cls):
+        not_completed_questions = []
+        col = 0
+        for row in range(10):
+            question_item = cls.__ui_mainwindow.tableWidget_3.item(row, col)
+            if (question_item != None):
+                question = question_item.text()
+                not_completed_questions.append(question)
+        return not_completed_questions
+
+    @classmethod
+    def add_question_to_completed_questions_by_id(cls, question_id):
+        question_to_add = "Question " + str(question_id)
+        completed_questions = cls.get_completed_questions()
+        completed_questions.append(question_to_add)
+        row = 0
+        col = 0
+        cls.__ui_mainwindow.tableWidget_5.clear()
+        for question in completed_questions:
+            question_item = QTableWidgetItem(question)
+            cls.__ui_mainwindow.tableWidget_5.setItem(row, col, question_item)
+            row += 1
+
+    @classmethod
+    def get_completed_questions(cls):
+        completed_questions = []
+        col = 0
+        for row in range(10):
+            question_item = cls.__ui_mainwindow.tableWidget_5.item(row, col)
+            if (question_item != None):
+                question = question_item.text()
+                completed_questions.append(question)
+        return completed_questions
 
     @classmethod
     def close_dialog(cls):
