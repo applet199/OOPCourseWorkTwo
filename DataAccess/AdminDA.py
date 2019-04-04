@@ -448,7 +448,18 @@ class AdminDA():
         students_in_school_class = cls.__cursor.fetchall()
         return students_in_school_class
 
-
+    @classmethod
+    def get_number_of_students_in_school_class_by_id(cls, school_class_pk):
+        query = '''
+                SELECT count(*)
+                FROM student
+                WHERE school_class_fk = ?
+                '''
+        cls.__cursor.execute(query, (school_class_pk, ))
+        number_of_students_tuple = cls.__cursor.fetchone()
+        if (number_of_students_tuple == None):
+            return 0
+        return number_of_students_tuple[0]
 
 
     def __str__(self):

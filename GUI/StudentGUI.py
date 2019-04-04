@@ -154,6 +154,11 @@ class StudentGUI():
         return student_answer
 
     @classmethod
+    def get_student_answer_for_essay_question(cls):
+        student_answer = cls.__ui_dialog.textEdit.toPlainText()
+        return student_answer
+
+    @classmethod
     def get_current_exam_id(cls):
         exam_id_text = cls.__ui_mainwindow.label_2.text()
         exam_id_text_split = exam_id_text.split(" ")
@@ -236,8 +241,13 @@ class StudentGUI():
         cls.__ui_mainwindow.label_2.setText("Exam ID: ")
 
     @classmethod
-    def display_invalid_answer_message(cls):
+    def display_invalid_answer_message_for_single_answer_dialog(cls):
         cls.__ui_dialog.label_8.setText("Invalid Answer")
+
+    @classmethod
+    def display_invalid_answer_message_for_essay_question_dialog(cls):
+        cls.__ui_dialog.label_2.setText("Invalid Answer")
+
 
 
     def __str__(self):

@@ -282,11 +282,7 @@ class AdminGUI():
             student_text = (str(student_tuple[-2]) + " " + student_tuple[-1])
             student_item = QTableWidgetItem(student_text)
             cls.__ui_mainwindow.tableWidget_9.setItem(row, col, student_item)
-            if (col >= 1):
-                col = 0
-                row += 1
-            else:
-                col += 1
+            row += 1
         cls.__ui_mainwindow.label_35.clear()
 
     @classmethod
@@ -365,6 +361,10 @@ class AdminGUI():
     def display_student_id_to_add_invalid_message(cls):
         cls.__ui_mainwindow.label_66.setText("Invalid Student ID To Add")
 
+    @classmethod
+    def display_school_class_full_message(cls):
+        cls.__ui_mainwindow.label_66.setText("School Class Is Full")
+
 
     @classmethod
     def display_de_activated_students(cls, students_tuples_list):
@@ -424,11 +424,8 @@ class AdminGUI():
             student_text = (str(student_tuple[0]) + " " + student_tuple[1])
             student_item = QTableWidgetItem(student_text)
             cls.__ui_mainwindow.tableWidget_9.setItem(row, col, student_item)
-            if (col >= 1):
-                col = 0
-                row += 1
-            else:
-                col += 1
+            row += 1
+
 
 
 

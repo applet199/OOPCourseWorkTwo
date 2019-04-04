@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -390,59 +390,17 @@
      <widget class="QTableWidget" name="tableWidget_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>70</y>
-        <width>501</width>
-        <height>651</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_8">
-      <property name="geometry">
-       <rect>
         <x>150</x>
-        <y>20</y>
-        <width>181</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Completed Exams Bank</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_9">
-      <property name="geometry">
-       <rect>
-        <x>720</x>
-        <y>130</y>
-        <width>181</width>
-        <height>91</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Drag And Drop Completed Exam To Box Below To View Result</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QTableWidget" name="tableWidget_6">
-      <property name="geometry">
-       <rect>
-        <x>750</x>
-        <y>260</y>
-        <width>111</width>
-        <height>41</height>
+        <y>80</y>
+        <width>761</width>
+        <height>521</height>
        </rect>
       </property>
       <property name="rowCount">
-       <number>1</number>
+       <number>14</number>
       </property>
       <property name="columnCount">
-       <number>1</number>
+       <number>6</number>
       </property>
       <attribute name="horizontalHeaderVisible">
        <bool>false</bool>
@@ -451,46 +409,131 @@
        <bool>false</bool>
       </attribute>
       <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
       <column/>
      </widget>
-     <widget class="QLabel" name="label_10">
+     <widget class="QLabel" name="label_8">
       <property name="geometry">
        <rect>
-        <x>730</x>
-        <y>360</y>
-        <width>211</width>
+        <x>350</x>
+        <y>20</y>
+        <width>341</width>
         <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>Exam ID: </string>
+       <string>Completed But Result Not Released Yet Exams Bank</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_11">
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>Released Exam Results</string>
+     </attribute>
+     <widget class="QTableWidget" name="tableWidget_6">
       <property name="geometry">
        <rect>
-        <x>730</x>
-        <y>510</y>
+        <x>90</x>
+        <y>90</y>
+        <width>531</width>
+        <height>541</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tableWidget_7">
+      <property name="geometry">
+       <rect>
+        <x>760</x>
+        <y>140</y>
         <width>191</width>
         <height>61</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Overall Average Mark: </string>
-      </property>
      </widget>
-     <widget class="QLabel" name="label_12">
+     <widget class="QLabel" name="label_9">
       <property name="geometry">
        <rect>
-        <x>730</x>
-        <y>430</y>
-        <width>191</width>
-        <height>61</height>
+        <x>810</x>
+        <y>90</y>
+        <width>55</width>
+        <height>16</height>
        </rect>
       </property>
       <property name="text">
-       <string>Exam Title: </string>
+       <string>TextLabel</string>
       </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="geometry">
+       <rect>
+        <x>810</x>
+        <y>230</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>290</y>
+        <width>55</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>680</x>
+        <y>350</y>
+        <width>341</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Exam ID: </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Overall Average Mark Percentage: </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>

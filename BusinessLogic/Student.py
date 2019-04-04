@@ -77,7 +77,7 @@ class Student():
     def submit_single_answer_question(cls):
         student_answer = StudentGUI.get_student_answer_for_single_answer_question()
         if (student_answer == None):
-            StudentGUI.display_invalid_answer_message()
+            StudentGUI.display_invalid_answer_message_for_single_answer_dialog()
             return
         exam_id = StudentGUI.get_current_exam_id()
         is_exam_result_id_already_created = StudentDA.is_exam_result_id_already_in_db(exam_id)
@@ -94,7 +94,20 @@ class Student():
 
     @classmethod
     def submit_essay_question(cls):
-        pass
+        student_answer = StudentGUI.get_student_answer_for_essay_question()
+        if (student_answer == None):
+            StudentGUI.display_invalid_answer_message_for_essay_question_dialog()
+            return
+        exam_id = StudentGUI.get_current_exam_id()
+        is_exam_result_id_already_created = StudentDA.is_exam_result_id_already_in_db(exam_id)
+        if (not is_exam_result_id_already_created):
+            StudentDA.insert_exam_result_by_id_to_db(exam_id)
+        question_id = StudentGUI.get_question_id_for_submitting_answer()
+        StudentGUI.close_dialog()
+        StudentGUI.remove_question_from_not_completed_questions_by_id(question_id)
+        StudentGUI.add_question_to_completed_questions_by_id(question_id)
+        StudentDA.update_student_answer_for_essay_question_by_id(question_id, student_answer)
+
 
     @classmethod
     def is_exam_id_valid(cls, exam_id):

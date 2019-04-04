@@ -353,8 +353,12 @@ class Admin():
 
     @classmethod
     def add_student_to_school_class_by_id(cls):
-        student_id = AdminGUI.get_student_id_to_add_to_school_class()
         school_class_id = AdminGUI.get_school_class_id_to_add_or_remove_student()
+        number_of_students_in_school_class = AdminDA.get_number_of_students_in_school_class_by_id(school_class_id)
+        if (number_of_students_in_school_class == 10):
+            AdminGUI.display_school_class_full_message()
+            return
+        student_id = AdminGUI.get_student_id_to_add_to_school_class()
         student_id_valid = AdminDA.is_student_id_to_add_to_school_class_valid(student_id, school_class_id)
         if (not student_id_valid):
             AdminGUI.display_student_id_to_add_invalid_message()

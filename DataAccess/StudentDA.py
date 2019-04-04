@@ -211,7 +211,15 @@ class StudentDA():
         cls.__cursor.execute(query, (aggregate_points_by_students_ids, exam_result_pk))
         cls.__db_connection.commit()
 
-
+    @classmethod
+    def update_student_answer_for_essay_question_by_id(cls, question_pk, student_answer):
+        query = '''
+            UPDATE essay_question
+            SET student_answer = ?
+            WHERE question_fk = ?
+        '''
+        cls.__cursor.execute(query, (student_answer, question_pk))
+        cls.__db_connection.commit()
 
     @classmethod
     def get_aggregate_points_by_students_ids_string_by_exam_result_id(cls, exam_result_pk):
