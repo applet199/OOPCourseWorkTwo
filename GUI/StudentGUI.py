@@ -138,6 +138,20 @@ class StudentGUI():
         return student_answer
 
     @classmethod
+    def get_current_exam_id(cls):
+        exam_id_text = cls.__ui_mainwindow.label_2.text()
+        exam_id_text_split = exam_id_text.split(" ")
+        exam_id_string = exam_id_text_split.pop()
+        return int(exam_id_string)
+
+    @classmethod
+    def get_question_id_for_submitting_answer(cls):
+        title_text = cls.__ui_dialog.groupBox.title()
+        title_text_split = title_text.split(" ")
+        question_id = title_text_split.pop()
+        return question_id
+
+    @classmethod
     def close_dialog(cls):
         cls.__dialog.close()
 

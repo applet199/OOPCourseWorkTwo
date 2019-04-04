@@ -79,7 +79,9 @@ class Student():
             StudentGUI.display_invalid_answer_message()
             return
         exam_id = StudentGUI.get_current_exam_id()
-        StudentDA.insert_exam_result_by_id_to_db(exam_id)
+        is_exam_result_id_already_created = StudentDA.is_exam_result_id_already_in_db(exam_id)
+        if (not is_exam_result_id_already_created):
+            StudentDA.insert_exam_result_by_id_to_db(exam_id)
         question_id = StudentGUI.get_question_id_for_submitting_answer()
         is_student_answer_correct = StudentDA.is_single_answer_correct_by_question_id(question_id, student_answer)
         if (is_student_answer_correct):

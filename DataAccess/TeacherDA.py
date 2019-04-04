@@ -64,7 +64,7 @@ class TeacherDA():
               correct_answer,
               question_fk
               )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         '''
         cls.__cursor.execute(insert_into_single_answer_question_table_query, (single_answer_question_pk, question_body, option_A_text, option_B_text, option_C_text, option_D_text, option_E_text, correct_ansewr, question_pk))
         cls.__db_connection.commit()
@@ -154,19 +154,67 @@ class TeacherDA():
 
     @classmethod
     def insert_exam_into_db(cls, exam_pk, questions_ids, school_classes_ids, exam_status):
+        total_available_points = cls.get_total_available_points_by_questions_ids(questions_ids)
+        number_of_questions = len(questions_ids.split(" ")) - 1
+        students_ids = cls.get_students_ids_in_exam_by_school_classes_ids(school_classes_ids)
         query = '''
             INSERT INTO exam (
               exam_pk,
               questions_ids,
               school_classes_ids,
-              exam_status
+              exam_status,
+              total_available_points,
+              number_of_questions,
+              students_ids
               )
-            VALUES (?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         '''
-        cls.__cursor.execute(query, (exam_pk, questions_ids, school_classes_ids, exam_status))
+        cls.__cursor.execute(query, (exam_pk, questions_ids, school_classes_ids, exam_status, total_available_points, number_of_questions, students_ids))
         cls.__db_connection.commit()
 
+    @classmethod
+    def get_total_available_points_by_questions_ids(cls, question_ids):
+        total_available_points = 0
+        questions_ids_list = question_ids.split(" ")
+        for question_id in questions_ids_list:
+            question_points = cls.get_question_available_points_by_id(question_id)
+            total_available_points = total_available_points + question_points
+        return total_available_points
 
+    @classmethod
+    def get_question_available_points_by_id(cls, question_pk):
+        query = '''
+            SELECT points
+            FROM question
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(query, (question_pk,))
+        available_points_tuple = cls.__cursor.fetchone()
+        if (available_points_tuple == None):
+            return 0
+        available_points = available_points_tuple[0]
+        return available_points
+
+    @classmethod
+    def get_students_ids_in_exam_by_school_classes_ids(cls, school_classes_ids_string):
+        school_classes_ids = school_classes_ids_string.split(" ")
+        students_ids_in_exam = ""
+        for school_class_id in school_classes_ids:
+            students_ids_in_school_class = cls.get_all_students_ids_in_school_class_by_id(school_class_id)
+            students_ids_in_exam = students_ids_in_exam + students_ids_in_school_class
+        return students_ids_in_exam
+
+    @classmethod
+    def get_school_classes_ids_in_exam_by_exam_id(cls, exam_pk):
+        query = '''
+            SELECT school_classes_ids
+            FROM exam
+            WHERE exam_pk = ?
+        '''
+        cls.__cursor.execute(query, (exam_pk,))
+        school_classes_ids_tuple = cls.__cursor.fetchone()
+        school_classes_ids = school_classes_ids_tuple[0]
+        return school_classes_ids
 
     @classmethod
     def get_total_number_of_questions_in_db(cls):
@@ -490,27 +538,30 @@ class TeacherDA():
         school_classes_ids_list = string_of_school_classes_ids.split(" ")
         students_ids_list = []
         for school_class_id in school_classes_ids_list:
-            students_ids_in_school_class = cls.get_all_students_ids_in_school_class_by_id(school_class_id)
-            students_ids_list.extend(students_ids_in_school_class)
+            students_ids_in_school_class_string = cls.get_all_students_ids_in_school_class_by_id(school_class_id)
+            if (students_ids_in_school_class_string != ""):
+                students_ids_in_school_class = students_ids_in_school_class_string.split(" ")
+                students_ids_list.extend(students_ids_in_school_class)
         for student_id in students_ids_list:
-            select_query = '''
-                SELECT not_completed_exams_ids
-                FROM student
-                WHERE student_pk = ?
-            '''
-            cls.__cursor.execute(select_query, (student_id, ))
-            not_completed_exams_ids_string_tuple = cls.__cursor.fetchone()
-            not_completed_exams_ids = not_completed_exams_ids_string_tuple[0]
-            if (not_completed_exams_ids == None):
-                not_completed_exams_ids = ""
-            not_completed_exams_ids = str(not_completed_exams_ids)+ " " + str(exam_pk)
-            update_query = '''
-                UPDATE student
-                SET not_completed_exams_ids = ?
-                WHERE student_pk = ?
-            '''
-            cls.__cursor.execute(update_query, (not_completed_exams_ids, student_id))
-            cls.__db_connection.commit()
+            if (student_id != ""):
+                select_query = '''
+                    SELECT not_completed_exams_ids
+                    FROM student
+                    WHERE student_pk = ?
+                '''
+                cls.__cursor.execute(select_query, (student_id, ))
+                not_completed_exams_ids_string_tuple = cls.__cursor.fetchone()
+                not_completed_exams_ids = not_completed_exams_ids_string_tuple[0]
+                if (not_completed_exams_ids == None):
+                    not_completed_exams_ids = ""
+                not_completed_exams_ids = str(not_completed_exams_ids) + " " + str(exam_pk)
+                update_query = '''
+                    UPDATE student
+                    SET not_completed_exams_ids = ?
+                    WHERE student_pk = ?
+                '''
+                cls.__cursor.execute(update_query, (not_completed_exams_ids, student_id))
+                cls.__db_connection.commit()
 
     @classmethod
     def get_all_students_ids_in_school_class_by_id(cls, school_class_id):
@@ -522,11 +573,13 @@ class TeacherDA():
             WHERE school_class_pk = ?
         '''
         cls.__cursor.execute(query, (school_class_id, ))
-        student_ids_tuple = cls.__cursor.fetchall()
-        students_ids_list = []
-        for (student_id,) in student_ids_tuple:
-            students_ids_list.append(student_id)
-        return students_ids_list
+        students_ids_tuple = cls.__cursor.fetchall()
+        students_ids = ""
+        if (students_ids_tuple == None):
+            return students_ids
+        for (student_id,) in students_ids_tuple:
+            students_ids = students_ids + str(student_id) + " "
+        return students_ids
 
     def __str__(self):
         return ("This is TeacherDA Object")
