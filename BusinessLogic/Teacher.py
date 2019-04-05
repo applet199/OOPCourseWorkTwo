@@ -46,6 +46,11 @@ class Teacher():
         TeacherGUI.display_not_completed_exams(not_completed_exams)
 
     @classmethod
+    def display_ready_to_be_marked_exams(cls):
+        ready_to_be_marked_exams = TeacherDA.get_ready_to_be_marked_exams_from_db()
+        TeacherGUI.display_ready_to_be_marked_exams(ready_to_be_marked_exams)
+
+    @classmethod
     def actions(cls):
         cls.create_single_answer_question_button_pressed()
         cls.preview_single_answer_question_button_pressed()
@@ -62,6 +67,7 @@ class Teacher():
         cls.remove_school_class_from_exam_by_id_button_pressed()
         cls.create_exam_button_pressed()
         cls.view_exam_details_by_id_button_pressed()
+        cls.mark_exam_by_id_button_pressed()
         cls.close_button_pressed()
 
     @classmethod
@@ -123,6 +129,10 @@ class Teacher():
     @classmethod
     def view_exam_details_by_id_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_15.clicked.connect(cls.view_exam_details_by_id)
+
+    @classmethod
+    def mark_exam_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_31.clicked.connect(cls.mark_exam_by_id)
 
     @classmethod
     def close_button_pressed(cls):
@@ -339,6 +349,19 @@ class Teacher():
     @classmethod
     def view_exam_details_by_id(cls):
         pass
+
+    @classmethod
+    def mark_exam_by_id(cls):
+        exam_id = TeacherGUI.get_exam_id_to_mark()
+        TeacherGUI.display_exam_id_on_marking_exam_page(exam_id)
+        students_ids = TeacherDA.get_students_ids_in_exam_by_exam_id(exam_id)
+        students_with_questions_ready_to_be_marked = []
+        for student_id in students_ids:
+            if (TeacherDA.does_student_have_questions_ready_to_be_marked(student_id)):
+                students_with_questions_ready_to_be_marked.append(student_id)
+        TeacherGUI.display_students_with_questions_ready_to_be_marked(students_with_questions_ready_to_be_marked)
+
+
 
     @classmethod
     def close_application(cls):

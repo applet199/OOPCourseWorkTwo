@@ -316,6 +316,17 @@ class TeacherDA():
         return not_completed_exams_tuple
 
     @classmethod
+    def get_ready_to_be_marked_exams_from_db(cls):
+        query='''
+            SELECT exam_pk
+            FROM exam
+            WHERE status = ?
+        '''
+        cls.__cursor.execute(query, ("Ready To Be Marked", ))
+        not_completed_exams_tuple = cls.__cursor.fetchall()
+        return not_completed_exams_tuple
+
+    @classmethod
     def get_question_type_by_id(cls, question_pk):
         select_question_type_by_id_query = '''
             SELECT question_type
@@ -635,7 +646,7 @@ class TeacherDA():
 
     @classmethod
     def have_all_students_completed_this_exam(cls, exam_id):
-        select_all_students_exam_statuses_query = '''
+        query = '''
             SELECT status
             FROM individual_student_exam_result
             WHERE exam_id = ?

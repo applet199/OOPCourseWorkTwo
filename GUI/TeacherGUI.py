@@ -62,6 +62,21 @@ class TeacherGUI():
             else:
                 col += 1
 
+    @classmethod
+    def display_ready_to_be_marked_exams(cls, ready_to_be_marked_exams):
+        cls.__ui_mainwindow.tableWidget_17.clear()
+        row = 0
+        col = 0
+        for (exam_id, ) in ready_to_be_marked_exams:
+            exam_text = "Exam "  + str(exam_id)
+            exam_item = QTableWidgetItem(exam_text)
+            cls.__ui_mainwindow.tableWidget_17.setItem(row, col, exam_item)
+            if (col >= 3):
+                col = 0
+                row += 1
+            else:
+                col += 1
+
 
     @classmethod
     def display_single_answer_question_dialog_preview(cls):
