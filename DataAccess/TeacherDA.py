@@ -162,7 +162,7 @@ class TeacherDA():
               exam_pk,
               questions_ids,
               school_classes_ids,
-              exam_status,
+              status,
               total_available_points,
               number_of_questions,
               students_ids
@@ -309,7 +309,7 @@ class TeacherDA():
         query='''
             SELECT exam_pk
             FROM exam
-            WHERE exam_status = ?
+            WHERE status = ?
         '''
         cls.__cursor.execute(query, ("Not Completed", ))
         not_completed_exams_tuple = cls.__cursor.fetchall()
@@ -633,7 +633,29 @@ class TeacherDA():
         students_ids_tuple = cls.__cursor.fetchone()
         return students_ids_tuple[0].rstrip()
 
+    @classmethod
+    def have_all_students_completed_this_exam(cls, exam_id):
+        select_all_students_exam_statuses_query = '''
+            SELECT status
+            FROM individual_student_exam_result
+            WHERE exam_id = ?
+        '''
+        cls.__cursor.execute(query, (exam_id,))
+        all_students_exam_statuses = cls.__cursor.fetchall()
+        for (status, ) in all_students_exam_statuses:
+            if (status == "Not Completed"):
+                return False
+        return True
 
+    @classmethod
+    def update_exam_status_to_ready_to_be_marked_by_exam_id(cls, exam_id):
+        query = '''
+            UPDATE exam
+            SET status = ?
+            WHERE exam_pk = ?
+        '''
+        cls.__cursor.execute(query, ("Ready To Be Marked", exam_id))
+        cls.__db_connection.commit()
 
     def __str__(self):
         return ("This is TeacherDA Object")

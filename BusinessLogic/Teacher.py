@@ -33,7 +33,15 @@ class Teacher():
         TeacherGUI.display_all_exams(all_exams)
 
     @classmethod
-    def display_saved_not_completed_exams(cls):
+    def update_not_completed_exams(cls):
+        old_not_completed_exams = TeacherDA.get_not_completed_exams_from_db()
+        for (exam_id, ) in old_not_completed_exams:
+            is_exam_ready_to_be_marked = TeacherDA.have_all_students_completed_this_exam(exam_id)
+            if (is_exam_ready_to_be_marked):
+                TeacherDA.update_exam_status_to_ready_to_be_marked_by_exam_id(exam_id)
+
+    @classmethod
+    def display_not_completed_exams(cls):
         not_completed_exams = TeacherDA.get_not_completed_exams_from_db()
         TeacherGUI.display_not_completed_exams(not_completed_exams)
 
@@ -54,6 +62,7 @@ class Teacher():
         cls.remove_school_class_from_exam_by_id_button_pressed()
         cls.create_exam_button_pressed()
         cls.view_exam_details_by_id_button_pressed()
+        cls.close_button_pressed()
 
     @classmethod
     def create_single_answer_question_button_pressed(cls):
@@ -115,6 +124,9 @@ class Teacher():
     def view_exam_details_by_id_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_15.clicked.connect(cls.view_exam_details_by_id)
 
+    @classmethod
+    def close_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_4.clicked.connect(cls.close_application)
 
     @classmethod
     def create_single_answer_question(cls):
@@ -327,6 +339,10 @@ class Teacher():
     @classmethod
     def view_exam_details_by_id(cls):
         pass
+
+    @classmethod
+    def close_application(cls):
+        cls.__mainwindow.close()
 
     def __str__(self):
         return ("This is Teacher Object")

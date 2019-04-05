@@ -22,9 +22,17 @@ class StudentGUI():
 
     @classmethod
     def display_not_completed_exams_for_current_student(cls, not_completed_exams):
+        cls.__ui_mainwindow.tableWidget.clear()
+        if (not_completed_exams == ""):
+            return
+        not_completed_exams_list = []
+        try:
+            not_completed_exams_list = not_completed_exams.split(" ")
+        except:
+            not_completed_exams_list.append(not_completed_exams)
         row = 0
         col = 0
-        for exam_id in not_completed_exams:
+        for exam_id in not_completed_exams_list:
             exam_text = "Exam " + str(exam_id)
             exam_item = QTableWidgetItem(exam_text)
             cls.__ui_mainwindow.tableWidget.setItem(row, col, exam_item)
@@ -34,6 +42,27 @@ class StudentGUI():
             else:
                 col += 1
 
+    @classmethod
+    def display_completed_exams_for_current_student(cls, completed_exams):
+        cls.__ui_mainwindow.tableWidget_2.clear()
+        if (completed_exams == ""):
+            return
+        completed_exams_list = []
+        try:
+            completed_exams_list = completed_exams.split(" ")
+        except:
+            completed_exams_list.append(completed_exams)
+        row = 0
+        col = 0
+        for exam_id in completed_exams_list:
+            exam_text = "Exam " + str(exam_id)
+            exam_item = QTableWidgetItem(exam_text)
+            cls.__ui_mainwindow.tableWidget_2.setItem(row, col, exam_item)
+            if (col >= 5):
+                col = 0
+                row += 1
+            else:
+                col += 1
 
     @classmethod
     def get_exam_id_to_load_details(cls):

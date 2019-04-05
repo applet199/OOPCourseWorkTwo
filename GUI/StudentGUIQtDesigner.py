@@ -85,8 +85,9 @@ class Ui_StudentMainWindow(object):
         self.label_6.setAlignment(QtCore.Qt.AlignCenter)
         self.label_6.setObjectName("label_6")
         self.label_7 = QtWidgets.QLabel(self.tab_3)
-        self.label_7.setGeometry(QtCore.QRect(420, 570, 151, 51))
+        self.label_7.setGeometry(QtCore.QRect(360, 550, 281, 71))
         self.label_7.setText("")
+        self.label_7.setAlignment(QtCore.Qt.AlignCenter)
         self.label_7.setObjectName("label_7")
         self.tableWidget_5 = QtWidgets.QTableWidget(self.tab_3)
         self.tableWidget_5.setGeometry(QtCore.QRect(780, 140, 131, 381))
@@ -168,6 +169,12 @@ class Ui_StudentMainWindow(object):
         self.label_14.setGeometry(QtCore.QRect(400, 20, 251, 41))
         self.label_14.setAlignment(QtCore.Qt.AlignCenter)
         self.label_14.setObjectName("label_14")
+        self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_5.setGeometry(QtCore.QRect(780, 30, 93, 28))
+        self.pushButton_5.setObjectName("pushButton_5")
+        self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_6.setGeometry(QtCore.QRect(930, 30, 93, 28))
+        self.pushButton_6.setObjectName("pushButton_6")
         StudentMainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(StudentMainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1117, 26))
@@ -178,7 +185,7 @@ class Ui_StudentMainWindow(object):
         StudentMainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(StudentMainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(StudentMainWindow)
 
     def retranslateUi(self, StudentMainWindow):
@@ -203,6 +210,8 @@ class Ui_StudentMainWindow(object):
         self.label_12.setText(_translate("StudentMainWindow", "Overall Average Mark Percentage: "))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("StudentMainWindow", "Released Exam Results"))
         self.label_14.setText(_translate("StudentMainWindow", "Student ID: "))
+        self.pushButton_5.setText(_translate("StudentMainWindow", "Log Off"))
+        self.pushButton_6.setText(_translate("StudentMainWindow", "Close"))
 
 
 if __name__ == "__main__":

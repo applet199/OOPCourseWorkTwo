@@ -136,8 +136,10 @@ class Main():
                 Teacher.display_saved_questions()
                 Teacher.display_saved_school_classes()
                 Teacher.display_saved_exams()
-                Teacher.display_saved_not_completed_exams()
+                Teacher.update_not_completed_exams()
+                Teacher.display_not_completed_exams()
                 Teacher.actions()
+                self.ui.pushButton_27.clicked.connect(self.reload_application)
             elif (user_type == "Student"):
                 self.ui = Ui_StudentMainWindow()
                 self.ui.setupUi(self.__mainwindow)
@@ -145,7 +147,9 @@ class Main():
                 Student.setup(self.__db_connection, self.ui, self.__mainwindow)
                 Student.set_student_id_for_current_session(self.__student_id)
                 Student.display_current_not_completed_exams()
+                Student.display_completed_exams()
                 Student.actions()
+                self.ui.pushButton_5.clicked.connect(self.reload_application)
         except:
             self.display_invalid_login_error_message()
 

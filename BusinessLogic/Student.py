@@ -26,15 +26,24 @@ class Student():
 
     @classmethod
     def display_current_not_completed_exams(cls):
-        not_completed_exams = StudentDA.get_not_completed_exams_for_current_student()
-        StudentGUI.display_not_completed_exams_for_current_student(not_completed_exams)
+        not_completed_exams_ids = StudentDA.get_not_completed_exams_ids_for_current_student()
+        StudentGUI.display_not_completed_exams_for_current_student(not_completed_exams_ids)
 
+    @classmethod
+    def display_completed_exams(cls):
+        completed_exams_ids = StudentDA.get_completed_exams_ids_for_current_student()
+        if (completed_exams_ids == None):
+            return
+        if (completed_exams_ids == ""):
+            return
+        StudentGUI.display_completed_exams_for_current_student(completed_exams_ids)
 
     @classmethod
     def actions(cls):
         cls.load_exam_details_by_id_button_pressed()
         cls.work_on_selected_question_button_pressed()
         cls.complete_exam_button_pressed()
+        cls.close_button_pressed()
 
     @classmethod
     def load_exam_details_by_id_button_pressed(cls):
@@ -48,6 +57,9 @@ class Student():
     def complete_exam_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_3.clicked.connect(cls.complete_exam)
 
+    @classmethod
+    def close_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_6.clicked.connect(cls.close_application)
 
     @classmethod
     def load_exam_details_by_id(cls):
@@ -141,28 +153,36 @@ class Student():
     def is_exam_id_valid(cls, exam_id):
         if (exam_id == None):
             return False
-        not_completed_exams_ids_for_current_student = StudentGUI.get_not_completed_exams_ids_for_current_student()
-        return not_completed_exams_ids_for_current_student.count(exam_id) == 1
+        not_completed_exams_ids = StudentDA.get_not_completed_exams_ids_for_current_student()
+        not_completed_exams_ids_list = []
+        try:
+            not_completed_exams_ids_list = not_completed_exams_ids.split(" ")
+        except:
+            not_completed_exams_ids_list.append(str(exam_id))
+        return not_completed_exams_ids_list.count(str(exam_id)) == 1
 
     @classmethod
     def complete_exam(cls):
         exam_id = StudentGUI.get_current_exam_id()
         completed_questions = StudentGUI.get_completed_questions()
         number_of_completed_questions = len(completed_questions)
-        questions_ids = StudentDA.get_questions_ids_of_exam_by_id(exam_id)
-        number_of_questions_in_exam = len((str(questions_ids)).split(" "))
+        number_of_questions_in_exam = StudentDA.get_number_of_questions_in_exam_by_id(exam_id)
         if (number_of_completed_questions != number_of_questions_in_exam):
             StudentGUI.display_invalid_exam_completion_message()
             return
         StudentDA.update_exam_status_to_completed_for_current_student_in_db(exam_id, cls.__student_id)
-        StudentDA.update_not_completed_exams_for_student_in_db(exam_id, cls.__student_id)
-        StudentDA.update_completed_exams_for_student_in_db(exam_id, cls.__student_id)
-        not_completed_exams = StudentDA.get_not_completed_exams_for_current_student()
+        StudentDA.update_not_completed_exams_ids_for_student_in_db(exam_id, cls.__student_id)
+        StudentDA.update_completed_exams_ids_for_student_in_db(exam_id, cls.__student_id)
+        not_completed_exams = StudentDA.get_not_completed_exams_ids_for_current_student()
         StudentGUI.display_not_completed_exams_for_current_student(not_completed_exams)
-        completed_exams = StudentDA.get_completed_exams_for_current_student()
+        completed_exams = StudentDA.get_completed_exams_ids_for_current_student()
         StudentGUI.display_completed_exams_for_current_student(completed_exams)
         StudentGUI.display_complete_exam_success_message()
         StudentGUI.refresh_do_exam_page()
+
+    @classmethod
+    def close_application(cls):
+        cls.__mainwindow.close()
 
     def __str__(self):
         return ("This is Student Object")

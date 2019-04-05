@@ -17,18 +17,28 @@ class StudentDA():
 
 
     @classmethod
-    def get_not_completed_exams_for_current_student(cls):
-        current_student_school_class_id = cls.get_current_student_school_class_id()
-        not_completed_exams_details = cls.get_not_completed_exams_details()
+    def get_not_completed_exams_ids_for_current_student(cls):
+        query = '''
+            SELECT not_completed_exams_ids
+            FROM student
+            WHERE student_pk = ?
+        '''
+        cls.__cursor.execute(query, (cls.__student_id,))
+        not_completed_exams_ids_tuple = cls.__cursor.fetchone()
+        not_completed_exams_ids = not_completed_exams_ids_tuple[0]
+        return not_completed_exams_ids
 
-        not_completed_exams_ids_for_current_student = []
-        for (exam_id, string_of_school_classes_ids) in not_completed_exams_details:
-            list_of_school_classes_ids = str(string_of_school_classes_ids).split(" ")
-            if ((list_of_school_classes_ids.count(str(current_student_school_class_id))) == 1):
-                not_completed_exams_ids_for_current_student.append(exam_id)
-        return not_completed_exams_ids_for_current_student
-
-
+    @classmethod
+    def get_completed_exams_ids_for_current_student(cls):
+        query = '''
+            SELECT completed_exams_ids
+            FROM student
+            WHERE student_pk = ?
+        '''
+        cls.__cursor.execute(query, (cls.__student_id,))
+        completed_exams_ids_tuple = cls.__cursor.fetchone()
+        completed_exams_ids = completed_exams_ids_tuple[0]
+        return completed_exams_ids
 
     @classmethod
     def get_current_student_school_class_id(cls):
@@ -57,6 +67,20 @@ class StudentDA():
         return not_completed_exams_details_tuple
 
     @classmethod
+    def get_number_of_questions_in_exam_by_id(cls, exam_id):
+        query = '''
+            SELECT number_of_questions
+            FROM exam
+            WHERE exam_pk = ?
+
+        '''
+        cls.__cursor.execute(query, (exam_id, ))
+        number_of_questions_tuple = cls.__cursor.fetchone()
+        number_of_questions = number_of_questions_tuple[0]
+        return number_of_questions
+
+
+    @classmethod
     def get_questions_ids_of_exam_by_id(cls, exam_id):
         query = '''
             SELECT questions_ids
@@ -66,7 +90,7 @@ class StudentDA():
         cls.__cursor.execute(query, (exam_id, ))
         questions_ids_tuple = cls.__cursor.fetchone()
         questions_ids = questions_ids_tuple[0]
-        return questions_ids
+        return (str(questions_ids)).rstrip()
 
     @classmethod
     def get_question_type_by_id(cls, question_id):
@@ -399,21 +423,90 @@ class StudentDA():
         cls.__db_connection.commit()
 
     @classmethod
-    def update_not_completed_exams_for_student_in_db(cls, exam_id, student_id):
-        old_not_completed_exams_string = cls.get_not_completed_exams_for_student(student_id)
-        old_not_completed_exams_list = old_not_completed_exams_string.split(" ")
-        new_not_completed_exam_list = old_not_completed_exams.remove(exam_id)
-        new_not_completed_exams_string = cls.make_list_to_string(new_not_completed_exam_list)
-        cls.update_not_completed_exams_for_student(new_not_completed_exams_string)
+    def update_not_completed_exams_ids_for_student_in_db(cls, exam_id, student_id):
+        not_completed_exams_string = cls.get_not_completed_exams_ids_for_student(student_id)
+        not_completed_exams_list = []
+        try:
+            not_completed_exams_list = not_completed_exams_string.split(" ")
+        except:
+            not_completed_exams_list.append(str(not_completed_exams_string))
+        try:
+            not_completed_exams_list.remove(str(exam_id))
+        except:
+            pass
+        new_not_completed_exams_string = cls.make_list_to_string(not_completed_exams_list)
+        cls.update_not_completed_exams_ids_string_for_student(new_not_completed_exams_string)
 
     @classmethod
-    def update_completed_exams_for_student_in_db(cls, exam_id, student_id):
-        old_completed_exams_string = cls.get_completed_exams_for_student(student_id)
-        old_completed_exams_list = old_completed_exams_string.split(" ")
-        new_completed_exam_list = old_completed_exams_list.append(exam_id)
-        new_completed_exams_string = cls.make_list_to_string(new_completed_exam_list)
-        cls.update_completed_exams_for_student(new_completed_exams_string)
+    def update_completed_exams_ids_for_student_in_db(cls, exam_id, student_id):
+        completed_exams_string = cls.get_completed_exams_ids_for_student(student_id)
+        completed_exams_list = []
+        if (completed_exams_string == ""):
+            completed_exams_list.append(str(exam_id))
+        else:
+            try:
+                completed_exams_list = completed_exams_string.split(" ")
+                completed_exams_list.append(completed_exams_string)
+            except:
+                pass
+        new_completed_exams_string = cls.make_list_to_string(completed_exams_list)
+        cls.update_completed_exams_ids_string_for_student(new_completed_exams_string)
 
+    @classmethod
+    def get_not_completed_exams_ids_for_student(cls, student_id):
+        query = '''
+            SELECT not_completed_exams_ids
+            FROM student
+            WHERE student_pk = ?
+        '''
+        cls.__cursor.execute(query, (student_id, ))
+        not_completed_exams_ids_tuple = cls.__cursor.fetchone()
+        not_completed_exams_ids = not_completed_exams_ids_tuple[0]
+        if (not_completed_exams_ids == None):
+            return ""
+        return not_completed_exams_ids
+
+    @classmethod
+    def get_completed_exams_ids_for_student(cls, student_id):
+        query = '''
+            SELECT completed_exams_ids
+            FROM student
+            WHERE student_pk = ?
+        '''
+        cls.__cursor.execute(query, (student_id, ))
+        completed_exams_ids_tuple = cls.__cursor.fetchone()
+        completed_exams_ids = completed_exams_ids_tuple[0]
+        if (completed_exams_ids == None):
+            return ""
+        return completed_exams_ids
+
+    @classmethod
+    def make_list_to_string(cls, any_list):
+        result_string = ""
+        for list_item in any_list:
+            result_string = result_string + str(list_item) + " "
+        result_string = result_string.rstrip()
+        return result_string
+
+    @classmethod
+    def update_not_completed_exams_ids_string_for_student(cls, not_completed_exams_string):
+        query = '''
+            UPDATE student
+            SET not_completed_exams_ids = ?
+            WHERE student_pk = ?
+        '''
+        cls.__cursor.execute(query, (not_completed_exams_string, cls.__student_id))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def update_completed_exams_ids_string_for_student(cls, completed_exams_string):
+        query = '''
+            UPDATE student
+            SET completed_exams_ids = ?
+            WHERE student_pk = ?
+        '''
+        cls.__cursor.execute(query, (completed_exams_string, cls.__student_id))
+        cls.__db_connection.commit()
 
 
 
