@@ -57,16 +57,16 @@ class StudentDA():
         return not_completed_exams_details_tuple
 
     @classmethod
-    def get_exam_details_by_id(cls, exam_id):
+    def get_questions_ids_of_exam_by_id(cls, exam_id):
         query = '''
-            SELECT exam_pk,
-                questions_ids
+            SELECT questions_ids
             FROM exam
             WHERE exam_pk = ?
         '''
         cls.__cursor.execute(query, (exam_id, ))
-        exams_details_tuple = cls.__cursor.fetchone()
-        return exams_details_tuple
+        questions_ids_tuple = cls.__cursor.fetchone()
+        questions_ids = questions_ids_tuple[0]
+        return questions_ids
 
     @classmethod
     def get_question_type_by_id(cls, question_id):
@@ -96,6 +96,27 @@ class StudentDA():
             WHERE question_pk = ?
         '''
         cls.__cursor.execute(select_single_answer_question_details_query, (question_pk, ))
+        question_details_tuple = cls.__cursor.fetchall()
+        question_details = question_details_tuple[0]
+        return question_details
+
+    @classmethod
+    def get_multiple_answers_question_details_by_id(cls, question_pk):
+        query = '''
+            SELECT question_pk,
+                points,
+                question_body,
+                option_A_text,
+                option_B_text,
+                option_C_text,
+                option_D_text,
+                option_E_text,
+                correct_answers
+            FROM question
+            INNER JOIN multiple_answers_question ON question_pk = question_fk
+            WHERE question_pk = ?
+        '''
+        cls.__cursor.execute(query, (question_pk, ))
         question_details_tuple = cls.__cursor.fetchall()
         question_details = question_details_tuple[0]
         return question_details
@@ -158,7 +179,21 @@ class StudentDA():
         correct_answer_tuple = cls.__cursor.fetchone()
         correct_answer = correct_answer_tuple[0]
         student_answer = student_answer.rstrip()
-        is_correct = student_answer is correct_answer
+        is_correct = student_answer == correct_answer
+        return is_correct
+
+    @classmethod
+    def are_multiple_answers_correct_by_question_id(cls, question_pk, student_answers):
+        query = '''
+            SELECT correct_answers
+            FROM multiple_answers_question
+            WHERE question_fk = ?
+        '''
+        cls.__cursor.execute(query, (question_pk, ))
+        correct_answers_tuple = cls.__cursor.fetchone()
+        correct_answers = correct_answers_tuple[0]
+        student_answers = student_answers.rstrip()
+        is_correct = student_answers == correct_answers
         return is_correct
 
     @classmethod
@@ -185,53 +220,201 @@ class StudentDA():
         return points
 
     @classmethod
-    def add_question_points_to_exam_result_by_student_id_in_DB(cls, exam_result_pk, student_pk, points):
-        aggregate_points_by_students_ids_string = cls.get_aggregate_points_by_students_ids_string_by_exam_result_id(exam_result_pk)
-        aggregate_points_by_students_ids_list = aggregate_points_by_students_ids_string.split(" ")
-        for aggregate_points_by_student_id in aggregate_points_by_students_ids_list:
-            student_id_and_old_points = aggregate_points_by_student_id.split(",")
-            student_id_string = student_id_and_old_points[0]
-            old_points_string = student_id_and_old_points[1]
-            student_id = int(student_id_string.strip("("))
-            if (student_id == student_pk):
-                old_points = int(old_points_string.strip(")"))
-                new_points = old_points + points
-                student_id_and_new_points_string = "(" + str(student_id) + "," + str(new_points) + ")"
-                student_id_and_old_points_string = "(" + str(student_id) + "," + str(old_points) + ")"
-                aggregate_points_by_students_ids_string = aggregate_points_by_students_ids_string.replace(student_id_and_old_points_string, student_id_and_new_points_string)
-        cls.update_aggregate_points_by_students_ids_by_exam_id_in_db(exam_result_pk, aggregate_points_by_students_ids_string)
-
-    @classmethod
-    def update_aggregate_points_by_students_ids_by_exam_id_in_db(cls, exam_result_pk, aggregate_points_by_students_ids):
+    def insert_single_answer_question_result_to_db(cls, question_pk, student_answer, exam_pk, student_pk, points_gained, status):
+        single_answer_question_result_pk = cls.get_next_single_answer_question_result_pk()
         query = '''
-            UPDATE exam_result
-            SET aggregate_points_by_students_ids = ?
-            WHERE exam_result_pk = ?
+            INSERT INTO single_answer_question_result (
+                single_answer_question_result_pk,
+                question_id,
+                single_answer_question_answer,
+                exam_result_id,
+                student_id,
+                points_gained,
+                status
+                )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         '''
-        cls.__cursor.execute(query, (aggregate_points_by_students_ids, exam_result_pk))
+        cls.__cursor.execute(query, (single_answer_question_result_pk, question_pk, student_answer, exam_pk, student_pk, points_gained, status))
         cls.__db_connection.commit()
 
     @classmethod
-    def update_student_answer_for_essay_question_by_id(cls, question_pk, student_answer):
+    def insert_multiple_answers_question_result_to_db(cls, question_pk, student_answers, exam_pk, student_pk, points_gained, status):
+        multiple_answers_question_result_pk = cls.get_next_multiple_answers_question_result_pk()
         query = '''
-            UPDATE essay_question
-            SET student_answer = ?
-            WHERE question_fk = ?
+            INSERT INTO multiple_answers_question_result (
+                multiple_answers_question_result_pk,
+                question_id,
+                multiple_answers_question_answer,
+                exam_result_id,
+                student_id,
+                points_gained,
+                status
+                )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         '''
-        cls.__cursor.execute(query, (student_answer, question_pk))
+        cls.__cursor.execute(query, (multiple_answers_question_result_pk, question_pk, student_answers, exam_pk, student_pk, points_gained, status))
         cls.__db_connection.commit()
 
     @classmethod
-    def get_aggregate_points_by_students_ids_string_by_exam_result_id(cls, exam_result_pk):
+    def insert_essay_question_result_to_db(cls, question_pk, student_answer, exam_pk, student_pk, points_gained, status):
+        essay_question_result_pk = cls.get_next_essay_question_result_pk()
         query = '''
-            SELECT aggregate_points_by_students_ids
-            FROM exam_result
-            WHERE exam_result_pk = ?
+            INSERT INTO essay_question_result(
+                essay_question_result_pk,
+                question_id,
+                essay_question_answer,
+                exam_result_id,
+                student_id,
+                points_gained,
+                status
+                )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         '''
-        cls.__cursor.execute(query, (exam_result_pk,))
-        aggregate_points_by_students_ids_tuple = cls.__cursor.fetchone()
-        aggregate_points_by_students_ids = aggregate_points_by_students_ids_tuple[0]
-        return aggregate_points_by_students_ids.rstrip()
+        cls.__cursor.execute(query, (essay_question_result_pk, question_pk, student_answer, exam_pk, student_pk, points_gained, status))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def get_next_single_answer_question_result_pk(cls):
+        query = '''
+            SELECT count(*)
+            FROM single_answer_question_result
+        '''
+        cls.__cursor.execute(query)
+        total_number_of_single_answer_question_result_tuple = cls.__cursor.fetchone()
+        total_number_of_single_answer_question_result = total_number_of_single_answer_question_result_tuple[0]
+        return total_number_of_single_answer_question_result + 1
+
+    @classmethod
+    def get_next_multiple_answers_question_result_pk(cls):
+        query = '''
+            SELECT count(*)
+            FROM multiple_answers_question_result
+        '''
+        cls.__cursor.execute(query)
+        total_number_of_multiple_answers_question_result_tuple = cls.__cursor.fetchone()
+        total_number_of_multiple_answers_question_result = total_number_of_multiple_answers_question_result_tuple[0]
+        return total_number_of_multiple_answers_question_result + 1
+
+    @classmethod
+    def get_next_essay_question_result_pk(cls):
+        query = '''
+            SELECT count(*)
+            FROM essay_question_result
+        '''
+        cls.__cursor.execute(query)
+        total_number_of_essay_question_result_tuple = cls.__cursor.fetchone()
+        total_number_of_essay_question_result = total_number_of_essay_question_result_tuple[0]
+        return total_number_of_essay_question_result + 1
+
+    @classmethod
+    def get_completed_questions_ids_in_current_exam_for_current_student(cls, questions_ids, exam_pk, student_pk):
+        completed_questions_ids = ""
+        questions_ids_list = []
+        try:
+            questions_ids_list = questions_ids.split(" ")
+        except:
+            questions_ids_list.append(questions_ids)
+        for question_id in questions_ids_list:
+            question_type = cls.get_question_type_by_id(question_id)
+            is_question_completed = cls.is_question_completed_for_current_student(question_id, exam_pk, student_pk, question_type)
+            if (is_question_completed):
+                completed_questions_ids = completed_questions_ids + str(question_id) + " "
+        return completed_questions_ids.rstrip()
+
+    @classmethod
+    def get_not_completed_questions_ids_in_current_exam_for_current_student(cls, questions_ids, exam_pk, student_pk):
+        not_completed_questions_ids = ""
+        questions_ids_list = []
+        try:
+            questions_ids_list = questions_ids.split(" ")
+        except:
+            questions_ids_list.append(questions_ids)
+        for question_id in questions_ids_list:
+            question_type = cls.get_question_type_by_id(question_id)
+            is_question_completed = cls.is_question_completed_for_current_student(question_id, exam_pk, student_pk, question_type)
+            if (not is_question_completed):
+                not_completed_questions_ids = not_completed_questions_ids + str(question_id) + " "
+        return not_completed_questions_ids.rstrip()
+
+    @classmethod
+    def is_question_completed_for_current_student(cls, question_id, exam_id, student_id, question_type):
+        if (question_type == "Single Answer"):
+            return cls.is_single_answer_question_completed_for_current_student(question_id, exam_id, student_id)
+        elif (question_type == "Multiple Answers"):
+            return cls.is_multiple_answers_question_completed_for_current_student(question_id, exam_id, student_id)
+        elif (question_type == "Essay"):
+            return cls.is_essay_question_completed_for_current_student(question_id, exam_id, student_id)
+
+    @classmethod
+    def is_single_answer_question_completed_for_current_student(cls, question_id, exam_id, student_id):
+        query = '''
+            SELECT single_answer_question_result_pk
+            FROM single_answer_question_result
+            WHERE question_id = ?
+            AND exam_result_id = ?
+            AND student_id = ?
+            AND status = ?
+        '''
+        cls.__cursor.execute(query, (question_id, exam_id, student_id, "Completed"))
+        single_answer_question_result_pk_tuple = cls.__cursor.fetchone()
+        return single_answer_question_result_pk_tuple != None
+
+    @classmethod
+    def is_multiple_answers_question_completed_for_current_student(cls, question_id, exam_id, student_id):
+        query = '''
+            SELECT multiple_answers_question_result_pk
+            FROM multiple_answers_question_result
+            WHERE question_id = ?
+            AND exam_result_id = ?
+            AND student_id = ?
+            AND status = ?
+        '''
+        cls.__cursor.execute(query, (question_id, exam_id, student_id, "Completed"))
+        multiple_answers_question_result_pk_tuple = cls.__cursor.fetchone()
+        return multiple_answers_question_result_pk_tuple != None
+
+    @classmethod
+    def is_essay_question_completed_for_current_student(cls, question_id, exam_id, student_id):
+        query = '''
+            SELECT essay_question_result_pk
+            FROM essay_question_result
+            WHERE question_id = ?
+            AND exam_result_id = ?
+            AND student_id = ?
+            AND status = ?
+        '''
+        cls.__cursor.execute(query, (question_id, exam_id, student_id, "Completed"))
+        essay_question_result_pk_tuple = cls.__cursor.fetchone()
+        return essay_question_result_pk_tuple != None
+
+    @classmethod
+    def update_exam_status_to_completed_for_current_student_in_db(cls, exam_id, student_id):
+        query = '''
+            UPDATE individual_student_exam_result
+            SET status = ?
+            WHERE exam_id = ?
+            AND student_id = ?
+        '''
+        cls.__cursor.execute(query, ("Completed", exam_id, student_id))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def update_not_completed_exams_for_student_in_db(cls, exam_id, student_id):
+        old_not_completed_exams_string = cls.get_not_completed_exams_for_student(student_id)
+        old_not_completed_exams_list = old_not_completed_exams_string.split(" ")
+        new_not_completed_exam_list = old_not_completed_exams.remove(exam_id)
+        new_not_completed_exams_string = cls.make_list_to_string(new_not_completed_exam_list)
+        cls.update_not_completed_exams_for_student(new_not_completed_exams_string)
+
+    @classmethod
+    def update_completed_exams_for_student_in_db(cls, exam_id, student_id):
+        old_completed_exams_string = cls.get_completed_exams_for_student(student_id)
+        old_completed_exams_list = old_completed_exams_string.split(" ")
+        new_completed_exam_list = old_completed_exams_list.append(exam_id)
+        new_completed_exams_string = cls.make_list_to_string(new_completed_exam_list)
+        cls.update_completed_exams_for_student(new_completed_exams_string)
+
+
 
 
     def __str__(self):

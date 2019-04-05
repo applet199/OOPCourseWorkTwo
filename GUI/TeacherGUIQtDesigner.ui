@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -733,7 +733,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_11">
        <attribute name="title">
@@ -1659,7 +1659,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_15">
        <attribute name="title">
@@ -1728,71 +1728,11 @@ p, li { white-space: pre-wrap; }
        <attribute name="title">
         <string>View Exam Details</string>
        </attribute>
-       <widget class="QPushButton" name="pushButton_15">
-        <property name="geometry">
-         <rect>
-          <x>150</x>
-          <y>20</y>
-          <width>251</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>View Exam Details By Exam ID</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_14">
-        <property name="geometry">
-         <rect>
-          <x>450</x>
-          <y>30</y>
-          <width>161</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QTableWidget" name="tableWidget_6">
-        <property name="geometry">
-         <rect>
-          <x>600</x>
-          <y>180</y>
-          <width>111</width>
-          <height>191</height>
-         </rect>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="selectionMode">
-         <enum>QAbstractItemView::NoSelection</enum>
-        </property>
-        <property name="rowCount">
-         <number>5</number>
-        </property>
-        <property name="columnCount">
-         <number>1</number>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <row/>
-        <column/>
-       </widget>
        <widget class="QLabel" name="label_19">
         <property name="geometry">
          <rect>
-          <x>240</x>
-          <y>120</y>
+          <x>20</x>
+          <y>150</y>
           <width>211</width>
           <height>31</height>
          </rect>
@@ -1810,8 +1750,8 @@ p, li { white-space: pre-wrap; }
        <widget class="QTableWidget" name="tableWidget_7">
         <property name="geometry">
          <rect>
-          <x>270</x>
-          <y>180</y>
+          <x>60</x>
+          <y>200</y>
           <width>131</width>
           <height>381</height>
          </rect>
@@ -1846,30 +1786,11 @@ p, li { white-space: pre-wrap; }
         <row/>
         <column/>
        </widget>
-       <widget class="QLabel" name="label_21">
-        <property name="geometry">
-         <rect>
-          <x>560</x>
-          <y>130</y>
-          <width>211</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>School Classes In Exam: </string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_18">
         <property name="geometry">
          <rect>
-          <x>420</x>
-          <y>100</y>
+          <x>450</x>
+          <y>80</y>
           <width>161</width>
           <height>51</height>
          </rect>
@@ -1884,8 +1805,8 @@ p, li { white-space: pre-wrap; }
        <widget class="QLabel" name="label_20">
         <property name="geometry">
          <rect>
-          <x>680</x>
-          <y>10</y>
+          <x>650</x>
+          <y>20</y>
           <width>221</width>
           <height>51</height>
          </rect>
@@ -1893,6 +1814,265 @@ p, li { white-space: pre-wrap; }
         <property name="text">
          <string/>
         </property>
+       </widget>
+       <widget class="QWidget" name="layoutWidget_11">
+        <property name="geometry">
+         <rect>
+          <x>250</x>
+          <y>180</y>
+          <width>701</width>
+          <height>401</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_16">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_42">
+           <item>
+            <widget class="QLabel" name="label_67">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="tableWidget_27">
+             <property name="rowCount">
+              <number>10</number>
+             </property>
+             <property name="columnCount">
+              <number>1</number>
+             </property>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <column/>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_43">
+           <item>
+            <widget class="QLabel" name="label_68">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="tableWidget_28">
+             <property name="rowCount">
+              <number>10</number>
+             </property>
+             <property name="columnCount">
+              <number>1</number>
+             </property>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <column/>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_44">
+           <item>
+            <widget class="QLabel" name="label_69">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="tableWidget_29">
+             <property name="rowCount">
+              <number>10</number>
+             </property>
+             <property name="columnCount">
+              <number>1</number>
+             </property>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <column/>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_45">
+           <item>
+            <widget class="QLabel" name="label_70">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="tableWidget_30">
+             <property name="rowCount">
+              <number>10</number>
+             </property>
+             <property name="columnCount">
+              <number>1</number>
+             </property>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <column/>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_46">
+           <item>
+            <widget class="QLabel" name="label_71">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="tableWidget_31">
+             <property name="rowCount">
+              <number>10</number>
+             </property>
+             <property name="columnCount">
+              <number>1</number>
+             </property>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <row/>
+             <column/>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QLabel" name="label_21">
+        <property name="geometry">
+         <rect>
+          <x>450</x>
+          <y>130</y>
+          <width>301</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Students In School Classes In This Exam:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QWidget" name="">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>20</y>
+          <width>411</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_17">
+         <item>
+          <widget class="QPushButton" name="pushButton_15">
+           <property name="text">
+            <string>View Exam Details By ID</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_14">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_17">
@@ -2302,7 +2482,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
@@ -2387,7 +2567,7 @@ p, li { white-space: pre-wrap; }
          </rect>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab_25">
          <attribute name="title">
@@ -2571,7 +2751,7 @@ p, li { white-space: pre-wrap; }
            <string>Mark Student's Questions Answers</string>
           </property>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>30</x>

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QLineEdit, QRadioButton, QPushButton, QTableWidgetIt
 from PyQt5.QtCore import QDate, QTime, QDateTime, Qt
 
 from OOPCourseWorkTwo.GUI.SingleAnswerQuestionDialog import Ui_SingleAnswerQuestionDialog
+from OOPCourseWorkTwo.GUI.MultipleAnswersQuestionDialog import Ui_MultipleAnswersQuestionDialog
 from OOPCourseWorkTwo.GUI.EssayQuestionDialog import Ui_EssayQuestionDialog
 
 class StudentGUI():
@@ -53,25 +54,30 @@ class StudentGUI():
         return question_id
 
     @classmethod
-    def display_exam_details_to_work_on(cls, exam_details):
-        cls.__ui_mainwindow.tableWidget_3.clear()
-        exam_id = exam_details[0]
-        questions_ids_string = exam_details[1]
-        try:
-            questions_ids_list = questions_ids_string.split(" ")
-            row = 0
-            col = 0
-            for question_id in questions_ids_list:
-                if (question_id != ""):
-                    question_text = "Question " + str(question_id)
-                    question_item = QTableWidgetItem(question_text)
-                    cls.__ui_mainwindow.tableWidget_3.setItem(row, col, question_item)
-                    row += 1
-        except:
-            question_text = "Question " + str(questions_ids_string)
+    def display_completed_questions(cls, completed_questions_ids):
+        cls.__ui_mainwindow.tableWidget_5.clear()
+        if (completed_questions_ids == ""):
+            return
+        row = 0
+        col = 0
+        for question_id in completed_questions_ids.split(" "):
+            question_text = "Question " + str(question_id)
             question_item = QTableWidgetItem(question_text)
-            cls.__ui_mainwindow.tableWidget_3.setItem(0, 0, question_item)
-        cls.__ui_mainwindow.label_2.setText("Exam ID: " + str(exam_id))
+            cls.__ui_mainwindow.tableWidget_5.setItem(row, col, question_item)
+            row += 1
+
+    @classmethod
+    def display_not_completed_questions(cls, not_completed_questions_ids):
+        cls.__ui_mainwindow.tableWidget_3.clear()
+        if (not_completed_questions_ids == ""):
+            return
+        row = 0
+        col = 0
+        for question_id in not_completed_questions_ids.split(" "):
+            question_text = "Question " + str(question_id)
+            question_item = QTableWidgetItem(question_text)
+            cls.__ui_mainwindow.tableWidget_3.setItem(row, col, question_item)
+            row += 1
 
     @classmethod
     def display_exam_id_invalid_to_load_details_message(cls):
@@ -119,6 +125,32 @@ class StudentGUI():
         return cls.__ui_dialog
 
     @classmethod
+    def setup_multiple_answers_question_ui_dialog_to_work_on(cls, question_details):
+        question_pk = question_details[0]
+        points = question_details[1]
+        question_body = question_details[2]
+        option_A_text = question_details[3]
+        option_B_text = question_details[4]
+        option_C_text = question_details[5]
+        option_D_text = question_details[6]
+        option_E_text = question_details[7]
+        correct_answers = question_details[8]
+        cls.__dialog = QtWidgets.QDialog()
+        cls.__ui_dialog = Ui_MultipleAnswersQuestionDialog()
+        cls.__ui_dialog.setupUi(cls.__dialog)
+        cls.__ui_dialog.groupBox.setTitle("Question " + str(question_pk))
+        cls.__ui_dialog.label.setText(question_body)
+        cls.__ui_dialog.label_2.setText("Points: " + str(points))
+        cls.__ui_dialog.label_3.setText(str(option_A_text))
+        cls.__ui_dialog.label_4.setText(str(option_B_text))
+        cls.__ui_dialog.label_5.setText(str(option_C_text))
+        cls.__ui_dialog.label_6.setText(str(option_D_text))
+        cls.__ui_dialog.label_7.setText(str(option_E_text))
+        cls.__ui_dialog.pushButton.clicked.connect(cls.close_dialog)
+        cls.__dialog.show()
+        return cls.__ui_dialog
+
+    @classmethod
     def setup_essay_question_ui_dialog_to_work_on(cls, question_details):
         question_pk = question_details[0]
         points = question_details[1]
@@ -154,6 +186,26 @@ class StudentGUI():
         return student_answer
 
     @classmethod
+    def get_student_answers_for_multiple_answers_question(cls):
+        student_answers = ""
+        if (cls.__ui_dialog.checkBox.isChecked()):
+            student_answers = student_answers + "A"
+        if (cls.__ui_dialog.checkBox_2.isChecked()):
+            student_answers = student_answers + "B"
+        if (cls.__ui_dialog.checkBox_3.isChecked()):
+            student_answers = student_answers + "C"
+        if (cls.__ui_dialog.checkBox_4.isChecked()):
+            student_answers = student_answers + "D"
+        if (cls.__ui_dialog.checkBox_5.isChecked()):
+            student_answers = student_answers + "E"
+        if (len(student_answers) == 0):
+            return None
+        if (len(student_answers) > 4):
+            return None
+        return student_answers
+
+
+    @classmethod
     def get_student_answer_for_essay_question(cls):
         student_answer = cls.__ui_dialog.textEdit.toPlainText()
         return student_answer
@@ -170,7 +222,7 @@ class StudentGUI():
         title_text = cls.__ui_dialog.groupBox.title()
         title_text_split = title_text.split(" ")
         question_id = title_text_split.pop()
-        return question_id
+        return int(question_id)
 
     @classmethod
     def remove_question_from_not_completed_questions_by_id(cls, question_id):
@@ -225,6 +277,15 @@ class StudentGUI():
         cls.__dialog.close()
 
     @classmethod
+    def refresh_do_exam_page(cls):
+        cls.__ui_mainwindow.lineEdit.clear()
+        cls.__ui_mainwindow.label.clear()
+        cls.__ui_mainwindow.label_2.setText("Exam ID: ")
+        cls.__ui_mainwindow.tableWidget_3.clear()
+        cls.__ui_mainwindow.tableWidget_4.clear()
+        cls.__ui_mainwindow.tableWidget_5.clear()
+
+    @classmethod
     def refresh_load_exam_details_by_id_input_box(cls):
         cls.__ui_mainwindow.lineEdit.clear()
 
@@ -248,6 +309,17 @@ class StudentGUI():
     def display_invalid_answer_message_for_essay_question_dialog(cls):
         cls.__ui_dialog.label_2.setText("Invalid Answer")
 
+    @classmethod
+    def display_current_exam_id(cls, exam_id):
+        cls.__ui_mainwindow.label_2.setText("Exam ID: " + str(exam_id))
+
+    @classmethod
+    def display_invalid_exam_completion_message(cls):
+        cls.__ui_mainwindow.label_7.setText("Invalid Exam Completion")
+
+    @classmethod
+    def display_complete_exam_success_message(cls):
+        cls.__ui_mainwindow.label_7.setText("Successful Exam Completion")
 
 
     def __str__(self):

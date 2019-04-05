@@ -581,5 +581,59 @@ class TeacherDA():
             students_ids = students_ids + str(student_id) + " "
         return students_ids
 
+    @classmethod
+    def insert_exam_result_to_db_by_exam_id(cls, exam_pk):
+        query = '''
+            INSERT INTO exam_result (
+                exam_result_pk,
+                is_result_released
+                )
+            VALUES (?, ?)
+        '''
+        cls.__cursor.execute(query, (exam_pk, False))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def insert_individual_student_exam_result_to_db_by_exam_id(cls, exam_pk):
+        students_ids = cls.get_students_ids_in_exam_by_exam_id(exam_pk)
+        for student_id in students_ids.split(" "):
+            individual_student_exam_result_pk = cls.get_next_individual_student_exam_result_pk_from_db()
+            query = '''
+                INSERT INTO individual_student_exam_result (
+                    individual_student_exam_result_pk,
+                    student_id,
+                    exam_id,
+                    total_points_gained,
+                    average_percentage_mark
+                    )
+                VALUES (?, ?, ?, ?, ?)
+            '''
+            cls.__cursor.execute(query, (individual_student_exam_result_pk, int(student_id), exam_pk, 0, 0.0))
+            cls.__db_connection.commit()
+
+    @classmethod
+    def get_next_individual_student_exam_result_pk_from_db(cls):
+        query = '''
+            SELECT count(*)
+            FROM individual_student_exam_result
+        '''
+        cls.__cursor.execute(query)
+        total_number_of_individual_student_exam_result_tuple = cls.__cursor.fetchone()
+        next_individual_student_exam_result_pk = total_number_of_individual_student_exam_result_tuple[0] + 1
+        return next_individual_student_exam_result_pk
+
+    @classmethod
+    def get_students_ids_in_exam_by_exam_id(cls, exam_pk):
+        query = '''
+            SELECT students_ids
+            FROM exam
+            WHERE exam_pk = ?
+        '''
+        cls.__cursor.execute(query, (exam_pk, ))
+        students_ids_tuple = cls.__cursor.fetchone()
+        return students_ids_tuple[0].rstrip()
+
+
+
     def __str__(self):
         return ("This is TeacherDA Object")

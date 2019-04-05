@@ -63,8 +63,12 @@ class Main():
 
     def get_password_for_login_name_from_database(self, login_name):
         cursor = self.__db_connection.cursor()
-        query = "SELECT password FROM user WHERE login_name=?"
-        cursor.execute(query, (login_name,))
+        query = '''
+            SELECT password
+            FROM user
+            WHERE login_name = ?
+        '''
+        cursor.execute(query, (login_name, ))
         stored_password_tuple = cursor.fetchone()
         if (stored_password_tuple == None):
             return None

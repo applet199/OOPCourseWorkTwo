@@ -53,6 +53,7 @@ class Teacher():
         cls.add_school_class_to_exam_by_id_button_pressed()
         cls.remove_school_class_from_exam_by_id_button_pressed()
         cls.create_exam_button_pressed()
+        cls.view_exam_details_by_id_button_pressed()
 
     @classmethod
     def create_single_answer_question_button_pressed(cls):
@@ -109,6 +110,11 @@ class Teacher():
     @classmethod
     def create_exam_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_14.clicked.connect(cls.create_exam)
+
+    @classmethod
+    def view_exam_details_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_15.clicked.connect(cls.view_exam_details_by_id)
+
 
     @classmethod
     def create_single_answer_question(cls):
@@ -315,8 +321,12 @@ class Teacher():
         TeacherGUI.display_all_exams(all_exams)
         TeacherGUI.display_create_exam_success_message()
         TeacherGUI.refresh_create_exam_page()
+        TeacherDA.insert_exam_result_to_db_by_exam_id(exam_pk)
+        TeacherDA.insert_individual_student_exam_result_to_db_by_exam_id(exam_pk)
 
-
+    @classmethod
+    def view_exam_details_by_id(cls):
+        pass
 
     def __str__(self):
         return ("This is Teacher Object")

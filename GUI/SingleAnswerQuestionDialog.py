@@ -126,6 +126,11 @@ class Ui_SingleAnswerQuestionDialog(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.groupBox)
         self.pushButton_2.setGeometry(QtCore.QRect(70, 530, 141, 41))
         self.pushButton_2.setObjectName("pushButton_2")
+        self.label_8 = QtWidgets.QLabel(self.groupBox)
+        self.label_8.setGeometry(QtCore.QRect(290, 560, 191, 31))
+        self.label_8.setText("")
+        self.label_8.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_8.setObjectName("label_8")
 
         self.retranslateUi(SingleAnswerQuestionDialog)
         QtCore.QMetaObject.connectSlotsByName(SingleAnswerQuestionDialog)

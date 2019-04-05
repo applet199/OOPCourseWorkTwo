@@ -123,6 +123,14 @@ class Ui_MultipleAnswersQuestionDialog(object):
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_5.addWidget(self.label_7, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.verticalLayout.addLayout(self.horizontalLayout_5)
+        self.pushButton_2 = QtWidgets.QPushButton(self.groupBox)
+        self.pushButton_2.setGeometry(QtCore.QRect(50, 530, 141, 51))
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.label_8 = QtWidgets.QLabel(self.groupBox)
+        self.label_8.setGeometry(QtCore.QRect(270, 560, 201, 41))
+        self.label_8.setText("")
+        self.label_8.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_8.setObjectName("label_8")
 
         self.retranslateUi(MultipleAnswersQuestionDialog)
         QtCore.QMetaObject.connectSlotsByName(MultipleAnswersQuestionDialog)
@@ -139,6 +147,7 @@ class Ui_MultipleAnswersQuestionDialog(object):
         self.checkBox_3.setText(_translate("MultipleAnswersQuestionDialog", "C"))
         self.checkBox_4.setText(_translate("MultipleAnswersQuestionDialog", "D"))
         self.checkBox_5.setText(_translate("MultipleAnswersQuestionDialog", "D"))
+        self.pushButton_2.setText(_translate("MultipleAnswersQuestionDialog", "Submit"))
 
 
 if __name__ == "__main__":
