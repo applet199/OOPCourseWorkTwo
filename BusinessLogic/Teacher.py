@@ -69,6 +69,7 @@ class Teacher():
         cls.view_exam_details_by_id_button_pressed()
         cls.mark_exam_button_pressed()
         cls.mark_student_questions_answers_button_pressed()
+        cls.mark_question_button_pressed()
         cls.close_button_pressed()
 
     @classmethod
@@ -139,6 +140,9 @@ class Teacher():
     def mark_student_questions_answers_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_33.clicked.connect(cls.mark_student_questions_answers)
 
+    @classmethod
+    def mark_question_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_34.clicked.connect(cls.mark_question)
 
     @classmethod
     def close_button_pressed(cls):
@@ -376,8 +380,21 @@ class Teacher():
 
     @classmethod
     def mark_student_questions_answers(cls):
-        pass
+        student_name = TeacherGUI.get_student_name_to_mark_answers()
+        exam_id = TeacherGUI.get_exam_id_to_mark_student_answers()
+        student_id = TeacherDA.get_student_id_by_name(student_name)
+        TeacherGUI.display_exam_id_on_mark_student_answers_page(exam_id)
+        TeacherGUI.display_student_id_on_mark_student_answers_page(student_id)
+        TeacherGUI.display_student_name_on_mark_student_answers_page(student_name)
+        questions_ready_to_be_marked = TeacherDA.get_questions_ready_to_be_marked_for_student_in_exam(student_id, exam_id)
+        TeacherGUI.display_questions_ready_to_be_marked(questions_ready_to_be_marked)
 
+    @classmethod
+    def mark_question(cls):
+        question_id = TeacherGUI.get_question_id_to_mark()
+        essay_question_details = TeacherDA.get_essay_question_details_to_mark_by_id(question_id)
+        cls.__ui_dialog = TeacherGUI.setup_essay_question_ui_dialog_to_mark(essay_question_details)
+        cls.__ui_dialog.pushButton_2.clicked.connect(cls.submit_essay_question_mark)
 
 
 

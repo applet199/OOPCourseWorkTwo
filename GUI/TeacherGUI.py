@@ -872,6 +872,44 @@ class TeacherGUI():
             else:
                 col += 1
 
+    @classmethod
+    def get_student_name_to_mark_answers(cls):
+        student_item = cls.__ui_mainwindow.tableWidget_19.item(0,0)
+        student_name = student_item.text()
+        return student_name
+
+    @classmethod
+    def get_exam_id_to_mark_student_answers(cls):
+        exam_id_text = cls.__ui_mainwindow.label_49.text()
+        exam_id_text_split = exam_id_text.split(" ")
+        exam_id = exam_id_text_split.pop()
+        return int(exam_id)
+
+    @classmethod
+    def display_exam_id_on_mark_student_answers_page(cls, exam_id):
+        exam_id_text = "Exam ID: " + str(exam_id)
+        cls.__ui_mainwindow.label_62.setText(exam_id_text)
+
+    @classmethod
+    def display_student_id_on_mark_student_answers_page(cls, student_id):
+        student_id_text = "Student ID: " + str(student_id)
+        cls.__ui_mainwindow.label_63.setText(student_id_text)
+
+    @classmethod
+    def display_student_name_on_mark_student_answers_page(cls,student_name):
+        student_name_text = "Student Name: " + str(student_name)
+        cls.__ui_mainwindow.label_50.setText(student_name_text)
+
+    @classmethod
+    def display_questions_ready_to_be_marked(cls, questions_ids_tuple):
+        cls.__ui_mainwindow.tableWidget_25.clear()
+        row = 0
+        col = 0
+        for (question_id,) in questions_ids_tuple:
+            question_text = "Question " + str(question_id)
+            question_item = QTableWidgetItem(question_text)
+            cls.__ui_mainwindow.tableWidget_25.setItem(row, col, question_item)
+            row += 1
 
     def __str__(self):
         return ("This is TeacherGUI Object")

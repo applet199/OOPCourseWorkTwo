@@ -753,7 +753,30 @@ class TeacherDA():
         student_full_name = student_full_name_tuple[0]
         return student_full_name
 
+    @classmethod
+    def get_student_id_by_name(cls, student_full_name):
+        query = '''
+            SELECT student_pk
+            FROM student
+            WHERE student_full_name = ?
+        '''
+        cls.__cursor.execute(query, (student_full_name, ))
+        student_id_tuple = cls.__cursor.fetchone()
+        student_id = student_id_tuple[0]
+        return student_id
 
+    @classmethod
+    def get_questions_ready_to_be_marked_for_student_in_exam(cls, student_id, exam_id):
+        query = '''
+            SELECT question_id
+            FROM essay_question_result
+            WHERE student_id = ?
+            AND exam_id = ?
+            AND status = ?
+        '''
+        cls.__cursor.execute(query, (student_id, exam_id, "Ready To Be Marked"))
+        questions_ids_tuple = cls.__cursor.fetchall()
+        return questions_ids_tuple
 
 
     def __str__(self):
