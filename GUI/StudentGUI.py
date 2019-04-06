@@ -76,6 +76,8 @@ class StudentGUI():
     @classmethod
     def get_question_id_to_work_on(cls):
         question_item = cls.__ui_mainwindow.tableWidget_4.item(0,0)
+        if (question_item == None):
+            return None
         question_text = question_item.text()
         question_text_split = question_text.split(" ")
         question_id_text = question_text_split.pop()
@@ -350,6 +352,9 @@ class StudentGUI():
     def display_complete_exam_success_message(cls):
         cls.__ui_mainwindow.label_7.setText("Successful Exam Completion")
 
+    @classmethod
+    def display_no_selected_question_in_drop_box_message(cls):
+        cls.__ui_mainwindow.label_7.setText("No Selected Question In Drop Box")
 
     def __str__(self):
         return ("This is StudentGUI Object")

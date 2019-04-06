@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -733,7 +733,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_11">
        <attribute name="title">
@@ -2585,8 +2585,11 @@ p, li { white-space: pre-wrap; }
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragOnly</enum>
+          </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::NoSelection</enum>
+           <enum>QAbstractItemView::SingleSelection</enum>
           </property>
           <property name="rowCount">
            <number>15</number>
@@ -2620,42 +2623,69 @@ p, li { white-space: pre-wrap; }
           <column/>
           <column/>
          </widget>
-         <widget class="QWidget" name="layoutWidget">
+         <widget class="QTableWidget" name="tableWidget_20">
+          <property name="geometry">
+           <rect>
+            <x>720</x>
+            <y>220</y>
+            <width>131</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DropOnly</enum>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::NoSelection</enum>
+          </property>
+          <property name="rowCount">
+           <number>1</number>
+          </property>
+          <property name="columnCount">
+           <number>1</number>
+          </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <row/>
+          <column/>
+         </widget>
+         <widget class="QPushButton" name="pushButton_31">
           <property name="geometry">
            <rect>
             <x>660</x>
-            <y>190</y>
-            <width>251</width>
-            <height>131</height>
+            <y>300</y>
+            <width>249</width>
+            <height>28</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_23">
-           <item>
-            <widget class="QLineEdit" name="lineEdit_29"/>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_31">
-             <property name="text">
-              <string>Mark Exam By ID On Next Page</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <property name="text">
+           <string>Mark Exam On Next Page</string>
+          </property>
          </widget>
-         <widget class="QLabel" name="label_72">
+         <widget class="QLabel" name="label_73">
           <property name="geometry">
            <rect>
-            <x>650</x>
-            <y>350</y>
-            <width>261</width>
+            <x>680</x>
+            <y>120</y>
+            <width>201</width>
             <height>81</height>
            </rect>
           </property>
           <property name="text">
-           <string/>
+           <string>Drag And Drop Exam In To Box Below To Mark Exam </string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </widget>
@@ -2717,7 +2747,7 @@ p, li { white-space: pre-wrap; }
            <enum>QAbstractItemView::DropOnly</enum>
           </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
+           <enum>QAbstractItemView::NoSelection</enum>
           </property>
           <property name="rowCount">
            <number>1</number>
@@ -2796,7 +2826,7 @@ p, li { white-space: pre-wrap; }
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
           <property name="dragDropMode">
-           <enum>QAbstractItemView::NoDragDrop</enum>
+           <enum>QAbstractItemView::DragOnly</enum>
           </property>
           <property name="selectionMode">
            <enum>QAbstractItemView::SingleSelection</enum>
@@ -2878,6 +2908,15 @@ p, li { white-space: pre-wrap; }
             <height>381</height>
            </rect>
           </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragOnly</enum>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
           <property name="rowCount">
            <number>10</number>
           </property>
@@ -2923,10 +2962,33 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>650</x>
             <y>290</y>
-            <width>141</width>
-            <height>51</height>
+            <width>131</width>
+            <height>41</height>
            </rect>
           </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DropOnly</enum>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::NoSelection</enum>
+          </property>
+          <property name="rowCount">
+           <number>1</number>
+          </property>
+          <property name="columnCount">
+           <number>1</number>
+          </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <row/>
+          <column/>
          </widget>
          <widget class="QLabel" name="label_65">
           <property name="geometry">
@@ -2938,7 +3000,13 @@ p, li { white-space: pre-wrap; }
            </rect>
           </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string>Drag And Drop Question In To Box Below To Mark Question</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
          <widget class="QPushButton" name="pushButton_34">
@@ -2964,7 +3032,13 @@ p, li { white-space: pre-wrap; }
            </rect>
           </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </widget>

@@ -708,6 +708,10 @@ class TeacherGUI():
     def display_create_exam_success_message(cls):
         cls.__ui_mainwindow.label_17.setText("Create Exam Success")
 
+    @classmethod
+    def refresh_mark_exam_drop_box(cls):
+        cls.__ui_mainwindow.tableWidget_19.clear()
+
 
     @classmethod
     def get_question_id_to_add_to_exam(cls):
@@ -826,7 +830,7 @@ class TeacherGUI():
                 question_text_split = question_text.split(" ")
                 question_id = question_text_split.pop()
                 string_of_question_ids = string_of_question_ids + question_id + " "
-        return string_of_question_ids
+        return string_of_question_ids.rstrip()
 
     @classmethod
     def get_string_of_school_classes_ids_in_current_exam(cls):
@@ -839,8 +843,34 @@ class TeacherGUI():
                 school_class_text_split = school_class_text.split(" ")
                 school_class_id = school_class_text_split.pop()
                 string_of_school_classes_ids = string_of_school_classes_ids + school_class_id + " "
-        return string_of_school_classes_ids
+        return string_of_school_classes_ids.rstrip()
 
+    @classmethod
+    def get_exam_id_to_mark(cls):
+        exam_item = cls.__ui_mainwindow.tableWidget_20.item(0, 0)
+        exam_text = exam_item.text()
+        exam_text_split = exam_text.split(" ")
+        exam_id_text = exam_text_split.pop()
+        return int(exam_id_text)
+
+
+    @classmethod
+    def display_exam_id_on_marking_exam_page(cls, exam_id):
+        cls.__ui_mainwindow.label_49.setText("Exam ID: " + str(exam_id))
+
+    @classmethod
+    def display_students_full_names_with_questions_ready_to_be_marked(cls, students_names_list):
+        cls.__ui_mainwindow.tableWidget_6.clear()
+        row = 0
+        col = 0
+        for student_name in students_names_list:
+            student_item = QTableWidgetItem(student_name)
+            cls.__ui_mainwindow.tableWidget_6.setItem(row, col, student_item)
+            if (col >= 4):
+                row += 1
+                col = 0
+            else:
+                col += 1
 
 
     def __str__(self):

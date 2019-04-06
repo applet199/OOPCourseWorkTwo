@@ -81,6 +81,9 @@ class Student():
     @classmethod
     def work_on_selected_question(cls):
         question_id = StudentGUI.get_question_id_to_work_on()
+        if (question_id == None):
+            StudentGUI.display_no_selected_question_in_drop_box_message()
+            return
         question_type = StudentDA.get_question_type_by_id(question_id)
         if (question_type == "Single Answer"):
             single_answer_question_details = StudentDA.get_single_answer_question_details_by_id(question_id)
@@ -146,7 +149,9 @@ class Student():
         StudentGUI.close_dialog()
         StudentGUI.remove_question_from_not_completed_questions_by_id(question_id)
         StudentGUI.add_question_to_completed_questions_by_id(question_id)
-        StudentDA.insert_essay_question_result_to_db(question_id, student_answer, exam_id, cls.__student_id, 0, "Completed")
+        StudentDA.update_essay_question_result_in_db(question_id, student_answer, exam_id, cls.__student_id, 0, "Completed")
+
+
 
 
     @classmethod
@@ -179,6 +184,9 @@ class Student():
         StudentGUI.display_completed_exams_for_current_student(completed_exams)
         StudentGUI.display_complete_exam_success_message()
         StudentGUI.refresh_do_exam_page()
+        are_essay_questions_ready_to_be_marked = StudentDA.are_essay_questions_ready_to_be_marked_in_exam(exam_id)
+        if (are_essay_questions_ready_to_be_marked):
+            StudentDA.update_essay_questions_status_to_ready_to_be_marked_in_exam_in_db(exam_id)
 
     @classmethod
     def close_application(cls):

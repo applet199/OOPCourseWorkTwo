@@ -67,7 +67,8 @@ class Teacher():
         cls.remove_school_class_from_exam_by_id_button_pressed()
         cls.create_exam_button_pressed()
         cls.view_exam_details_by_id_button_pressed()
-        cls.mark_exam_by_id_button_pressed()
+        cls.mark_exam_button_pressed()
+        cls.mark_student_questions_answers_button_pressed()
         cls.close_button_pressed()
 
     @classmethod
@@ -131,8 +132,13 @@ class Teacher():
         cls.__ui_mainwindow.pushButton_15.clicked.connect(cls.view_exam_details_by_id)
 
     @classmethod
-    def mark_exam_by_id_button_pressed(cls):
-        cls.__ui_mainwindow.pushButton_31.clicked.connect(cls.mark_exam_by_id)
+    def mark_exam_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_31.clicked.connect(cls.mark_exam)
+
+    @classmethod
+    def mark_student_questions_answers_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_33.clicked.connect(cls.mark_student_questions_answers)
+
 
     @classmethod
     def close_button_pressed(cls):
@@ -337,7 +343,8 @@ class Teacher():
         string_of_school_classes_ids = TeacherGUI.get_string_of_school_classes_ids_in_current_exam()
         total_number_of_exams = TeacherDA.get_total_number_of_exams_in_db()
         exam_pk = total_number_of_exams + 1
-        TeacherDA.insert_exam_into_db(exam_pk, string_of_question_ids, string_of_school_classes_ids, "Not Completed")
+        string_of_essay_questions_ids = TeacherDA.get_essay_questions_ids_string_from_questions_ids(string_of_question_ids)
+        TeacherDA.insert_exam_into_db(exam_pk, string_of_question_ids, string_of_school_classes_ids, "Not Completed", string_of_essay_questions_ids)
         TeacherDA.set_exam_to_all_students_in_all_relevant_school_classes(exam_pk, string_of_school_classes_ids)
         all_exams = TeacherDA.get_all_exams_from_db()
         TeacherGUI.display_all_exams(all_exams)
@@ -345,21 +352,32 @@ class Teacher():
         TeacherGUI.refresh_create_exam_page()
         TeacherDA.insert_exam_result_to_db_by_exam_id(exam_pk)
         TeacherDA.insert_individual_student_exam_result_to_db_by_exam_id(exam_pk)
+        not_completed_exams = TeacherDA.get_not_completed_exams_from_db()
+        TeacherGUI.display_not_completed_exams(not_completed_exams)
+        string_of_students_ids = TeacherDA.get_students_ids_in_exam_by_exam_id(exam_pk)
+        TeacherDA.insert_essay_questions_results_in_to_db(string_of_essay_questions_ids, string_of_students_ids, exam_pk)
 
     @classmethod
     def view_exam_details_by_id(cls):
         pass
 
     @classmethod
-    def mark_exam_by_id(cls):
+    def mark_exam(cls):
         exam_id = TeacherGUI.get_exam_id_to_mark()
         TeacherGUI.display_exam_id_on_marking_exam_page(exam_id)
         students_ids = TeacherDA.get_students_ids_in_exam_by_exam_id(exam_id)
         students_with_questions_ready_to_be_marked = []
-        for student_id in students_ids:
-            if (TeacherDA.does_student_have_questions_ready_to_be_marked(student_id)):
+        for student_id in students_ids.split(" "):
+            if (TeacherDA.does_student_have_questions_ready_to_be_marked_for_exam(student_id, exam_id)):
                 students_with_questions_ready_to_be_marked.append(student_id)
-        TeacherGUI.display_students_with_questions_ready_to_be_marked(students_with_questions_ready_to_be_marked)
+        students_full_names_list = TeacherDA.get_students_full_names_by_ids(students_with_questions_ready_to_be_marked)
+        TeacherGUI.display_students_full_names_with_questions_ready_to_be_marked(students_full_names_list)
+        TeacherGUI.refresh_mark_exam_drop_box()
+
+    @classmethod
+    def mark_student_questions_answers(cls):
+        pass
+
 
 
 

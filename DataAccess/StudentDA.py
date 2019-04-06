@@ -251,7 +251,7 @@ class StudentDA():
                 single_answer_question_result_pk,
                 question_id,
                 single_answer_question_answer,
-                exam_result_id,
+                exam_id,
                 student_id,
                 points_gained,
                 status
@@ -269,7 +269,7 @@ class StudentDA():
                 multiple_answers_question_result_pk,
                 question_id,
                 multiple_answers_question_answer,
-                exam_result_id,
+                exam_id,
                 student_id,
                 points_gained,
                 status
@@ -280,21 +280,17 @@ class StudentDA():
         cls.__db_connection.commit()
 
     @classmethod
-    def insert_essay_question_result_to_db(cls, question_pk, student_answer, exam_pk, student_pk, points_gained, status):
-        essay_question_result_pk = cls.get_next_essay_question_result_pk()
+    def update_essay_question_result_in_db(cls, question_pk, student_answer, exam_pk, student_pk, points_gained, status):
         query = '''
-            INSERT INTO essay_question_result(
-                essay_question_result_pk,
-                question_id,
-                essay_question_answer,
-                exam_result_id,
-                student_id,
-                points_gained,
-                status
-                )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            UPDATE essay_question_result
+            SET essay_question_answer = ?,
+                points_gained = ?,
+                status = ?
+            WHERE question_id = ?
+            AND exam_id = ?
+            AND student_id = ?
         '''
-        cls.__cursor.execute(query, (essay_question_result_pk, question_pk, student_answer, exam_pk, student_pk, points_gained, status))
+        cls.__cursor.execute(query, (student_answer, points_gained, status, question_pk, exam_pk, student_pk))
         cls.__db_connection.commit()
 
     @classmethod
@@ -375,7 +371,7 @@ class StudentDA():
             SELECT single_answer_question_result_pk
             FROM single_answer_question_result
             WHERE question_id = ?
-            AND exam_result_id = ?
+            AND exam_id = ?
             AND student_id = ?
             AND status = ?
         '''
@@ -389,7 +385,7 @@ class StudentDA():
             SELECT multiple_answers_question_result_pk
             FROM multiple_answers_question_result
             WHERE question_id = ?
-            AND exam_result_id = ?
+            AND exam_id = ?
             AND student_id = ?
             AND status = ?
         '''
@@ -403,7 +399,7 @@ class StudentDA():
             SELECT essay_question_result_pk
             FROM essay_question_result
             WHERE question_id = ?
-            AND exam_result_id = ?
+            AND exam_id = ?
             AND student_id = ?
             AND status = ?
         '''
@@ -508,7 +504,73 @@ class StudentDA():
         cls.__cursor.execute(query, (completed_exams_string, cls.__student_id))
         cls.__db_connection.commit()
 
+    @classmethod
+    def are_essay_questions_ready_to_be_marked_in_exam(cls, exam_id):
+        essay_questions_ids_string = cls.get_essay_questions_ids_in_exam(exam_id)
+        essay_questions_ids_list = cls.make_string_to_list(essay_questions_ids_string)
+        students_ids_string = cls.get_all_students_of_exam_by_id(exam_id)
+        students_ids_list = cls.make_string_to_list(students_ids_string)
+        for essay_question_id in essay_questions_ids_list:
+            for student_id in students_ids_list:
+                essay_question_status = cls.get_essay_question_status_for_student_in_exam_by_id(essay_question_id, student_id, exam_id)
+                if (essay_question_status == "Not Completed"):
+                    return False
+        return True
 
+    @classmethod
+    def update_essay_questions_status_to_ready_to_be_marked_in_exam_in_db(cls, exam_id):
+        essay_questions_ids_string = cls.get_essay_questions_ids_in_exam(exam_id)
+        essay_questions_ids_list = cls.make_string_to_list(essay_questions_ids_string)
+        students_ids_string = cls.get_all_students_of_exam_by_id(exam_id)
+        students_ids_list = cls.make_string_to_list(students_ids_string)
+        for essay_question_id in essay_questions_ids_list:
+            for student_id in students_ids_list:
+                cls.update_essay_question_status_to_ready_to_be_marked_for_student_in_exam_by_id(essay_question_id, student_id, exam_id)
+
+    @classmethod
+    def get_essay_question_status_for_student_in_exam_by_id(cls, question_id, student_id, exam_id):
+        query = '''
+            SELECT status
+            FROM essay_question_result
+            WHERE question_id = ?
+            AND student_id = ?
+            AND exam_id = ?
+        '''
+        cls.__cursor.execute(query, (question_id, student_id, exam_id))
+        status_tuple = cls.__cursor.fetchone()
+        status = status_tuple[0]
+        return status
+
+    @classmethod
+    def update_essay_question_status_to_ready_to_be_marked_for_student_in_exam_by_id(cls, question_id, student_id, exam_id):
+        query = '''
+            UPDATE essay_question_result
+            SET status = ?
+            WHERE question_id = ?
+            AND student_id = ?
+            AND exam_id = ?
+        '''
+        cls.__cursor.execute(query, ("Ready To Be Marked", question_id, student_id, exam_id))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def get_essay_questions_ids_in_exam(cls, exam_id):
+        query = '''
+            SELECT essay_questions_ids
+            FROM exam
+            WHERE exam_pk = ?
+        '''
+        cls.__cursor.execute(query, (exam_id, ))
+        essay_questions_ids_tuple = cls.__cursor.fetchone()
+        essay_questions_ids = essay_questions_ids_tuple[0]
+        return essay_questions_ids
+
+    @classmethod
+    def make_string_to_list(cls, any_string):
+        any_string = str(any_string)
+        any_string.strip()
+        any_list = any_string.split(" ")
+        return any_list
 
     def __str__(self):
         return ("This is StudentDA Object")
