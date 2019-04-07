@@ -681,8 +681,8 @@ class TeacherDA():
             AND status = ?
         '''
         cls.__cursor.execute(query, (student_id, exam_id, "Ready To Be Marked"))
-        essay_question_result_tuple = cls.__cursor.fetchall()
-        return essay_question_result_tuple != None
+        essay_question_result_list = cls.__cursor.fetchall()
+        return essay_question_result_list != []
 
 
     @classmethod
@@ -778,6 +778,79 @@ class TeacherDA():
         questions_ids_tuple = cls.__cursor.fetchall()
         return questions_ids_tuple
 
+    @classmethod
+    def get_essay_question_details_to_mark_by_id(cls, question_id, exam_id, student_id):
+        query = '''
+            SELECT question_body,
+                essay_question_answer,
+                points
+            FROM essay_question
+            INNER JOIN essay_question_result
+            ON essay_question.question_fk = essay_question_result.question_id
+            INNER JOIN question
+            ON essay_question.question_fk = question.question_pk
+            WHERE essay_question_result.question_id = ?
+            AND essay_question_result.exam_id = ?
+            AND essay_question_result.student_id = ?
+        '''
+        cls.__cursor.execute(query, (question_id, exam_id, student_id))
+        essay_questions_details_tuple = cls.__cursor.fetchone()
+        return essay_questions_details_tuple
+
+    @classmethod
+    def update_essay_question_mark_in_db(cls, points, exam_id, student_id, question_id):
+        query = '''
+            UPDATE essay_question_result
+            SET points_gained = ?,
+                status = ?
+            WHERE question_id = ?
+            AND exam_id = ?
+            AND student_id = ?
+        '''
+        cls.__cursor.execute(query, (points, "Marked", question_id, exam_id, student_id))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def update_exam_status_to_marked_by_id_in_db(cls, exam_id):
+        query = '''
+            UPDATE exam
+            SET status = ?
+            WHERE exam_pk = ?
+        '''
+        cls.__cursor.execute(query, ("Marked", exam_id))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def get_marked_exams_from_db(cls):
+        query = '''
+            SELECT exam_pk
+            FROM exam
+            WHERE status = ?
+        '''
+        cls.__cursor.execute(query, ("Marked", ))
+        marked_exams_list = cls.__cursor.fetchall()
+        return marked_exams_list
+
+    @classmethod
+    def update_exam_status_to_result_released_by_exam_id_in_db(cls, exam_id):
+        query = '''
+            UPDATE exam
+            SET status = ?
+            WHERE exam_pk = ?
+        '''
+        cls.__cursor.execute(query, ("Result Released", exam_id))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def get_result_released_exams_from_db(cls):
+        query = '''
+            SELECT exam_pk
+            FROM exam
+            WHERE status = ?
+        '''
+        cls.__cursor.execute(query, ("Result Released", ))
+        result_released_exams = cls.__cursor.fetchall()
+        return result_released_exams
 
     def __str__(self):
         return ("This is TeacherDA Object")

@@ -51,6 +51,16 @@ class Teacher():
         TeacherGUI.display_ready_to_be_marked_exams(ready_to_be_marked_exams)
 
     @classmethod
+    def display_marked_exams(cls):
+        marked_exams = TeacherDA.get_marked_exams_from_db()
+        TeacherGUI.display_marked_exams(marked_exams)
+
+    @classmethod
+    def display_exam_results(cls):
+        exam_results = TeacherDA.get_exam_results_from_db()
+        TeacherGUI.display_exam_results(exam_results)
+
+    @classmethod
     def actions(cls):
         cls.create_single_answer_question_button_pressed()
         cls.preview_single_answer_question_button_pressed()
@@ -70,6 +80,7 @@ class Teacher():
         cls.mark_exam_button_pressed()
         cls.mark_student_questions_answers_button_pressed()
         cls.mark_question_button_pressed()
+        cls.release_exam_result_button_pressed()
         cls.close_button_pressed()
 
     @classmethod
@@ -149,6 +160,11 @@ class Teacher():
         cls.__ui_mainwindow.pushButton_4.clicked.connect(cls.close_application)
 
     @classmethod
+    def release_exam_result_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_32.clicked.connect(cls.release_exam_result)
+
+
+    @classmethod
     def create_single_answer_question(cls):
         single_answer_question_details = TeacherGUI.get_single_answer_question_details()
         if (single_answer_question_details == None):
@@ -198,7 +214,6 @@ class Teacher():
 
     @classmethod
     def load_question_details_by_id(cls):
-
         question_id = TeacherGUI.get_question_id_to_load()
         is_question_id_valid = cls.is_question_id_valid(question_id)
         if (not is_question_id_valid):
@@ -369,14 +384,19 @@ class Teacher():
     def mark_exam(cls):
         exam_id = TeacherGUI.get_exam_id_to_mark()
         TeacherGUI.display_exam_id_on_marking_exam_page(exam_id)
+        students_full_names_list = cls.get_students_full_names_who_have_questions_ready_to_be_marked_by_exam_id(exam_id)
+        TeacherGUI.display_students_full_names_with_questions_ready_to_be_marked(students_full_names_list)
+        TeacherGUI.refresh_mark_exam_drop_box()
+
+    @classmethod
+    def get_students_full_names_who_have_questions_ready_to_be_marked_by_exam_id(cls, exam_id):
         students_ids = TeacherDA.get_students_ids_in_exam_by_exam_id(exam_id)
         students_with_questions_ready_to_be_marked = []
         for student_id in students_ids.split(" "):
             if (TeacherDA.does_student_have_questions_ready_to_be_marked_for_exam(student_id, exam_id)):
                 students_with_questions_ready_to_be_marked.append(student_id)
         students_full_names_list = TeacherDA.get_students_full_names_by_ids(students_with_questions_ready_to_be_marked)
-        TeacherGUI.display_students_full_names_with_questions_ready_to_be_marked(students_full_names_list)
-        TeacherGUI.refresh_mark_exam_drop_box()
+        return students_full_names_list
 
     @classmethod
     def mark_student_questions_answers(cls):
@@ -388,14 +408,51 @@ class Teacher():
         TeacherGUI.display_student_name_on_mark_student_answers_page(student_name)
         questions_ready_to_be_marked = TeacherDA.get_questions_ready_to_be_marked_for_student_in_exam(student_id, exam_id)
         TeacherGUI.display_questions_ready_to_be_marked(questions_ready_to_be_marked)
+        TeacherGUI.refresh_drop_student_to_mark_questions_box()
 
     @classmethod
     def mark_question(cls):
         question_id = TeacherGUI.get_question_id_to_mark()
-        essay_question_details = TeacherDA.get_essay_question_details_to_mark_by_id(question_id)
+        if (question_id == None):
+            TeacherGUI.display_no_question_selected_to_mark_message()
+            return
+        exam_id = TeacherGUI.get_exam_id_on_marking_question_page()
+        student_id = TeacherGUI.get_student_id_on_marking_question_page()
+        essay_question_details = TeacherDA.get_essay_question_details_to_mark_by_id(question_id, exam_id, student_id)
         cls.__ui_dialog = TeacherGUI.setup_essay_question_ui_dialog_to_mark(essay_question_details)
-        cls.__ui_dialog.pushButton_2.clicked.connect(cls.submit_essay_question_mark)
+        cls.__ui_dialog.pushButton.clicked.connect(cls.submit_essay_question_mark)
 
+    @classmethod
+    def submit_essay_question_mark(cls):
+        question_mark = TeacherGUI.get_essay_question_marked_points()
+        exam_id = TeacherGUI.get_exam_id_on_marking_question_page()
+        student_id = TeacherGUI.get_student_id_on_marking_question_page()
+        question_id = TeacherGUI.get_question_id_to_mark()
+        TeacherDA.update_essay_question_mark_in_db(question_mark, exam_id, student_id, question_id)
+        TeacherGUI.refresh_drop_question_to_mark_box()
+        questions_ready_to_be_marked = TeacherDA.get_questions_ready_to_be_marked_for_student_in_exam(student_id, exam_id)
+        if (questions_ready_to_be_marked == []):
+            TeacherGUI.refresh_mark_student_questions_answers_page()
+            TeacherGUI.display_no_more_questions_to_mark_message()
+            students_full_names_list = cls.get_students_full_names_who_have_questions_ready_to_be_marked_by_exam_id(exam_id)
+            if (students_full_names_list == []):
+                TeacherDA.update_exam_status_to_marked_by_id_in_db(exam_id)
+                ready_to_be_marked_exams = TeacherDA.get_ready_to_be_marked_exams_from_db()
+                TeacherGUI.display_ready_to_be_marked_exams(ready_to_be_marked_exams)
+            TeacherGUI.display_students_full_names_with_questions_ready_to_be_marked(students_full_names_list)
+        TeacherGUI.display_questions_ready_to_be_marked(questions_ready_to_be_marked)
+        marked_exams = TeacherDA.get_marked_exams_from_db()
+        TeacherGUI.display_marked_exams(marked_exams)
+
+    @classmethod
+    def release_exam_result(cls):
+        exam_id = TeacherGUI.get_exam_id_to_release_result()
+        TeacherDA.update_exam_status_to_result_released_by_exam_id_in_db(exam_id)
+        result_released_exams = TeacherDA.get_result_released_exams_from_db()
+        TeacherGUI.display_result_released_exams(result_released_exams)
+        marked_exams = TeacherDA.get_marked_exams_from_db()
+        TeacherGUI.display_marked_exams(marked_exams)
+        TeacherGUI.refresh_drop_exam_to_release_result_box()
 
 
     @classmethod

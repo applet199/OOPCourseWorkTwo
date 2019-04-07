@@ -139,6 +139,8 @@ class Main():
                 Teacher.update_not_completed_exams()
                 Teacher.display_not_completed_exams()
                 Teacher.display_ready_to_be_marked_exams()
+                Teacher.display_marked_exams()
+                Teacher.display_exam_results()
                 Teacher.actions()
                 self.ui.pushButton_27.clicked.connect(self.reload_application)
             elif (user_type == "Student"):

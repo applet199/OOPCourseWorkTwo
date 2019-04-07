@@ -6,6 +6,7 @@ from PyQt5.QtCore import QDate, QTime, QDateTime, Qt
 from OOPCourseWorkTwo.GUI.SingleAnswerQuestionDialog import Ui_SingleAnswerQuestionDialog
 from OOPCourseWorkTwo.GUI.MultipleAnswersQuestionDialog import Ui_MultipleAnswersQuestionDialog
 from OOPCourseWorkTwo.GUI.EssayQuestionDialog import Ui_EssayQuestionDialog
+from OOPCourseWorkTwo.GUI.MarkingEssayQuestionDialog import Ui_MarkingEssayQuestionDialog
 
 
 class TeacherGUI():
@@ -910,6 +911,116 @@ class TeacherGUI():
             question_item = QTableWidgetItem(question_text)
             cls.__ui_mainwindow.tableWidget_25.setItem(row, col, question_item)
             row += 1
+
+    @classmethod
+    def get_question_id_to_mark(cls):
+        question_item = cls.__ui_mainwindow.tableWidget_26.item(0,0)
+        if (question_item == None):
+            return None
+        question_id_text = question_item.text()
+        question_id_text_list = question_id_text.split(" ")
+        question_id = question_id_text_list.pop()
+        return int(question_id)
+
+    @classmethod
+    def get_exam_id_on_marking_question_page(cls):
+        exam_id_text = cls.__ui_mainwindow.label_62.text()
+        exam_id_text_list = exam_id_text.split(" ")
+        exam_id = exam_id_text_list.pop()
+        return int(exam_id)
+
+    @classmethod
+    def get_student_id_on_marking_question_page(cls):
+        student_id_text = cls.__ui_mainwindow.label_63.text()
+        student_id_text_list = student_id_text.split(" ")
+        student_id = student_id_text_list.pop()
+        return int(student_id)
+
+    @classmethod
+    def setup_essay_question_ui_dialog_to_mark(cls, question_details):
+        question_body = question_details[0]
+        student_answer = question_details[1]
+        available_points = question_details[2]
+        cls.__dialog = QtWidgets.QDialog()
+        cls.__ui_dialog = Ui_MarkingEssayQuestionDialog()
+        cls.__ui_dialog.setupUi(cls.__dialog)
+        cls.__ui_dialog.label_2.setText(question_body)
+        cls.__ui_dialog.label_3.setText(student_answer)
+        cls.__ui_dialog.label_4.setText("Total Available Points: " + str(available_points))
+        cls.__ui_dialog.pushButton.clicked.connect(cls.close_dialog)
+        cls.__dialog.show()
+        return cls.__ui_dialog
+
+    @classmethod
+    def get_essay_question_marked_points(cls):
+        points_text = cls.__ui_dialog.lineEdit.text()
+        return int(points_text)
+
+    @classmethod
+    def refresh_drop_question_to_mark_box(cls):
+        cls.__ui_mainwindow.tableWidget_26.clear()
+
+    @classmethod
+    def refresh_mark_student_questions_answers_page(cls):
+        cls.__ui_mainwindow.label_62.clear()
+        cls.__ui_mainwindow.label_63.clear()
+        cls.__ui_mainwindow.label_50.clear()
+
+    @classmethod
+    def display_no_more_questions_to_mark_message(cls):
+        cls.__ui_mainwindow.label_66.setText("No More Questions To Mark")
+
+    @classmethod
+    def display_marked_exams(cls, marked_exams_ids):
+        cls.__ui_mainwindow.tableWidget_18.clear()
+        row = 0
+        col = 0
+        for (exam_id,) in marked_exams_ids:
+            exam_text = "Exam " + str(exam_id)
+            exam_item = QTableWidgetItem(exam_text)
+            cls.__ui_mainwindow.tableWidget_18.setItem(row, col, exam_item)
+            if (col >= 4):
+                row += 1
+                col = 0
+            else:
+                col += 1
+
+    @classmethod
+    def display_no_question_selected_to_mark_message(cls):
+        cls.__ui_mainwindow.label_66.setText("No Question Selected To Mark")
+
+    @classmethod
+    def refresh_drop_student_to_mark_questions_box(cls):
+        cls.__ui_mainwindow.tableWidget_19.clear()
+
+    @classmethod
+    def get_exam_id_to_release_result(cls):
+        exam_item = cls.__ui_mainwindow.tableWidget_21.item(0,0)
+        if (exam_item == None):
+            return None
+        exam_id_text = exam_item.text()
+        exam_id_text_list = exam_id_text.split(" ")
+        exam_id = exam_id_text_list.pop()
+        return int(exam_id)
+
+    @classmethod
+    def display_result_released_exams(cls, result_released_exams_ids):
+        cls.__ui_mainwindow.tableWidget_11.clear()
+        row = 0
+        col = 0
+        for (exam_id,) in result_released_exams_ids:
+            exam_text = "Exam " + str(exam_id)
+            exam_item = QTableWidgetItem(exam_text)
+            cls.__ui_mainwindow.tableWidget_11.setItem(row, col, exam_item)
+            if (col >= 9):
+                row += 1
+                col = 0
+            else:
+                col += 1
+
+    @classmethod
+    def refresh_drop_exam_to_release_result_box(cls):
+        cls.__ui_mainwindow.tableWidget_21.clear()
 
     def __str__(self):
         return ("This is TeacherGUI Object")
