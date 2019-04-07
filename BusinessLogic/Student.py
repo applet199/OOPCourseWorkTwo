@@ -41,6 +41,8 @@ class Student():
     @classmethod
     def display_released_exam_results(cls):
         released_exam_results = StudentDA.get_released_exam_results_for_current_student_from_db(cls.__student_id)
+        if (released_exam_results == None):
+            return
         StudentGUI.display_released_exam_results_for_current_student(released_exam_results)
 
     @classmethod

@@ -304,8 +304,22 @@ class StudentGUI():
         return completed_questions
 
     @classmethod
-    def display_released_exam_results_for_current_student(cls, released_exam_results):
-        pass
+    def display_released_exam_results_for_current_student(cls, exam_results_ids):
+        cls.__ui_mainwindow.tableWidget_6.clear()
+        exam_results_ids_list = exam_results_ids.split(" ")
+        row = 0
+        col = 0
+        for exam_result_id in exam_results_ids_list:
+            exam_result_id_text = "Exam " + str(exam_result_id) + " Result"
+            exam_result_item = QTableWidgetItem(exam_result_id_text)
+            cls.__ui_mainwindow.tableWidget_6.setItem(row, col, exam_result_item)
+            if (col >= 4):
+                row += 1
+                col = 0
+            else:
+                col += 1
+
+
 
     @classmethod
     def close_dialog(cls):

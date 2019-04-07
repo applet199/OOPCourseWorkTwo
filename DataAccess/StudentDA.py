@@ -603,7 +603,15 @@ class StudentDA():
 
     @classmethod
     def get_released_exam_results_for_current_student_from_db(cls, student_id):
-        pass
+        query = '''
+            SELECT exam_results_ids
+            FROM student
+            WHERE student_pk = ?
+        '''
+        cls.__cursor.execute(query, (student_id, ))
+        exam_results_ids_tuple = cls.__cursor.fetchone()
+        exam_results_ids = exam_results_ids_tuple[0]
+        return exam_results_ids
 
     @classmethod
     def update_exam_status_to_marked_for_all_students(cls, exam_id):

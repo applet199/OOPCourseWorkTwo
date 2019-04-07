@@ -385,7 +385,38 @@ class Teacher():
 
     @classmethod
     def view_exam_details_by_id(cls):
-        pass
+        exam_id = TeacherGUI.get_exam_id_to_view_details()
+        TeacherGUI.diaplay_exam_id_on_view_exam_details_page(exam_id)
+        questions_ids = TeacherDA.get_questions_ids_in_exam(exam_id)
+        TeacherGUI.display_questions_on_view_exam_details_page(questions_ids)
+        school_classes_ids = TeacherDA.get_school_classes_ids_in_exam_by_exam_id(exam_id)
+        try:
+            first_school_class_id = school_classes_ids[0]
+            TeacherGUI.display_first_school_class_details_on_view_exam_details_page(first_school_class_id)
+        except:
+            pass
+        try:
+            second_school_class_id = school_classes_ids[1]
+            TeacherGUI.display_second_school_class_details_on_view_exam_details_page(second_school_class_id)
+        except:
+            pass
+        try:
+            third_school_class_id = school_classes_ids[2]
+            TeacherGUI.display_third_school_class_details_on_view_exam_details_page(third_school_class_id)
+        except:
+            pass
+        try:
+            fourth_school_class_id = school_classes_ids[2]
+            TeacherGUI.display_fourth_school_class_details_on_view_exam_details_page(fourth_school_class_id)
+        except:
+            pass
+        try:
+            fifth_school_class_id = school_classes_ids[2]
+            TeacherGUI.display_fifth_school_class_details_on_view_exam_details_page(fifth_school_class_id)
+        except:
+            pass
+
+
 
     @classmethod
     def mark_exam(cls):
@@ -464,6 +495,8 @@ class Teacher():
         marked_exams = TeacherDA.get_marked_exams_from_db()
         TeacherGUI.display_marked_exams(marked_exams)
         TeacherGUI.refresh_drop_exam_to_release_result_box()
+        TeacherDA.update_completed_exams_ids_for_students_in_db(exam_id, students_ids)
+        TeacherDA.update_exam_results_ids_for_students_in_db(exam_id, students_ids)
 
 
 

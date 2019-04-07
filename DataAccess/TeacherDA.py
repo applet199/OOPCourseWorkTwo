@@ -202,8 +202,8 @@ class TeacherDA():
         students_ids_in_exam = ""
         for school_class_id in school_classes_ids:
             students_ids_in_school_class = cls.get_all_students_ids_in_school_class_by_id(school_class_id)
-            students_ids_in_exam = students_ids_in_exam + students_ids_in_school_class
-        return students_ids_in_exam
+            students_ids_in_exam = students_ids_in_exam + students_ids_in_school_class + " "
+        return students_ids_in_exam.strip()
 
     @classmethod
     def get_school_classes_ids_in_exam_by_exam_id(cls, exam_pk):
@@ -644,7 +644,8 @@ class TeacherDA():
         '''
         cls.__cursor.execute(query, (exam_pk, ))
         students_ids_tuple = cls.__cursor.fetchone()
-        return students_ids_tuple[0].rstrip()
+        students_ids = students_ids_tuple[0]
+        return str(students_ids).strip()
 
     @classmethod
     def have_all_students_completed_this_exam(cls, exam_id):
@@ -1032,6 +1033,62 @@ class TeacherDA():
         cls.__cursor.execute(query, (exam_id, student_id, question_id, "Marked"))
         points_gained_tuple = cls.__cursor.fetchone()
         return points_gained_tuple[0]
+
+    @classmethod
+    def update_completed_exams_ids_for_students_in_db(cls, exam_id, students_ids):
+        students_ids_list = cls.make_string_to_list(students_ids)
+        for student_id in students_ids_list:
+            new_completed_exams_ids = cls.get_updated_completed_exams_ids_by_deletion(exam_id, student_id)
+            cls.update_completed_exams_ids_for_student(new_completed_exams_ids, student_id)
+
+    @classmethod
+    def make_string_to_list(cls, any_string):
+        any_list = any_string.split(" ")
+        return any_list
+
+    @classmethod
+    def update_exam_results_ids_for_students_in_db(cls, exam_id, students_ids):
+        for student_id in students_ids:
+            new_exam_results_ids = cls.get_updated_exam_results_ids_by_addition(exam_id, student_id)
+            cls.update_exam_results_ids_for_student(new_exam_results_ids, student_id)
+
+    @classmethod
+    def get_updated_completed_exams_ids_by_deletion(cls, exam_id, student_id):
+        old_completed_exams_ids = cls.get_completed_exams_ids_for_student_from_db(student_id)
+        old_completed_exams_ids_list = old_completed_exams_ids.split(" ")
+        old_completed_exams_ids_list.remove(str(exam_id))
+        new_completed_exams_ids = cls.make_list_to_string(old_completed_exams_ids_list)
+        return new_completed_exams_ids
+
+    @classmethod
+    def update_completed_exams_ids_for_student(cls, new_completed_exams_ids, student_id):
+        query = '''
+            UPDATE student
+            SET completed_exams_ids = ?
+            WHERE student_pk = ?
+        '''
+        cls.__cursor.execute(query, (new_completed_exams_ids, student_id))
+        cls.__db_connection.commit()
+
+
+    @classmethod
+    def get_updated_exam_results_ids_by_addition(cls, exam_id, student_id):
+        old_exam_results_ids = cls.get_exam_results_ids_for_student_from_db(student_id)
+        old_exam_results_ids_list = old_exam_results_ids.split(" ")
+        old_exam_results_ids_list.append(str(exam_id))
+        new_exam_results_ids = cls.make_list_to_string(old_exam_results_ids_list)
+        return new_exam_results_ids
+
+    @classmethod
+    def update_exam_results_ids_for_student(cls, new_exam_results_ids, student_id):
+        query = '''
+            UPDATE student
+            SET exam_results_ids = ?
+            WHERE student_pk = ?
+        '''
+        cls.__cursor.execute(query, (new_exam_results_ids, student_id))
+        cls.__db_connection.commit()
+
 
     def __str__(self):
         return ("This is TeacherDA Object")
