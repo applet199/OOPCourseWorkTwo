@@ -304,6 +304,10 @@ class StudentGUI():
         return completed_questions
 
     @classmethod
+    def display_released_exam_results_for_current_student(cls, released_exam_results):
+        pass
+
+    @classmethod
     def close_dialog(cls):
         cls.__dialog.close()
 

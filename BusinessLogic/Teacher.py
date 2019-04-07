@@ -462,6 +462,9 @@ class Teacher():
     @classmethod
     def release_exam_result(cls):
         exam_id = TeacherGUI.get_exam_id_to_release_result()
+        students_ids = TeacherDA.get_students_ids_in_exam_by_exam_id(exam_id)
+        TeacherDA.update_total_points_gained_for_each_student_in_exam(students_ids, exam_id)
+        TeacherDA.update_average_percentage_mark_for_each_student_in_exam(students_ids, exam_id)
         TeacherDA.update_exam_status_to_result_released_by_exam_id_in_db(exam_id)
         TeacherDA.update_exam_result_to_released_by_exam_result_id_in_db(exam_id)
         result_released_exams = TeacherDA.get_result_released_exams_from_db()
@@ -469,6 +472,7 @@ class Teacher():
         marked_exams = TeacherDA.get_marked_exams_from_db()
         TeacherGUI.display_marked_exams(marked_exams)
         TeacherGUI.refresh_drop_exam_to_release_result_box()
+
 
     @classmethod
     def load_exam_details(cls):

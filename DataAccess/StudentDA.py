@@ -528,6 +528,16 @@ class StudentDA():
                 cls.update_essay_question_status_to_ready_to_be_marked_for_student_in_exam_by_id(essay_question_id, student_id, exam_id)
 
     @classmethod
+    def update_individual_student_exam_result_status_to_ready_to_be_marked_for_exam_in_db(cls, exam_id):
+        query = '''
+            UPDATE individual_student_exam_result
+            SET status = ?
+            WHERE exam_id = ?
+        '''
+        cls.__cursor.execute(query, ("Ready To Be Marked", exam_id))
+        cls.__db_connection.commit()
+
+    @classmethod
     def get_essay_question_status_for_student_in_exam_by_id(cls, question_id, student_id, exam_id):
         query = '''
             SELECT status
@@ -575,6 +585,7 @@ class StudentDA():
     @classmethod
     def get_released_exam_results_for_current_student_from_db(cls, student_id):
         pass
+
 
     def __str__(self):
         return ("This is StudentDA Object")

@@ -41,7 +41,7 @@ class Student():
     @classmethod
     def display_released_exam_results(cls):
         released_exam_results = StudentDA.get_released_exam_results_for_current_student_from_db(cls.__student_id)
-        StudentGUI.display_released_exam_results_for_current_student()
+        StudentGUI.display_released_exam_results_for_current_student(released_exam_results)
 
     @classmethod
     def actions(cls):
@@ -192,6 +192,7 @@ class Student():
         are_essay_questions_ready_to_be_marked = StudentDA.are_essay_questions_ready_to_be_marked_in_exam(exam_id)
         if (are_essay_questions_ready_to_be_marked):
             StudentDA.update_essay_questions_status_to_ready_to_be_marked_in_exam_in_db(exam_id)
+            StudentDA.update_individual_student_exam_result_status_to_ready_to_be_marked_for_exam_in_db(exam_id)
 
     @classmethod
     def close_application(cls):
