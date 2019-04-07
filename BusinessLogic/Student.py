@@ -39,6 +39,11 @@ class Student():
         StudentGUI.display_completed_exams_for_current_student(completed_exams_ids)
 
     @classmethod
+    def display_released_exam_results(cls):
+        released_exam_results = StudentDA.get_released_exam_results_for_current_student_from_db(cls.__student_id)
+        StudentGUI.display_released_exam_results_for_current_student()
+
+    @classmethod
     def actions(cls):
         cls.load_exam_details_by_id_button_pressed()
         cls.work_on_selected_question_button_pressed()

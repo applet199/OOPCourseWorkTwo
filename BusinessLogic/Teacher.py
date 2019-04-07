@@ -490,6 +490,7 @@ class Teacher():
         exam_result_details = TeacherDA.get_student_exam_result_details_by_id(student_full_name, exam_result_id)
         TeacherGUI.display_student_exam_result_details(exam_result_details)
 
+
     @classmethod
     def close_application(cls):
         cls.__mainwindow.close()

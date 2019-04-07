@@ -572,5 +572,9 @@ class StudentDA():
         any_list = any_string.split(" ")
         return any_list
 
+    @classmethod
+    def get_released_exam_results_for_current_student_from_db(cls, student_id):
+        pass
+
     def __str__(self):
         return ("This is StudentDA Object")

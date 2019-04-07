@@ -151,6 +151,7 @@ class Main():
                 Student.set_student_id_for_current_session(self.__student_id)
                 Student.display_current_not_completed_exams()
                 Student.display_completed_exams()
+                Student.display_released_exam_results()
                 Student.actions()
                 self.ui.pushButton_5.clicked.connect(self.reload_application)
         except:
