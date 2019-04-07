@@ -1022,5 +1022,87 @@ class TeacherGUI():
     def refresh_drop_exam_to_release_result_box(cls):
         cls.__ui_mainwindow.tableWidget_21.clear()
 
+    @classmethod
+    def display_exam_results(cls, exam_results_ids):
+        cls.__ui_mainwindow.tableWidget_11.clear()
+        row = 0
+        col = 0
+        for (exam_result_id, ) in exam_results_ids:
+            exam_result_text = "Exam " + str(exam_result_id) + " Result"
+            exam_result_item = QTableWidgetItem(exam_result_text)
+            cls.__ui_mainwindow.tableWidget_11.setItem(row, col, exam_result_item)
+            if (col >= 9):
+                row += 1
+                col = 0
+            else:
+                col += 1
+
+    @classmethod
+    def get_exam_result_id_to_load_details(cls):
+        exam_result_id_text = cls.__ui_mainwindow.lineEdit_22.text()
+        return int(exam_result_id_text)
+
+    @classmethod
+    def display_school_classes_to_view_exam_result_details(cls, school_classes_ids):
+        cls.__ui_mainwindow.tableWidget_12.clear()
+        row = 0
+        col = 0
+        for (school_class_id, ) in school_classes_ids:
+            school_class_text = "Class " + str(school_class_id)
+            school_class_item = QTableWidgetItem(school_class_text)
+            cls.__ui_mainwindow.tableWidget_12.setItem(row, col, school_class_item)
+            row += 1
+
+    @classmethod
+    def display_exam_result_id_on_view_exam_result_details_page(cls, exam_result_id):
+        cls.__ui_mainwindow.label_33.setText("Exam Result ID: " + str(exam_result_id))
+
+    @classmethod
+    def get_school_class_id_to_view_exam_result(cls):
+        school_class_id_text = cls.__ui_mainwindow.lineEdit_23.text()
+        return int(school_class_id_text)
+
+    @classmethod
+    def display_students_full_names_to_view_exam_result(cls, students_full_names):
+        cls.__ui_mainwindow.tableWidget_13.clear()
+        row = 0
+        col = 0
+        for (student_full_name, ) in students_full_names:
+            student_item = QTableWidgetItem(student_full_name)
+            cls.__ui_mainwindow.tableWidget_13.setItem(row, col, student_item)
+            row += 1
+
+    @classmethod
+    def get_student_full_name_to_view_exam_result(cls):
+        student_item = cls.__ui_mainwindow.tableWidget_22.item(0, 0)
+        student_name_text = student_item.text()
+        return student_name_text
+
+    @classmethod
+    def get_exam_result_id_on_view_exam_result_page(cls):
+        exam_result_id_text = cls.__ui_mainwindow.label_33.text()
+        exam_result_id_text_list = exam_result_id_text.split(" ")
+        exam_result_id = exam_result_id_text_list.pop()
+        return exam_result_id
+
+    @classmethod
+    def display_student_exam_result_details(cls, exam_result_details):
+        student_id = exam_result_details[0]
+        student_full_name = exam_result_details[1]
+        date_of_birth = exam_result_details[2]
+        school_class_id = exam_result_details[3]
+        exam_id = exam_result_details[4]
+        total_available_points = exam_result_details[5]
+        total_points_gained = exam_result_details[6]
+        average_percentage_mark = exam_result_details[7]
+        cls.__ui_mainwindow.label_58.setText(str(student_id))
+        cls.__ui_mainwindow.label_72.setText(str(student_full_name))
+        cls.__ui_mainwindow.label_75.setText(str(date_of_birth))
+        cls.__ui_mainwindow.label_76.setText(str(school_class_id))
+        cls.__ui_mainwindow.label_77.setText(str(exam_id))
+        cls.__ui_mainwindow.label_78.setText(str(total_available_points))
+        cls.__ui_mainwindow.label_79.setText(str(total_points_gained))
+        cls.__ui_mainwindow.label_80.setText(str(average_percentage_mark))
+
     def __str__(self):
         return ("This is TeacherGUI Object")

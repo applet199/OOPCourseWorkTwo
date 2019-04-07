@@ -213,9 +213,8 @@ class TeacherDA():
             WHERE exam_pk = ?
         '''
         cls.__cursor.execute(query, (exam_pk,))
-        school_classes_ids_tuple = cls.__cursor.fetchone()
-        school_classes_ids = school_classes_ids_tuple[0]
-        return school_classes_ids
+        school_classes_ids_list = cls.__cursor.fetchall()
+        return school_classes_ids_list
 
     @classmethod
     def get_total_number_of_questions_in_db(cls):
@@ -851,6 +850,63 @@ class TeacherDA():
         cls.__cursor.execute(query, ("Result Released", ))
         result_released_exams = cls.__cursor.fetchall()
         return result_released_exams
+
+    @classmethod
+    def update_exam_result_to_released_by_exam_result_id_in_db(cls, exam_id):
+        query = '''
+            UPDATE exam_result
+            SET is_result_released = ?
+            WHERE exam_result_pk = ?
+        '''
+        cls.__cursor.execute(query, (1, exam_id))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def get_exam_results_from_db(cls):
+        query = '''
+            SELECT exam_result_pk
+            FROM exam_result
+            WHERE is_result_released = ?
+        '''
+        cls.__cursor.execute(query, (1, ))
+        exam_results = cls.__cursor.fetchall()
+        return exam_results
+
+    @classmethod
+    def get_students_full_names_by_school_class_id(cls, school_class_id):
+        query = '''
+            SELECT student_full_name
+            FROM student
+            WHERE school_class_fk = ?
+        '''
+        cls.__cursor.execute(query, (school_class_id, ))
+        students_full_names_list = cls.__cursor.fetchall()
+        return students_full_names_list
+
+    @classmethod
+    def get_student_exam_result_details_by_id(cls, student_full_name, exam_result_id):
+        query = '''
+            SELECT student_pk,
+                student_full_name,
+                date_of_birth,
+                school_class_fk,
+                exam_id,
+                total_available_points,
+                total_points_gained,
+                average_percentage_mark
+            FROM individual_student_exam_result
+            INNER JOIN student
+            ON individual_student_exam_result.student_id = student.student_pk
+            INNER JOIN exam
+            ON individual_student_exam_result.exam_id = exam.exam_pk
+            WHERE student.student_full_name = ?
+            AND exam.exam_pk = ?
+        '''
+        cls.__cursor.execute(query, (student_full_name, exam_result_id))
+        exam_result_details_tuple = cls.__cursor.fetchone()
+        return exam_result_details_tuple
+
+
 
     def __str__(self):
         return ("This is TeacherDA Object")

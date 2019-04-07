@@ -81,6 +81,9 @@ class Teacher():
         cls.mark_student_questions_answers_button_pressed()
         cls.mark_question_button_pressed()
         cls.release_exam_result_button_pressed()
+        cls.load_exam_result_details_by_id_button_pressed()
+        cls.view_school_class_exam_result_by_id_button_pressed()
+        cls.view_individual_student_exam_result_by_student_full_name_button_pressed()
         cls.close_button_pressed()
 
     @classmethod
@@ -162,6 +165,18 @@ class Teacher():
     @classmethod
     def release_exam_result_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_32.clicked.connect(cls.release_exam_result)
+
+    @classmethod
+    def load_exam_result_details_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_24.clicked.connect(cls.load_exam_details)
+
+    @classmethod
+    def view_school_class_exam_result_by_id_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_25.clicked.connect(cls.view_school_class_exam_result)
+
+    @classmethod
+    def view_individual_student_exam_result_by_student_full_name_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_26.clicked.connect(cls.view_individual_student_exam_result)
 
 
     @classmethod
@@ -448,12 +463,32 @@ class Teacher():
     def release_exam_result(cls):
         exam_id = TeacherGUI.get_exam_id_to_release_result()
         TeacherDA.update_exam_status_to_result_released_by_exam_id_in_db(exam_id)
+        TeacherDA.update_exam_result_to_released_by_exam_result_id_in_db(exam_id)
         result_released_exams = TeacherDA.get_result_released_exams_from_db()
         TeacherGUI.display_result_released_exams(result_released_exams)
         marked_exams = TeacherDA.get_marked_exams_from_db()
         TeacherGUI.display_marked_exams(marked_exams)
         TeacherGUI.refresh_drop_exam_to_release_result_box()
 
+    @classmethod
+    def load_exam_details(cls):
+        exam_result_id = TeacherGUI.get_exam_result_id_to_load_details()
+        school_classes_ids = TeacherDA.get_school_classes_ids_in_exam_by_exam_id(exam_result_id)
+        TeacherGUI.display_school_classes_to_view_exam_result_details(school_classes_ids)
+        TeacherGUI.display_exam_result_id_on_view_exam_result_details_page(exam_result_id)
+
+    @classmethod
+    def view_school_class_exam_result(cls):
+        school_class_id = TeacherGUI.get_school_class_id_to_view_exam_result()
+        students_full_names = TeacherDA.get_students_full_names_by_school_class_id(school_class_id)
+        TeacherGUI.display_students_full_names_to_view_exam_result(students_full_names)
+
+    @classmethod
+    def view_individual_student_exam_result(cls):
+        student_full_name = TeacherGUI.get_student_full_name_to_view_exam_result()
+        exam_result_id = TeacherGUI.get_exam_result_id_on_view_exam_result_page()
+        exam_result_details = TeacherDA.get_student_exam_result_details_by_id(student_full_name, exam_result_id)
+        TeacherGUI.display_student_exam_result_details(exam_result_details)
 
     @classmethod
     def close_application(cls):
