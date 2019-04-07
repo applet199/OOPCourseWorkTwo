@@ -33,14 +33,6 @@ class Teacher():
         TeacherGUI.display_all_exams(all_exams)
 
     @classmethod
-    def update_not_completed_exams(cls):
-        old_not_completed_exams = TeacherDA.get_not_completed_exams_from_db()
-        for (exam_id, ) in old_not_completed_exams:
-            is_exam_ready_to_be_marked = TeacherDA.have_all_students_completed_this_exam(exam_id)
-            if (is_exam_ready_to_be_marked):
-                TeacherDA.update_exam_status_to_ready_to_be_marked_by_exam_id(exam_id)
-
-    @classmethod
     def display_not_completed_exams(cls):
         not_completed_exams = TeacherDA.get_not_completed_exams_from_db()
         TeacherGUI.display_not_completed_exams(not_completed_exams)
@@ -472,6 +464,7 @@ class Teacher():
         marked_exams = TeacherDA.get_marked_exams_from_db()
         TeacherGUI.display_marked_exams(marked_exams)
         TeacherGUI.refresh_drop_exam_to_release_result_box()
+
 
 
     @classmethod

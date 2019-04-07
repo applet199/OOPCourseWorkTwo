@@ -696,6 +696,8 @@ class TeacherDA():
 
     @classmethod
     def insert_essay_questions_results_in_to_db(cls, essay_questions_ids, students_ids, exam_id):
+        if (essay_questions_ids == ""):
+            return
         essay_questions_ids_list = essay_questions_ids.split(" ")
         students_ids_list = students_ids.split(" ")
         for student_id in students_ids_list:
@@ -906,7 +908,130 @@ class TeacherDA():
         exam_result_details_tuple = cls.__cursor.fetchone()
         return exam_result_details_tuple
 
+    @classmethod
+    def update_total_points_gained_for_each_student_in_exam(cls, students_ids, exam_id):
+        questions_ids = cls.get_questions_ids_in_exam(exam_id)
+        for student_id in students_ids.split(" "):
+            total_points_gained = 0
+            for question_id in str(questions_ids):
+                question_type = cls.get_question_type_by_id(question_id)
+                points_gained_for_question = 0
+                if (question_type == "Single Answer"):
+                    points_gained_for_question = cls.get_points_gained_for_single_answser_question(exam_id, student_id, question_id)
+                elif (question_type == "Multiple Answers"):
+                    points_gained_for_question = cls.get_points_gained_for_multiple_answsers_question(exam_id, student_id, question_id)
+                elif (question_type == "Essay"):
+                    points_gained_for_question = cls.get_points_gained_for_essay_question(exam_id, student_id, question_id)
+                total_points_gained = total_points_gained + points_gained_for_question
+            cls.update_total_points_gained_for_student(student_id, total_points_gained, exam_id)
 
+    @classmethod
+    def update_average_percentage_mark_for_each_student_in_exam(cls, students_ids, exam_id):
+        for student_id in students_ids.split(" "):
+            total_available_points = cls.get_total_available_points_in_exam(exam_id)
+            total_points_gained = cls.get_total_points_gained_for_student_in_exam(student_id, exam_id)
+            average_percentage_mark = (total_points_gained / total_available_points) * 100
+            query = '''
+                UPDATE individual_student_exam_result
+                SET average_percentage_mark = ?
+                WHERE student_id = ?
+                AND exam_id = ?
+                AND status = ?
+            '''
+            cls.__cursor.execute(query, (average_percentage_mark, student_id, exam_id, "Marked"))
+            cls.__db_connection.commit()
+
+    @classmethod
+    def get_total_points_gained_for_student_in_exam(cls, student_id, exam_id):
+        query = '''
+            SELECT total_points_gained
+            FROM individual_student_exam_result
+            WHERE exam_id = ?
+            AND student_id = ?
+        '''
+        cls.__cursor.execute(query, (exam_id, student_id))
+        total_points_gained_tuple = cls.__cursor.fetchone()
+        return total_points_gained_tuple[0]
+
+    @classmethod
+    def get_total_available_points_in_exam(cls, exam_id):
+        query = '''
+            SELECT total_available_points
+            FROM exam
+            WHERE exam_pk = ?
+        '''
+        cls.__cursor.execute(query, (exam_id, ))
+        total_available_points_tuple = cls.__cursor.fetchone()
+        return total_available_points_tuple[0]
+
+
+
+    @classmethod
+    def update_total_points_gained_for_student(cls, student_id, total_points_gained, exam_id):
+        query = '''
+            UPDATE individual_student_exam_result
+            SET total_points_gained = ?
+            WHERE student_id = ?
+            AND exam_id = ?
+            AND status = ?
+        '''
+        cls.__cursor.execute(query, (total_points_gained, student_id, exam_id, "Marked"))
+        cls.__db_connection.commit()
+
+
+
+    @classmethod
+    def get_questions_ids_in_exam(cls, exam_id):
+        query = '''
+            SELECT questions_ids
+            FROM exam
+            WHERE exam_pk = ?
+        '''
+        cls.__cursor.execute(query, (exam_id, ))
+        questions_ids_tuple = cls.__cursor.fetchone()
+        return questions_ids_tuple[0]
+
+    @classmethod
+    def get_points_gained_for_single_answser_question(cls, exam_id, student_id, question_id):
+        query = '''
+            SELECT points_gained
+            FROM single_answer_question_result
+            WHERE exam_id = ?
+            AND student_id = ?
+            AND question_id = ?
+            AND status = ?
+        '''
+        cls.__cursor.execute(query, (exam_id, student_id, question_id, "Marked"))
+        points_gained_tuple = cls.__cursor.fetchone()
+        return points_gained_tuple[0]
+
+    @classmethod
+    def get_points_gained_for_multiple_answsers_question(cls, exam_id, student_id, question_id):
+        query = '''
+            SELECT points_gained
+            FROM multiple_answers_question_result
+            WHERE exam_id = ?
+            AND student_id = ?
+            AND question_id = ?
+            And status= ?
+        '''
+        cls.__cursor.execute(query, (exam_id, student_id, question_id, "Marked"))
+        points_gained_tuple = cls.__cursor.fetchone()
+        return points_gained_tuple[0]
+
+    @classmethod
+    def get_points_gained_for_essay_question(cls, exam_id, student_id, question_id):
+        query = '''
+            SELECT points_gained
+            FROM essay_question_result
+            WHERE exam_id = ?
+            AND student_id = ?
+            AND question_id = ?
+            AND status = ?
+        '''
+        cls.__cursor.execute(query, (exam_id, student_id, question_id, "Marked"))
+        points_gained_tuple = cls.__cursor.fetchone()
+        return points_gained_tuple[0]
 
     def __str__(self):
         return ("This is TeacherDA Object")

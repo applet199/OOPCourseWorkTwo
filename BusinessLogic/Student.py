@@ -123,7 +123,7 @@ class Student():
         StudentGUI.close_dialog()
         StudentGUI.remove_question_from_not_completed_questions_by_id(question_id)
         StudentGUI.add_question_to_completed_questions_by_id(question_id)
-        StudentDA.insert_single_answer_question_result_to_db(question_id, student_answer, exam_id, cls.__student_id, question_points, "Completed")
+        StudentDA.insert_single_answer_question_result_to_db(question_id, student_answer, exam_id, cls.__student_id, question_points, "Marked")
 
     @classmethod
     def submit_multiple_answers_question(cls):
@@ -140,7 +140,7 @@ class Student():
         StudentGUI.close_dialog()
         StudentGUI.remove_question_from_not_completed_questions_by_id(question_id)
         StudentGUI.add_question_to_completed_questions_by_id(question_id)
-        StudentDA.insert_multiple_answers_question_result_to_db(question_id, student_answers, exam_id, cls.__student_id, question_points, "Completed")
+        StudentDA.insert_multiple_answers_question_result_to_db(question_id, student_answers, exam_id, cls.__student_id, question_points, "Marked")
 
 
     @classmethod
@@ -189,10 +189,15 @@ class Student():
         StudentGUI.display_completed_exams_for_current_student(completed_exams)
         StudentGUI.display_complete_exam_success_message()
         StudentGUI.refresh_do_exam_page()
-        are_essay_questions_ready_to_be_marked = StudentDA.are_essay_questions_ready_to_be_marked_in_exam(exam_id)
-        if (are_essay_questions_ready_to_be_marked):
-            StudentDA.update_essay_questions_status_to_ready_to_be_marked_in_exam_in_db(exam_id)
-            StudentDA.update_individual_student_exam_result_status_to_ready_to_be_marked_for_exam_in_db(exam_id)
+        essay_questions_ids = StudentDA.get_essay_questions_ids_in_exam(exam_id)
+        if (essay_questions_ids == None):
+            StudentDA.update_individual_student_exam_result_status_to_marked_for_student_in_exam_in_db(cls.__student_id, exam_id)
+        else:
+            are_essay_questions_ready_to_be_marked = StudentDA.are_essay_questions_ready_to_be_marked_in_exam(exam_id)
+            if (are_essay_questions_ready_to_be_marked):
+                StudentDA.update_essay_questions_status_to_ready_to_be_marked_in_exam_in_db(exam_id)
+                StudentDA.update_individual_student_exam_result_status_to_ready_to_be_marked_for_exam_in_db(exam_id)
+        StudentDA.update_exam_status_to_marked_for_all_students(exam_id)
 
     @classmethod
     def close_application(cls):

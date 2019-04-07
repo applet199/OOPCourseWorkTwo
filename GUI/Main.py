@@ -136,7 +136,6 @@ class Main():
                 Teacher.display_saved_questions()
                 Teacher.display_saved_school_classes()
                 Teacher.display_saved_exams()
-                Teacher.update_not_completed_exams()
                 Teacher.display_not_completed_exams()
                 Teacher.display_ready_to_be_marked_exams()
                 Teacher.display_marked_exams()

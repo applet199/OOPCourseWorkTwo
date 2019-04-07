@@ -507,6 +507,8 @@ class StudentDA():
     @classmethod
     def are_essay_questions_ready_to_be_marked_in_exam(cls, exam_id):
         essay_questions_ids_string = cls.get_essay_questions_ids_in_exam(exam_id)
+        if (essay_questions_ids_string == None):
+            return True
         essay_questions_ids_list = cls.make_string_to_list(essay_questions_ids_string)
         students_ids_string = cls.get_all_students_of_exam_by_id(exam_id)
         students_ids_list = cls.make_string_to_list(students_ids_string)
@@ -520,6 +522,8 @@ class StudentDA():
     @classmethod
     def update_essay_questions_status_to_ready_to_be_marked_in_exam_in_db(cls, exam_id):
         essay_questions_ids_string = cls.get_essay_questions_ids_in_exam(exam_id)
+        if(essay_questions_ids_string == None):
+            return
         essay_questions_ids_list = cls.make_string_to_list(essay_questions_ids_string)
         students_ids_string = cls.get_all_students_of_exam_by_id(exam_id)
         students_ids_list = cls.make_string_to_list(students_ids_string)
@@ -535,6 +539,17 @@ class StudentDA():
             WHERE exam_id = ?
         '''
         cls.__cursor.execute(query, ("Ready To Be Marked", exam_id))
+        cls.__db_connection.commit()
+
+    @classmethod
+    def update_individual_student_exam_result_status_to_marked_for_student_in_exam_in_db(cls, student_id, exam_id):
+        query = '''
+            UPDATE individual_student_exam_result
+            SET status = ?
+            WHERE exam_id = ?
+            AND student_id = ?
+        '''
+        cls.__cursor.execute(query, ("Marked", exam_id, student_id))
         cls.__db_connection.commit()
 
     @classmethod
@@ -572,7 +587,11 @@ class StudentDA():
         '''
         cls.__cursor.execute(query, (exam_id, ))
         essay_questions_ids_tuple = cls.__cursor.fetchone()
+        if (essay_questions_ids_tuple == None):
+            return None
         essay_questions_ids = essay_questions_ids_tuple[0]
+        if (essay_questions_ids == ""):
+            return None
         return essay_questions_ids
 
     @classmethod
@@ -585,6 +604,30 @@ class StudentDA():
     @classmethod
     def get_released_exam_results_for_current_student_from_db(cls, student_id):
         pass
+
+    @classmethod
+    def update_exam_status_to_marked_for_all_students(cls, exam_id):
+        query = '''
+            SELECT individual_student_exam_result_pk
+            FROM individual_student_exam_result
+            WHERE exam_id = ?
+            AND status = ?
+        '''
+        cls.__cursor.execute(query, (exam_id, "Marked"))
+        marked_individual_exam_results = cls.__cursor.fetchall()
+        if (marked_individual_exam_results == []):
+            return
+        number_of_marked_individual_exam_results = len(marked_individual_exam_results)
+        students_ids = cls.get_all_students_of_exam_by_id(exam_id)
+        number_of_students = len(students_ids.split(" "))
+        if (number_of_marked_individual_exam_results == number_of_students):
+            query = '''
+                UPDATE exam
+                SET status = ?
+                WHERE exam_pk = ?
+            '''
+            cls.__cursor.execute(query, ("Marked", exam_id))
+            cls.__db_connection.commit()
 
 
     def __str__(self):
