@@ -1009,7 +1009,7 @@ class TeacherGUI():
         row = 0
         col = 0
         for (exam_id,) in result_released_exams_ids:
-            exam_text = "Exam " + str(exam_id)
+            exam_text = "Exam " + str(exam_id) + " Result"
             exam_item = QTableWidgetItem(exam_text)
             cls.__ui_mainwindow.tableWidget_11.setItem(row, col, exam_item)
             if (col >= 9):
@@ -1061,7 +1061,11 @@ class TeacherGUI():
     @classmethod
     def get_school_class_id_to_view_exam_result(cls):
         school_class_id_text = cls.__ui_mainwindow.lineEdit_23.text()
-        return int(school_class_id_text)
+        try:
+            school_class_id = int(school_class_id_text)
+        except:
+            return None
+        return school_class_id
 
     @classmethod
     def display_students_full_names_to_view_exam_result(cls, students_full_names):
@@ -1084,7 +1088,11 @@ class TeacherGUI():
         exam_result_id_text = cls.__ui_mainwindow.label_33.text()
         exam_result_id_text_list = exam_result_id_text.split(" ")
         exam_result_id = exam_result_id_text_list.pop()
-        return exam_result_id
+        try:
+            exam_result_id_int = int(exam_result_id)
+            return exam_result_id_int
+        except:
+            return None
 
     @classmethod
     def display_student_exam_result_details(cls, exam_result_details):
@@ -1149,7 +1157,7 @@ class TeacherGUI():
 
     @classmethod
     def display_second_school_class_details_on_view_exam_details_page(cls, school_class_id, students_full_names):
-        cls.display_first_school_class_id_on_view_exam_details_page(school_class_id)
+        cls.display_second_school_class_id_on_view_exam_details_page(school_class_id)
         cls.__ui_mainwindow.tableWidget_28.clear()
         row = 0
         col = 0
@@ -1218,8 +1226,8 @@ class TeacherGUI():
         cls.__ui_mainwindow.tableWidget_22.clear()
 
     @classmethod
-    def display_exam_result_not_yet_released_message(cls):
-        cls.__ui_mainwindow.label_32.setText("Exam Result Not Yet Released For This Exam")
+    def display_exam_result_id_invalid_message(cls):
+        cls.__ui_mainwindow.label_32.setText("Exam Result ID Invalid")
 
     @classmethod
     def refresh_load_exam_result_details_page(cls):
@@ -1240,6 +1248,61 @@ class TeacherGUI():
     @classmethod
     def refresh_exam_result_id_validity_error_message(cls):
         cls.__ui_mainwindow.label_32.clear()
+
+    @classmethod
+    def display_school_class_id_invalid_to_view_result_message(cls):
+        cls.__ui_mainwindow.label_81.setText("School Class ID Invalid To View")
+
+    @classmethod
+    def refresh_school_class_details_table_on_view_exam_result_page(cls):
+        cls.__ui_mainwindow.tableWidget_13.clear()
+
+    @classmethod
+    def refresh_school_class_id_invalid_to_view_exam_result_error_label(cls):
+        cls.__ui_mainwindow.label_81.clear()
+
+    @classmethod
+    def refresh_student_exam_result_details(cls):
+        cls.__ui_mainwindow.label_58.clear()
+        cls.__ui_mainwindow.label_72.clear()
+        cls.__ui_mainwindow.label_75.clear()
+        cls.__ui_mainwindow.label_76.clear()
+        cls.__ui_mainwindow.label_77.clear()
+        cls.__ui_mainwindow.label_78.clear()
+        cls.__ui_mainwindow.label_79.clear()
+        cls.__ui_mainwindow.label_80.clear()
+
+    @classmethod
+    def display_no_exam_result_id_selected_message(cls):
+        cls.__ui_mainwindow.label_81.setText("No Exam Result ID Selected")
+
+    @classmethod
+    def refresh_school_class_id_input_box_on_view_exam_result_details_page(cls):
+        cls.__ui_mainwindow.lineEdit_23.clear()
+
+    @classmethod
+    def refresh_view_exam_details_by_id_page(cls):
+        cls.__ui_mainwindow.label_18.setText("Exam ID : ")
+        cls.__ui_mainwindow.tableWidget_7.clear()
+        cls.__ui_mainwindow.label_67.clear()
+        cls.__ui_mainwindow.label_68.clear()
+        cls.__ui_mainwindow.label_69.clear()
+        cls.__ui_mainwindow.label_70.clear()
+        cls.__ui_mainwindow.label_71.clear()
+        cls.__ui_mainwindow.tableWidget_27.clear()
+        cls.__ui_mainwindow.tableWidget_28.clear()
+        cls.__ui_mainwindow.tableWidget_29.clear()
+        cls.__ui_mainwindow.tableWidget_30.clear()
+        cls.__ui_mainwindow.tableWidget_31.clear()
+
+    @classmethod
+    def refresh_students_table_on_view_exam_result_details_page(cls):
+        cls.__ui_mainwindow.tableWidget_13.clear()
+
+    @classmethod
+    def refresh_school_classes_table_on_view_exam_result_details_page(cls):
+        cls.__ui_mainwindow.tableWidget_12.clear()
+
 
 
 

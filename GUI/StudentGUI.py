@@ -43,18 +43,13 @@ class StudentGUI():
                 col += 1
 
     @classmethod
-    def display_completed_exams_for_current_student(cls, completed_exams):
+    def display_completed_exams_for_current_student(cls, completed_exams_list):
         cls.__ui_mainwindow.tableWidget_2.clear()
-        if (completed_exams == ""):
+        if (completed_exams_list == ""):
             return
-        completed_exams_list = []
-        try:
-            completed_exams_list = completed_exams.split(" ")
-        except:
-            completed_exams_list.append(completed_exams)
         row = 0
         col = 0
-        for exam_id in completed_exams_list:
+        for (exam_id, ) in completed_exams_list:
             exam_text = "Exam " + str(exam_id)
             exam_item = QTableWidgetItem(exam_text)
             cls.__ui_mainwindow.tableWidget_2.setItem(row, col, exam_item)
@@ -246,7 +241,11 @@ class StudentGUI():
         exam_id_text = cls.__ui_mainwindow.label_2.text()
         exam_id_text_split = exam_id_text.split(" ")
         exam_id_string = exam_id_text_split.pop()
-        return int(exam_id_string)
+        try:
+            exam_id = int(exam_id_string)
+            return exam_id
+        except:
+            return None
 
     @classmethod
     def get_question_id_for_submitting_answer(cls):
@@ -308,10 +307,9 @@ class StudentGUI():
         cls.__ui_mainwindow.tableWidget_6.clear()
         if (exam_results_ids == ""):
             return
-        exam_results_ids_list = cls.make_string_to_list(exam_results_ids)
         row = 0
         col = 0
-        for exam_result_id in exam_results_ids_list:
+        for (exam_result_id, ) in exam_results_ids:
             exam_result_id_text = "Exam " + str(exam_result_id) + " Result"
             exam_result_item = QTableWidgetItem(exam_result_id_text)
             cls.__ui_mainwindow.tableWidget_6.setItem(row, col, exam_result_item)
@@ -382,6 +380,54 @@ class StudentGUI():
         any_string.strip()
         any_list = any_string.split(" ")
         return any_list
+
+    @classmethod
+    def get_exam_result_id_to_view_details(cls):
+        exam_result_item = cls.__ui_mainwindow.tableWidget_7.item(0, 0)
+        if (exam_result_item == None):
+            return None
+        exam_result_text = exam_result_item.text()
+        exam_result_list = cls.make_string_to_list(exam_result_text)
+        exam_result_id = exam_result_list[1]
+        return exam_result_id
+
+    @classmethod
+    def display_exam_result_details_for_current_student(cls, exam_result_details):
+        exam_pk = exam_result_details[0]
+        school_class_fk = exam_result_details[1]
+        total_available_points = exam_result_details[2]
+        total_points_gained = exam_result_details[3]
+        average_percentage_mark = exam_result_details[4]
+        cls.__ui_mainwindow.label_18.setText(str(exam_pk))
+        cls.__ui_mainwindow.label_19.setText(str(school_class_fk))
+        cls.__ui_mainwindow.label_20.setText(str(total_available_points))
+        cls.__ui_mainwindow.label_21.setText(str(total_points_gained))
+        cls.__ui_mainwindow.label_22.setText(str(average_percentage_mark) + " %")
+
+    @classmethod
+    def refresh_drop_exam_result_to_view_details_box(cls):
+        cls.__ui_mainwindow.tableWidget_7.clear()
+
+    @classmethod
+    def display_view_exam_result_details_box_empty_message(cls):
+        cls.__ui_mainwindow.label_10.setText("View Exam Result Details Box Empty")
+
+    @classmethod
+    def refresh_view_exam_result_details_error_label(cls):
+        cls.__ui_mainwindow.label_10.clear()
+
+    @classmethod
+    def refresh_student_exam_result_details_labels(cls):
+        cls.__ui_mainwindow.label_18.clear()
+        cls.__ui_mainwindow.label_19.clear()
+        cls.__ui_mainwindow.label_20.clear()
+        cls.__ui_mainwindow.label_21.clear()
+        cls.__ui_mainwindow.label_22.clear()
+
+    @classmethod
+    def display_no_exam_is_selected_error_message(cls):
+        cls.__ui_mainwindow.label_7.setText("No Exam Is Selected")
+
 
     def __str__(self):
         return ("This is StudentGUI Object")

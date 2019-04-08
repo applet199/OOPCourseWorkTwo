@@ -121,6 +121,8 @@ class Ui_StudentMainWindow(object):
         self.tab_2.setObjectName("tab_2")
         self.tableWidget_2 = QtWidgets.QTableWidget(self.tab_2)
         self.tableWidget_2.setGeometry(QtCore.QRect(150, 80, 761, 521))
+        self.tableWidget_2.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget_2.setSelectionMode(QtWidgets.QAbstractItemView.NoSelection)
         self.tableWidget_2.setRowCount(14)
         self.tableWidget_2.setColumnCount(6)
         self.tableWidget_2.setObjectName("tableWidget_2")
@@ -248,7 +250,7 @@ class Ui_StudentMainWindow(object):
         StudentMainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(StudentMainWindow)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(StudentMainWindow)
 
     def retranslateUi(self, StudentMainWindow):

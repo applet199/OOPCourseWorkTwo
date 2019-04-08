@@ -486,5 +486,21 @@ class AdminGUI():
         cls.__ui_mainwindow.lineEdit_41.clear()
         cls.__ui_mainwindow.label_66.clear()
 
+    @classmethod
+    def display_saved_teachers_GUI(cls, saved_teachers):
+        cls.__ui_mainwindow.tableWidget_4.clear()
+        row = 0
+        col = 0
+        for (teacher_id, teacher_name) in saved_teachers:
+            teacher_text = str(teacher_id) + " " + str(teacher_name)
+            teacher_item = QTableWidgetItem(teacher_text)
+            cls.__ui_mainwindow.tableWidget_4.setItem(row, col, teacher_item)
+            if (col >= 2):
+                col = 0
+                row += 1
+            else:
+                col += 1
+
+
     def __str__(self):
         return ("This is AdminGUI Object")

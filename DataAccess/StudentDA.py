@@ -31,14 +31,15 @@ class StudentDA():
     @classmethod
     def get_completed_exams_ids_for_current_student(cls):
         query = '''
-            SELECT completed_exams_ids
-            FROM student
-            WHERE student_pk = ?
+            SELECT exam_id
+            FROM individual_student_exam_result
+            WHERE student_id = ?
+            AND status != ?
+            AND status != ?
         '''
-        cls.__cursor.execute(query, (cls.__student_id,))
-        completed_exams_ids_tuple = cls.__cursor.fetchone()
-        completed_exams_ids = completed_exams_ids_tuple[0]
-        return completed_exams_ids
+        cls.__cursor.execute(query, (cls.__student_id, "Not Completed", "Result Released"))
+        completed_exams_ids_list = cls.__cursor.fetchall()
+        return completed_exams_ids_list
 
     @classmethod
     def get_current_student_school_class_id(cls):
@@ -116,8 +117,9 @@ class StudentDA():
                 option_E_text,
                 correct_answer
             FROM question
-            INNER JOIN single_answer_question ON question_pk = question_fk
-            WHERE question_pk = ?
+            INNER JOIN single_answer_question
+            ON question.question_pk = single_answer_question.question_fk
+            WHERE question.question_pk = ?
         '''
         cls.__cursor.execute(select_single_answer_question_details_query, (question_pk, ))
         question_details_tuple = cls.__cursor.fetchall()
@@ -137,8 +139,9 @@ class StudentDA():
                 option_E_text,
                 correct_answers
             FROM question
-            INNER JOIN multiple_answers_question ON question_pk = question_fk
-            WHERE question_pk = ?
+            INNER JOIN multiple_answers_question
+            ON question.question_pk = multiple_answers_question.question_fk
+            WHERE question.question_pk = ?
         '''
         cls.__cursor.execute(query, (question_pk, ))
         question_details_tuple = cls.__cursor.fetchall()
@@ -153,8 +156,8 @@ class StudentDA():
                 question_body
             FROM question
             INNER JOIN essay_question
-            ON question_pk = question_fk
-            WHERE question_pk = ?
+            ON question.question_pk = essay_question.question_fk
+            WHERE question.question_pk = ?
         '''
         cls.__cursor.execute(query, (question_pk,))
         question_details_tuple = cls.__cursor.fetchone()
@@ -216,8 +219,9 @@ class StudentDA():
         cls.__cursor.execute(query, (question_pk, ))
         correct_answers_tuple = cls.__cursor.fetchone()
         correct_answers = correct_answers_tuple[0]
-        student_answers = student_answers.rstrip()
-        is_correct = student_answers == correct_answers
+        student_answers = student_answers.strip()
+        correct_answers = correct_answers.strip()
+        is_correct = (student_answers == correct_answers)
         return is_correct
 
     @classmethod
@@ -604,14 +608,14 @@ class StudentDA():
     @classmethod
     def get_released_exam_results_for_current_student_from_db(cls, student_id):
         query = '''
-            SELECT exam_results_ids
-            FROM student
-            WHERE student_pk = ?
+            SELECT exam_id
+            FROM individual_student_exam_result
+            WHERE student_id = ?
+            AND status = ?
         '''
-        cls.__cursor.execute(query, (student_id, ))
-        exam_results_ids_tuple = cls.__cursor.fetchone()
-        exam_results_ids = exam_results_ids_tuple[0]
-        return exam_results_ids
+        cls.__cursor.execute(query, (cls.__student_id, "Result Released"))
+        released_exams_ids_list = cls.__cursor.fetchall()
+        return released_exams_ids_list
 
     @classmethod
     def update_exam_status_to_marked_for_all_students(cls, exam_id):
@@ -637,6 +641,55 @@ class StudentDA():
             '''
             cls.__cursor.execute(query, ("Marked", exam_id))
             cls.__db_connection.commit()
+
+    @classmethod
+    def get_exam_result_details_for_current_student_by_exam_result_id(cls, student_id, exam_result_id):
+        query = '''
+            SELECT exam_pk,
+                school_class_fk,
+                total_available_points,
+                total_points_gained,
+                average_percentage_mark
+            FROM individual_student_exam_result
+            INNER JOIN exam
+            ON individual_student_exam_result.exam_id = exam.exam_pk
+            INNER JOIN student
+            ON individual_student_exam_result.student_id = student.student_pk
+            WHERE individual_student_exam_result.exam_id = ?
+            AND individual_student_exam_result.student_id = ?
+        '''
+        cls.__cursor.execute(query, (exam_result_id, student_id))
+        exam_result_details_tuple = cls.__cursor.fetchone()
+        return exam_result_details_tuple
+
+    @classmethod
+    def update_exam_status_to_ready_to_be_marked_for_all_students(cls, exam_id):
+        query = '''
+            SELECT individual_student_exam_result_pk
+            FROM individual_student_exam_result
+            WHERE exam_id = ?
+            AND status = ?
+        '''
+        cls.__cursor.execute(query, (exam_id, "Ready To Be Marked"))
+        ready_to_be_marked_individual_exam_results = cls.__cursor.fetchall()
+        if (ready_to_be_marked_individual_exam_results == []):
+            return
+        number_of_ready_to_be_marked_individual_exam_results = len(ready_to_be_marked_individual_exam_results)
+        students_ids = cls.get_all_students_of_exam_by_id(exam_id)
+        students_ids_list = cls.make_string_to_list(students_ids)
+        number_of_students = len(students_ids_list)
+        if (number_of_ready_to_be_marked_individual_exam_results == number_of_students):
+            query = '''
+                UPDATE exam
+                SET status = ?
+                WHERE exam_pk = ?
+            '''
+            cls.__cursor.execute(query, ("Ready To Be Marked", exam_id))
+            cls.__db_connection.commit()
+
+
+
+
 
 
     def __str__(self):

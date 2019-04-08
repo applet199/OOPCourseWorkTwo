@@ -146,7 +146,7 @@ class Ui_MultipleAnswersQuestionDialog(object):
         self.checkBox_2.setText(_translate("MultipleAnswersQuestionDialog", "B"))
         self.checkBox_3.setText(_translate("MultipleAnswersQuestionDialog", "C"))
         self.checkBox_4.setText(_translate("MultipleAnswersQuestionDialog", "D"))
-        self.checkBox_5.setText(_translate("MultipleAnswersQuestionDialog", "D"))
+        self.checkBox_5.setText(_translate("MultipleAnswersQuestionDialog", "E"))
         self.pushButton_2.setText(_translate("MultipleAnswersQuestionDialog", "Submit"))
 
 

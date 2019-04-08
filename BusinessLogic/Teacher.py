@@ -385,6 +385,7 @@ class Teacher():
 
     @classmethod
     def view_exam_details_by_id(cls):
+        TeacherGUI.refresh_view_exam_details_by_id_page()
         exam_id = TeacherGUI.get_exam_id_to_view_details()
         if (exam_id == None):
             return
@@ -505,27 +506,52 @@ class Teacher():
         TeacherGUI.refresh_drop_exam_to_release_result_box()
         TeacherDA.update_completed_exams_ids_for_students_in_db(exam_id, students_ids)
         TeacherDA.update_exam_results_ids_for_students_in_db(exam_id, students_ids)
+        TeacherDA.update_individual_student_exam_result_status_to_result_released_for_all_students_in_exam_in_db(exam_id)
 
 
 
     @classmethod
     def load_exam_details(cls):
+        TeacherGUI.refresh_students_table_on_view_exam_result_details_page()
+        TeacherGUI.refresh_school_classes_table_on_view_exam_result_details_page()
         exam_result_id = TeacherGUI.get_exam_result_id_to_load_details()
         is_exam_result_released = TeacherDA.is_exam_result_released_by_exam_id(exam_result_id)
         if (not is_exam_result_released):
-            TeacherGUI.display_exam_result_not_yet_released_message()
+            TeacherGUI.display_exam_result_id_invalid_message()
             TeacherGUI.refresh_load_exam_result_details_page()
             return
         TeacherGUI.refresh_exam_result_id_validity_error_message()
         school_classes_ids = TeacherDA.get_school_classes_ids_in_exam_by_exam_id(exam_result_id)
         TeacherGUI.display_school_classes_to_view_exam_result_details(school_classes_ids)
         TeacherGUI.display_exam_result_id_on_view_exam_result_details_page(exam_result_id)
+        TeacherGUI.refresh_school_class_id_input_box_on_view_exam_result_details_page()
+        TeacherGUI.refresh_school_class_id_invalid_to_view_exam_result_error_label()
+        TeacherGUI.refresh_student_exam_result_details()
+
 
     @classmethod
     def view_school_class_exam_result(cls):
         school_class_id = TeacherGUI.get_school_class_id_to_view_exam_result()
+        if (school_class_id == None):
+            TeacherGUI.display_school_class_id_invalid_to_view_result_message()
+            TeacherGUI.refresh_school_class_details_table_on_view_exam_result_page()
+            TeacherGUI.refresh_student_exam_result_details()
+            return
+        exam_id = TeacherGUI.get_exam_result_id_on_view_exam_result_page()
+        if (exam_id == None):
+            TeacherGUI.display_no_exam_result_id_selected_message()
+            TeacherGUI.refresh_school_class_details_table_on_view_exam_result_page()
+            TeacherGUI.refresh_student_exam_result_details()
+            return
+        is_school_class_id_valid = TeacherDA.is_school_class_id_in_exam(school_class_id, exam_id)
+        if (not is_school_class_id_valid):
+            TeacherGUI.display_school_class_id_invalid_to_view_result_message()
+            TeacherGUI.refresh_school_class_details_table_on_view_exam_result_page()
+            TeacherGUI.refresh_student_exam_result_details()
+            return
         students_full_names = TeacherDA.get_students_full_names_by_school_class_id(school_class_id)
         TeacherGUI.display_students_full_names_to_view_exam_result(students_full_names)
+        TeacherGUI.refresh_school_class_id_invalid_to_view_exam_result_error_label()
 
     @classmethod
     def view_individual_student_exam_result(cls):

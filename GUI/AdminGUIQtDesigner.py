@@ -537,6 +537,7 @@ class Ui_AdminMainWindow(object):
         self.tableWidget_10.horizontalHeader().setVisible(False)
         self.tableWidget_10.verticalHeader().setVisible(False)
         self.label_39 = QtWidgets.QLabel(self.tab_10)
+        self.label_39.setEnabled(False)
         self.label_39.setGeometry(QtCore.QRect(430, 110, 131, 41))
         self.label_39.setObjectName("label_39")
         self.layoutWidget_5 = QtWidgets.QWidget(self.tab_10)
@@ -833,11 +834,11 @@ class Ui_AdminMainWindow(object):
         AdminMainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(AdminMainWindow)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(1)
         self.tabWidget_2.setCurrentIndex(1)
         self.tabWidget_3.setCurrentIndex(2)
-        self.tabWidget_5.setCurrentIndex(3)
-        self.tabWidget_4.setCurrentIndex(3)
+        self.tabWidget_5.setCurrentIndex(0)
+        self.tabWidget_4.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(AdminMainWindow)
 
     def retranslateUi(self, AdminMainWindow):

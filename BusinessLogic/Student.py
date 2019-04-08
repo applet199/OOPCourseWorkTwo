@@ -34,7 +34,7 @@ class Student():
         completed_exams_ids = StudentDA.get_completed_exams_ids_for_current_student()
         if (completed_exams_ids == None):
             return
-        if (completed_exams_ids == ""):
+        if (completed_exams_ids == []):
             return
         StudentGUI.display_completed_exams_for_current_student(completed_exams_ids)
 
@@ -182,6 +182,9 @@ class Student():
     @classmethod
     def complete_exam(cls):
         exam_id = StudentGUI.get_current_exam_id()
+        if (exam_id == None):
+            StudentGUI.display_no_exam_is_selected_error_message()
+            return
         completed_questions = StudentGUI.get_completed_questions()
         number_of_completed_questions = len(completed_questions)
         number_of_questions_in_exam = StudentDA.get_number_of_questions_in_exam_by_id(exam_id)
@@ -200,16 +203,27 @@ class Student():
         essay_questions_ids = StudentDA.get_essay_questions_ids_in_exam(exam_id)
         if (essay_questions_ids == None):
             StudentDA.update_individual_student_exam_result_status_to_marked_for_student_in_exam_in_db(cls.__student_id, exam_id)
+            StudentDA.update_exam_status_to_marked_for_all_students(exam_id)
         else:
             are_essay_questions_ready_to_be_marked = StudentDA.are_essay_questions_ready_to_be_marked_in_exam(exam_id)
             if (are_essay_questions_ready_to_be_marked):
                 StudentDA.update_essay_questions_status_to_ready_to_be_marked_in_exam_in_db(exam_id)
                 StudentDA.update_individual_student_exam_result_status_to_ready_to_be_marked_for_exam_in_db(exam_id)
-        StudentDA.update_exam_status_to_marked_for_all_students(exam_id)
+                StudentDA.update_exam_status_to_ready_to_be_marked_for_all_students(exam_id)
+
 
     @classmethod
     def view_exam_result_details_for_current_student(cls):
-        exam_result_id = StudentGUI.get_exam_result
+        exam_result_id = StudentGUI.get_exam_result_id_to_view_details()
+        if (exam_result_id == None):
+            StudentGUI.display_view_exam_result_details_box_empty_message()
+            StudentGUI.refresh_student_exam_result_details_labels()
+            return
+        exam_result_details = StudentDA.get_exam_result_details_for_current_student_by_exam_result_id(cls.__student_id, exam_result_id)
+        StudentGUI.display_exam_result_details_for_current_student(exam_result_details)
+        StudentGUI.refresh_drop_exam_result_to_view_details_box()
+        StudentGUI.refresh_view_exam_result_details_error_label()
+
 
     @classmethod
     def close_application(cls):
