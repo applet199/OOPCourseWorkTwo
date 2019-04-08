@@ -1044,10 +1044,11 @@ class TeacherGUI():
 
     @classmethod
     def display_school_classes_to_view_exam_result_details(cls, school_classes_ids):
+        school_classes_ids_list = cls.make_string_to_list(school_classes_ids)
         cls.__ui_mainwindow.tableWidget_12.clear()
         row = 0
         col = 0
-        for (school_class_id, ) in school_classes_ids:
+        for school_class_id in school_classes_ids_list:
             school_class_text = "Class " + str(school_class_id)
             school_class_item = QTableWidgetItem(school_class_text)
             cls.__ui_mainwindow.tableWidget_12.setItem(row, col, school_class_item)
@@ -1102,7 +1103,146 @@ class TeacherGUI():
         cls.__ui_mainwindow.label_77.setText(str(exam_id))
         cls.__ui_mainwindow.label_78.setText(str(total_available_points))
         cls.__ui_mainwindow.label_79.setText(str(total_points_gained))
-        cls.__ui_mainwindow.label_80.setText(str(average_percentage_mark))
+        cls.__ui_mainwindow.label_80.setText(str(average_percentage_mark) + " %")
+
+    @classmethod
+    def get_exam_id_to_view_details(cls):
+        exam_id_text = cls.__ui_mainwindow.lineEdit_14.text()
+        if (exam_id_text == ""):
+            return None
+        try:
+            exam_id = int(exam_id_text)
+            return exam_id
+        except:
+            return None
+
+    @classmethod
+    def diaplay_exam_id_on_view_exam_details_page(cls, exam_id):
+        cls.__ui_mainwindow.label_18.setText("Exam ID: " + str(exam_id))
+
+    @classmethod
+    def display_questions_on_view_exam_details_page(cls, questions_ids):
+        cls.__ui_mainwindow.tableWidget_7.clear()
+        questions_ids_list = cls.make_string_to_list(questions_ids)
+        row = 0
+        col = 0
+        for question_id in questions_ids_list:
+            question_text = "Question " + str(question_id)
+            question_item = QTableWidgetItem(question_text)
+            cls.__ui_mainwindow.tableWidget_7.setItem(row, col, question_item)
+            row += 1
+
+    @classmethod
+    def display_first_school_class_details_on_view_exam_details_page(cls, school_class_id, students_full_names):
+        cls.display_first_school_class_id_on_view_exam_details_page(school_class_id)
+        cls.__ui_mainwindow.tableWidget_27.clear()
+        row = 0
+        col = 0
+        for (student_name, ) in students_full_names:
+            student_item = QTableWidgetItem(student_name)
+            cls.__ui_mainwindow.tableWidget_27.setItem(row, col, student_item)
+            row += 1
+
+    @classmethod
+    def display_first_school_class_id_on_view_exam_details_page(cls, school_class_id):
+        cls.__ui_mainwindow.label_67.setText("CLass " + str(school_class_id))
+
+    @classmethod
+    def display_second_school_class_details_on_view_exam_details_page(cls, school_class_id, students_full_names):
+        cls.display_first_school_class_id_on_view_exam_details_page(school_class_id)
+        cls.__ui_mainwindow.tableWidget_28.clear()
+        row = 0
+        col = 0
+        for (student_name, ) in students_full_names:
+            student_item = QTableWidgetItem(student_name)
+            cls.__ui_mainwindow.tableWidget_28.setItem(row, col, student_item)
+            row += 1
+
+    @classmethod
+    def display_second_school_class_id_on_view_exam_details_page(cls, school_class_id):
+        cls.__ui_mainwindow.label_68.setText("CLass " + str(school_class_id))
+
+    @classmethod
+    def display_third_school_class_details_on_view_exam_details_page(cls, school_class_id, students_full_names):
+        cls.display_third_school_class_id_on_view_exam_details_page(school_class_id)
+        cls.__ui_mainwindow.tableWidget_29.clear()
+        row = 0
+        col = 0
+        for (student_name, ) in students_full_names:
+            student_item = QTableWidgetItem(student_name)
+            cls.__ui_mainwindow.tableWidget_29.setItem(row, col, student_item)
+            row += 1
+
+    @classmethod
+    def display_third_school_class_id_on_view_exam_details_page(cls, school_class_id):
+        cls.__ui_mainwindow.label_69.setText("CLass " + str(school_class_id))
+
+    @classmethod
+    def display_fourth_school_class_details_on_view_exam_details_page(cls, school_class_id, students_full_names):
+        cls.display_fourth_school_class_id_on_view_exam_details_page(school_class_id)
+        cls.__ui_mainwindow.tableWidget_30.clear()
+        row = 0
+        col = 0
+        for (student_name, ) in students_full_names:
+            student_item = QTableWidgetItem(student_name)
+            cls.__ui_mainwindow.tableWidget_30.setItem(row, col, student_item)
+            row += 1
+
+    @classmethod
+    def display_fourth_school_class_id_on_view_exam_details_page(cls, school_class_id):
+        cls.__ui_mainwindow.label_70.setText("CLass " + str(school_class_id))
+
+    @classmethod
+    def display_fifth_school_class_details_on_view_exam_details_page(cls, school_class_id, students_full_names):
+        cls.display_fifth_school_class_id_on_view_exam_details_page(school_class_id)
+        cls.__ui_mainwindow.tableWidget_31.clear()
+        row = 0
+        col = 0
+        for (student_name, ) in students_full_names:
+            student_item = QTableWidgetItem(student_name)
+            cls.__ui_mainwindow.tableWidget_31.setItem(row, col, student_item)
+            row += 1
+
+    @classmethod
+    def display_fifth_school_class_id_on_view_exam_details_page(cls, school_class_id):
+        cls.__ui_mainwindow.label_71.setText("CLass " + str(school_class_id))
+
+    @classmethod
+    def make_string_to_list(cls, any_string):
+        any_string = str(any_string)
+        any_list = any_string.split(" ")
+        return any_list
+
+    @classmethod
+    def refresh_drop_student_to_view_exam_result_details_box(cls):
+        cls.__ui_mainwindow.tableWidget_22.clear()
+
+    @classmethod
+    def display_exam_result_not_yet_released_message(cls):
+        cls.__ui_mainwindow.label_32.setText("Exam Result Not Yet Released For This Exam")
+
+    @classmethod
+    def refresh_load_exam_result_details_page(cls):
+        cls.__ui_mainwindow.label_33.clear()
+        cls.__ui_mainwindow.tableWidget_12.clear()
+        cls.__ui_mainwindow.lineEdit_23.clear()
+        cls.__ui_mainwindow.tableWidget_13.clear()
+        cls.__ui_mainwindow.tableWidget_22.clear()
+        cls.__ui_mainwindow.label_58.clear()
+        cls.__ui_mainwindow.label_72.clear()
+        cls.__ui_mainwindow.label_75.clear()
+        cls.__ui_mainwindow.label_76.clear()
+        cls.__ui_mainwindow.label_77.clear()
+        cls.__ui_mainwindow.label_78.clear()
+        cls.__ui_mainwindow.label_79.clear()
+        cls.__ui_mainwindow.label_80.clear()
+
+    @classmethod
+    def refresh_exam_result_id_validity_error_message(cls):
+        cls.__ui_mainwindow.label_32.clear()
+
+
+
 
     def __str__(self):
         return ("This is TeacherGUI Object")

@@ -55,7 +55,7 @@ class Main():
 
     def get_login_name_from_login_screen(self):
         login_name = self.ui.lineEdit.text()
-        return login_name
+        return login_name.strip()
 
     def get_password_from_login_screen(self):
         password = self.ui.lineEdit_2.text()

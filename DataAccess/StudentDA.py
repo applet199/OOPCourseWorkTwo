@@ -627,7 +627,8 @@ class StudentDA():
             return
         number_of_marked_individual_exam_results = len(marked_individual_exam_results)
         students_ids = cls.get_all_students_of_exam_by_id(exam_id)
-        number_of_students = len(students_ids.split(" "))
+        students_ids_list = cls.make_string_to_list(students_ids)
+        number_of_students = len(students_ids_list)
         if (number_of_marked_individual_exam_results == number_of_students):
             query = '''
                 UPDATE exam

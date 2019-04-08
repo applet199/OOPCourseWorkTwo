@@ -50,6 +50,7 @@ class Student():
         cls.load_exam_details_by_id_button_pressed()
         cls.work_on_selected_question_button_pressed()
         cls.complete_exam_button_pressed()
+        cls.view_exam_result_details_for_current_student_button_pressed()
         cls.close_button_pressed()
 
     @classmethod
@@ -67,6 +68,11 @@ class Student():
     @classmethod
     def close_button_pressed(cls):
         cls.__ui_mainwindow.pushButton_6.clicked.connect(cls.close_application)
+
+    @classmethod
+    def view_exam_result_details_for_current_student_button_pressed(cls):
+        cls.__ui_mainwindow.pushButton_4.clicked.connect(cls.view_exam_result_details_for_current_student)
+
 
     @classmethod
     def load_exam_details_by_id(cls):
@@ -200,6 +206,10 @@ class Student():
                 StudentDA.update_essay_questions_status_to_ready_to_be_marked_in_exam_in_db(exam_id)
                 StudentDA.update_individual_student_exam_result_status_to_ready_to_be_marked_for_exam_in_db(exam_id)
         StudentDA.update_exam_status_to_marked_for_all_students(exam_id)
+
+    @classmethod
+    def view_exam_result_details_for_current_student(cls):
+        exam_result_id = StudentGUI.get_exam_result
 
     @classmethod
     def close_application(cls):

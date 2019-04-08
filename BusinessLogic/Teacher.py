@@ -386,33 +386,41 @@ class Teacher():
     @classmethod
     def view_exam_details_by_id(cls):
         exam_id = TeacherGUI.get_exam_id_to_view_details()
+        if (exam_id == None):
+            return
         TeacherGUI.diaplay_exam_id_on_view_exam_details_page(exam_id)
         questions_ids = TeacherDA.get_questions_ids_in_exam(exam_id)
         TeacherGUI.display_questions_on_view_exam_details_page(questions_ids)
         school_classes_ids = TeacherDA.get_school_classes_ids_in_exam_by_exam_id(exam_id)
+        school_classes_ids_list = cls.make_string_to_list(school_classes_ids)
         try:
-            first_school_class_id = school_classes_ids[0]
-            TeacherGUI.display_first_school_class_details_on_view_exam_details_page(first_school_class_id)
+            first_school_class_id = school_classes_ids_list[0]
+            students_full_names = TeacherDA.get_students_full_names_by_school_class_id(first_school_class_id)
+            TeacherGUI.display_first_school_class_details_on_view_exam_details_page(first_school_class_id, students_full_names)
         except:
             pass
         try:
-            second_school_class_id = school_classes_ids[1]
-            TeacherGUI.display_second_school_class_details_on_view_exam_details_page(second_school_class_id)
+            second_school_class_id = school_classes_ids_list[1]
+            students_full_names = TeacherDA.get_students_full_names_by_school_class_id(second_school_class_id)
+            TeacherGUI.display_second_school_class_details_on_view_exam_details_page(second_school_class_id, students_full_names)
         except:
             pass
         try:
-            third_school_class_id = school_classes_ids[2]
-            TeacherGUI.display_third_school_class_details_on_view_exam_details_page(third_school_class_id)
+            third_school_class_id = school_classes_ids_list[2]
+            students_full_names = TeacherDA.get_students_full_names_by_school_class_id(third_school_class_id)
+            TeacherGUI.display_third_school_class_details_on_view_exam_details_page(third_school_class_id, students_full_names)
         except:
             pass
         try:
-            fourth_school_class_id = school_classes_ids[2]
-            TeacherGUI.display_fourth_school_class_details_on_view_exam_details_page(fourth_school_class_id)
+            fourth_school_class_id = school_classes_ids_list[2]
+            students_full_names = TeacherDA.get_students_full_names_by_school_class_id(fourth_school_class_id)
+            TeacherGUI.display_fourth_school_class_details_on_view_exam_details_page(fourth_school_class_id, students_full_names)
         except:
             pass
         try:
-            fifth_school_class_id = school_classes_ids[2]
-            TeacherGUI.display_fifth_school_class_details_on_view_exam_details_page(fifth_school_class_id)
+            fifth_school_class_id = school_classes_ids_list[2]
+            students_full_names = TeacherDA.get_students_full_names_by_school_class_id(fifth_school_class_id)
+            TeacherGUI.display_fifth_school_class_details_on_view_exam_details_page(fifth_school_class_id, students_full_names)
         except:
             pass
 
@@ -503,6 +511,12 @@ class Teacher():
     @classmethod
     def load_exam_details(cls):
         exam_result_id = TeacherGUI.get_exam_result_id_to_load_details()
+        is_exam_result_released = TeacherDA.is_exam_result_released_by_exam_id(exam_result_id)
+        if (not is_exam_result_released):
+            TeacherGUI.display_exam_result_not_yet_released_message()
+            TeacherGUI.refresh_load_exam_result_details_page()
+            return
+        TeacherGUI.refresh_exam_result_id_validity_error_message()
         school_classes_ids = TeacherDA.get_school_classes_ids_in_exam_by_exam_id(exam_result_id)
         TeacherGUI.display_school_classes_to_view_exam_result_details(school_classes_ids)
         TeacherGUI.display_exam_result_id_on_view_exam_result_details_page(exam_result_id)
@@ -519,11 +533,18 @@ class Teacher():
         exam_result_id = TeacherGUI.get_exam_result_id_on_view_exam_result_page()
         exam_result_details = TeacherDA.get_student_exam_result_details_by_id(student_full_name, exam_result_id)
         TeacherGUI.display_student_exam_result_details(exam_result_details)
+        TeacherGUI.refresh_drop_student_to_view_exam_result_details_box()
 
 
     @classmethod
     def close_application(cls):
         cls.__mainwindow.close()
+
+    @classmethod
+    def make_string_to_list(cls, any_string):
+        any_string = str(any_string)
+        any_list = any_string.split(" ")
+        return any_list
 
     def __str__(self):
         return ("This is Teacher Object")

@@ -40,7 +40,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_7">
        <attribute name="title">
@@ -794,6 +794,9 @@ p, li { white-space: pre-wrap; }
         <string>Search The Bank By Tag</string>
        </attribute>
        <widget class="QTableWidget" name="tableWidget_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -851,10 +854,17 @@ p, li { white-space: pre-wrap; }
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QLineEdit" name="lineEdit"/>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QPushButton" name="pushButton_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>Search By Year Level Between 1 and 13</string>
              </property>
@@ -865,10 +875,17 @@ p, li { white-space: pre-wrap; }
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <widget class="QLineEdit" name="lineEdit_2"/>
+            <widget class="QLineEdit" name="lineEdit_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QPushButton" name="pushButton_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>Search By Phrase</string>
              </property>
@@ -1659,7 +1676,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_15">
        <attribute name="title">
@@ -2080,6 +2097,9 @@ p, li { white-space: pre-wrap; }
         <string>Modify Exam Details</string>
        </attribute>
        <widget class="QLabel" name="label_22">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>390</x>
@@ -2128,6 +2148,9 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
        <widget class="QTableWidget" name="tableWidget_8">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>800</x>
@@ -2156,6 +2179,9 @@ p, li { white-space: pre-wrap; }
         <column/>
        </widget>
        <widget class="QTableWidget" name="tableWidget_9">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>120</x>
@@ -2221,13 +2247,20 @@ p, li { white-space: pre-wrap; }
           <layout class="QHBoxLayout" name="horizontalLayout_9">
            <item>
             <widget class="QPushButton" name="pushButton_17">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>Add Question To Exam By Question ID</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_16"/>
+            <widget class="QLineEdit" name="lineEdit_16">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -2235,13 +2268,20 @@ p, li { white-space: pre-wrap; }
           <layout class="QHBoxLayout" name="horizontalLayout_10">
            <item>
             <widget class="QPushButton" name="pushButton_18">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>Remove Question From Exam By Question ID</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_17"/>
+            <widget class="QLineEdit" name="lineEdit_17">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -2249,13 +2289,20 @@ p, li { white-space: pre-wrap; }
           <layout class="QHBoxLayout" name="horizontalLayout_11">
            <item>
             <widget class="QPushButton" name="pushButton_19">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>Add School Class To Exam By School Class ID</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_18"/>
+            <widget class="QLineEdit" name="lineEdit_18">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -2263,18 +2310,28 @@ p, li { white-space: pre-wrap; }
           <layout class="QHBoxLayout" name="horizontalLayout_12">
            <item>
             <widget class="QPushButton" name="pushButton_20">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>Remove School Class From Exam By School Class ID</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_19"/>
+            <widget class="QLineEdit" name="lineEdit_19">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_21">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Modify Exam</string>
            </property>
@@ -2336,13 +2393,20 @@ p, li { white-space: pre-wrap; }
         <layout class="QHBoxLayout" name="horizontalLayout_13">
          <item>
           <widget class="QPushButton" name="pushButton_16">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Modify Exam Details By Exam ID</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_15"/>
+          <widget class="QLineEdit" name="lineEdit_15">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -2352,6 +2416,9 @@ p, li { white-space: pre-wrap; }
         <string>Exam Activation</string>
        </attribute>
        <widget class="QPushButton" name="pushButton_22">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>240</x>
@@ -2365,6 +2432,9 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
        <widget class="QLineEdit" name="lineEdit_20">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>500</x>
@@ -2375,6 +2445,9 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
        <widget class="QTableWidget" name="tableWidget_10">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -2430,6 +2503,9 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton_23">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>270</x>
@@ -2456,6 +2532,9 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
        <widget class="QLineEdit" name="lineEdit_21">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>540</x>
@@ -2482,7 +2561,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
@@ -3361,11 +3440,17 @@ p, li { white-space: pre-wrap; }
        <widget class="QLabel" name="label_32">
         <property name="geometry">
          <rect>
-          <x>660</x>
+          <x>650</x>
           <y>20</y>
-          <width>211</width>
-          <height>61</height>
+          <width>300</width>
+          <height>51</height>
          </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>300</width>
+          <height>50</height>
+         </size>
         </property>
         <property name="text">
          <string/>

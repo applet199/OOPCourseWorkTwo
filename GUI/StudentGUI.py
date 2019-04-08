@@ -306,7 +306,9 @@ class StudentGUI():
     @classmethod
     def display_released_exam_results_for_current_student(cls, exam_results_ids):
         cls.__ui_mainwindow.tableWidget_6.clear()
-        exam_results_ids_list = exam_results_ids.split(" ")
+        if (exam_results_ids == ""):
+            return
+        exam_results_ids_list = cls.make_string_to_list(exam_results_ids)
         row = 0
         col = 0
         for exam_result_id in exam_results_ids_list:
@@ -373,6 +375,13 @@ class StudentGUI():
     @classmethod
     def display_no_selected_question_in_drop_box_message(cls):
         cls.__ui_mainwindow.label_7.setText("No Selected Question In Drop Box")
+
+    @classmethod
+    def make_string_to_list(cls, any_string):
+        any_string = str(any_string)
+        any_string.strip()
+        any_list = any_string.split(" ")
+        return any_list
 
     def __str__(self):
         return ("This is StudentGUI Object")
